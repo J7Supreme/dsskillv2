@@ -1,0 +1,56 @@
+{
+    "background": {
+        "default": {
+            "$value": "{color.gray.0}",
+            "$type": "color"
+        },
+        "card": {
+            "$value": "{color.gray.0}",
+            "$type": "color"
+        },
+        "modal": {
+            "$value": "{color.gray.50}",
+            "$type": "color"
+        },
+        "surface": {
+            "$value": "{color.gray.100}",
+            "$type": "color"
+        },
+        "brand": {
+            "$value": "{color.brand.primary}",
+            "$type": "color"
+        }
+    },
+    "text": {
+        "primary": {
+            "$value": "{color.blue.900}",
+            "$type": "color"
+        },
+        "secondary": {
+            "$value": "{color.blue.900-alpha60}",
+            "$type": "color"
+        },
+        "placeholder": {
+            "$value": "{color.blue.900-alpha20}",
+            "$type": "color"
+        },
+        "link": {
+            "$value": "{color.brand.primary}",
+            "$type": "color"
+        },
+        "inverse": {
+            "$value": "{color.gray.0}",
+            "$type": "color"
+        }
+    },
+    "border": {
+        "default": {
+            "$value": "{color.blue.900-alpha20}",
+            "$type": "color"
+        },
+        "icon": {
+            "$value": "{color.blue.900}",
+            "$type": "color"
+        }
+    }
+}

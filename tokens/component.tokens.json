@@ -1,0 +1,46 @@
+{
+    "component": {
+        "button": {
+            "primary": {
+                "background": {
+                    "$value": "{background.brand}",
+                    "$type": "color"
+                },
+                "text": {
+                    "$value": "{text.inverse}",
+                    "$type": "color"
+                },
+                "border": {
+                    "$value": "{border.default}",
+                    "$type": "color"
+                }
+            }
+        },
+        "chip": {
+            "background": {
+                "$value": "{background.surface}",
+                "$type": "color"
+            },
+            "text": {
+                "$value": "{text.primary}",
+                "$type": "color"
+            }
+        },
+        "modal": {
+            "surface": {
+                "$value": "{background.modal}",
+                "$type": "color"
+            },
+            "backdrop": {
+                "$value": "rgba(0,0,0,0.8)",
+                "$type": "color"
+            }
+        },
+        "logo": {
+            "color": {
+                "$value": "{text.primary}",
+                "$type": "color"
+            }
+        }
+    }
+}

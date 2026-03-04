@@ -1,0 +1,24 @@
+{
+    "gradient": {
+        "background": {
+            "main": {
+                "$value": {
+                    "type": "linear",
+                    "angle": "180deg",
+                    "stops": [
+                        {
+                            "color": "#F9FDFF",
+                            "position": 0
+                        },
+                        {
+                            "color": "#F0F1F3",
+                            "position": 1
+                        }
+                    ]
+                },
+                "$type": "gradient",
+                "$description": "Primary decorative background gradient"
+            }
+        }
+    }
+}
