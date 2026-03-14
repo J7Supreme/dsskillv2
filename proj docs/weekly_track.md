@@ -101,17 +101,40 @@
 ## 📅 Thursday (周四)
 
 ### 📝 更新总结
-- 
+- [自动打卡] Gemini API 请求失败: HTTP 403
+错误详情：{
+  "error": {
+    "code": 403,
+    "message": "Your API key was reported as leaked. Please use another API key.",
+    "status": "PERMISSION_DENIED"
+  }
+}
+
 
 ### 🔗 引用文档链接
-- 
+- `.DS_Store`
+- `INSTALL_DSSKILLV2.md`
+- `README.md`
+- `docs/INSTALL_DSSKILLV2.md`
+- `docs/dsskillv2-skill-package.zip`
+- `docs/index.html`
+- `docs/token-visual-architecture.html`
+- `dsskillv2-skill-package.zip`
+- `dsskillv2/SKILL.md`
+- `dsskillv2/agents/openai.yaml`
+- `dsskillv2/references/repo-workflow.md`
+- `dsskillv2/references/token-architecture.md`
+- `index.html`
+- `proj docs/weekly_track.md`
+- `scripts/auto_weekly_track.sh`
+- `source/.DS_Store`
 
 ---
 
 ## 📅 Friday (周五)
 
 ### 📝 更新总结
-- 
+- [自动打卡] 今日无代码本地提交更新记录
 
 ### 🔗 引用文档链接
-- 
+- 无相关文档更新
