@@ -5,8 +5,8 @@ Use this reference for path discovery, generated files, and common token-reposit
 ## Common paths
 
 - `source/tokens.json`: common canonical token source path
-- `adapters/tokenstudio/`: common Token Studio output path
 - `adapters/figma/`: common Figma-oriented adapter path
+- `adapters/runtime/`: common runtime-oriented adapter path
 - `prd_v1.md` or similar: common architecture/governance document
 - `docs/` or project doc pages: common place for visual architecture docs
 
@@ -34,6 +34,6 @@ Use existing scripts when they clearly fit the requested task. Otherwise, prefer
 ## Common task mapping
 
 - Token naming or structure issue: locate the canonical source and project architecture doc first.
-- Token Studio sync issue: locate adapter output paths after confirming the source model.
+- Figma, runtime, or AI adapter issue: locate adapter output paths after confirming the source model.
 - Architecture explanation request: use the project's existing terminology and diagrams.
 - README or Pages issue: check for broken relative paths and publication-path compatibility.

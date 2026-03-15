@@ -367,7 +367,7 @@ design-tokens
 ├── schema
 │   ├── dtcg.schema.json
 │   ├── figma.schema.json
-│   ├── tokenstudio.schema.json
+│   ├── runtime.schema.json
 │   └── runtime.schema.json
 │
 └── scripts

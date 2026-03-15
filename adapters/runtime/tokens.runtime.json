@@ -1,0 +1,1320 @@
+{
+  "$themes": [
+    "light",
+    "dark"
+  ],
+  "$metadata": {
+    "generatedFrom": "source/tokens.json",
+    "collections": [
+      "semantic",
+      "pattern",
+      "component"
+    ]
+  },
+  "semantic": {
+    "background": {
+      "general": {
+        "$type": "color",
+        "$description": "Primary app background in light mode — pure white for maximum contrast and visual clarity.",
+        "sourceRef": "semantic.background.general",
+        "light": {
+          "value": "#FFFFFF",
+          "sourceRef": "semantic.background.general"
+        },
+        "dark": {
+          "value": "#1C1C1E",
+          "sourceRef": "semantic.background.general"
+        }
+      },
+      "card": {
+        "$type": "color",
+        "$description": "Card surface background in light mode — white creates clean elevated content areas.",
+        "sourceRef": "semantic.background.card",
+        "light": {
+          "value": "#FFFFFF",
+          "sourceRef": "semantic.background.card"
+        },
+        "dark": {
+          "value": "#1C1C1E",
+          "sourceRef": "semantic.background.card"
+        }
+      },
+      "modal": {
+        "$type": "color",
+        "$description": "Modal container background in light mode — slightly off-white to create perceived depth above the page.",
+        "sourceRef": "semantic.background.modal",
+        "light": {
+          "value": "#F9FAFB",
+          "sourceRef": "semantic.background.modal"
+        },
+        "dark": {
+          "value": "#1C1C1E",
+          "sourceRef": "semantic.background.modal"
+        }
+      },
+      "modal_section": {
+        "$type": "color",
+        "$description": "Modal section panel background in light mode — white for a flat, clean inner content area.",
+        "sourceRef": "semantic.background.modal_section",
+        "light": {
+          "value": "#FFFFFF",
+          "sourceRef": "semantic.background.modal_section"
+        },
+        "dark": {
+          "value": "#2C2C2E",
+          "sourceRef": "semantic.background.modal_section"
+        }
+      },
+      "modal_section_inner": {
+        "$type": "color",
+        "$description": "Inner modal subsection background in light mode — light gray to visually group and differentiate nested content.",
+        "sourceRef": "semantic.background.modal_section_inner",
+        "light": {
+          "value": "#F0F1F3",
+          "sourceRef": "semantic.background.modal_section_inner"
+        },
+        "dark": {
+          "value": "#1C1C1E",
+          "sourceRef": "semantic.background.modal_section_inner"
+        }
+      },
+      "backdrop": {
+        "$type": "color",
+        "$description": "Backdrop blur overlay behind modals in light mode — 80% white for a frosted glass effect.",
+        "sourceRef": "semantic.background.backdrop",
+        "light": {
+          "value": "rgba(255, 255, 255, 0.8)",
+          "sourceRef": "semantic.background.backdrop"
+        },
+        "dark": {
+          "value": "rgba(0, 0, 0, 0.8)",
+          "sourceRef": "semantic.background.backdrop"
+        }
+      }
+    },
+    "text": {
+      "core": {
+        "$type": "color",
+        "$description": "页面核心信息内容，比主文字B的饱和度更高，也避免了整体页面过于沉闷的色值搭配。核心信息例如balance金额，明细金额，页面大抬头等",
+        "sourceRef": "semantic.text.core",
+        "light": {
+          "value": "#111D4A",
+          "sourceRef": "semantic.text.core"
+        },
+        "dark": {
+          "value": "#FFFFFF",
+          "sourceRef": "semantic.text.core"
+        }
+      },
+      "primary": {
+        "$type": "color",
+        "$description": "适用于对应于次标题的主标题等。但该标题尚未到页面核心信息的地位",
+        "sourceRef": "semantic.text.primary",
+        "light": {
+          "value": "#111D4A",
+          "sourceRef": "semantic.text.primary"
+        },
+        "dark": {
+          "value": "#D6D7E0",
+          "sourceRef": "semantic.text.primary"
+        }
+      },
+      "secondary": {
+        "$type": "color",
+        "$description": "Supporting and secondary text in light mode — 40% navy for captions, metadata, and sublabels.",
+        "sourceRef": "semantic.text.secondary",
+        "light": {
+          "value": "rgba(17, 29, 74, 0.4)",
+          "sourceRef": "semantic.text.secondary"
+        },
+        "dark": {
+          "value": "rgba(221, 222, 234, 0.4)",
+          "sourceRef": "semantic.text.secondary"
+        }
+      },
+      "action": {
+        "$type": "color",
+        "$description": "Interactive action text in light mode — brand blue to signal links, CTAs, and affordance.",
+        "sourceRef": "semantic.text.action",
+        "light": {
+          "value": "#007FFF",
+          "sourceRef": "semantic.text.action"
+        },
+        "dark": {
+          "value": "rgba(0, 127, 255, 0.8)",
+          "sourceRef": "semantic.text.action"
+        }
+      },
+      "placeholder": {
+        "$type": "color",
+        "$description": "Placeholder and empty state hint text in light mode — 20% navy at minimum readable contrast.",
+        "sourceRef": "semantic.text.placeholder",
+        "light": {
+          "value": "rgba(17, 29, 74, 0.2)",
+          "sourceRef": "semantic.text.placeholder"
+        },
+        "dark": {
+          "value": "rgba(255, 255, 255, 0.2)",
+          "sourceRef": "semantic.text.placeholder"
+        }
+      }
+    },
+    "stroke": {
+      "icon_primary": {
+        "$type": "color",
+        "$description": "Primary icon stroke color in light mode — full navy for strong, legible icon rendering.",
+        "sourceRef": "semantic.stroke.icon_primary",
+        "light": {
+          "value": "#111D4A",
+          "sourceRef": "semantic.stroke.icon_primary"
+        },
+        "dark": {
+          "value": "rgba(221, 222, 234, 0.8)",
+          "sourceRef": "semantic.stroke.icon_primary"
+        }
+      },
+      "icon_secondary": {
+        "$type": "color",
+        "$description": "Secondary icon stroke in light mode — 40% navy for de-emphasized, supporting icons.",
+        "sourceRef": "semantic.stroke.icon_secondary",
+        "light": {
+          "value": "rgba(17, 29, 74, 0.4)",
+          "sourceRef": "semantic.stroke.icon_secondary"
+        },
+        "dark": {
+          "value": "rgba(221, 222, 234, 0.4)",
+          "sourceRef": "semantic.stroke.icon_secondary"
+        }
+      }
+    },
+    "border": {
+      "default": {
+        "$type": "color",
+        "$description": "Default border and divider in light mode — 8% navy, ultra-subtle separator for cards and list rows.",
+        "sourceRef": "semantic.border.default",
+        "light": {
+          "value": "rgba(17, 29, 74, 0.08)",
+          "sourceRef": "semantic.border.default"
+        },
+        "dark": {
+          "value": "rgba(221, 222, 234, 0.08)",
+          "sourceRef": "semantic.border.default"
+        }
+      }
+    },
+    "fill": {
+      "icon_chip": {
+        "$type": "color",
+        "$description": "Icon chip background in light mode — light gray pill for icon-and-label chip components.",
+        "sourceRef": "semantic.fill.icon_chip",
+        "light": {
+          "value": "#F0F1F3",
+          "sourceRef": "semantic.fill.icon_chip"
+        },
+        "dark": {
+          "value": "#2C2C2E",
+          "sourceRef": "semantic.fill.icon_chip"
+        }
+      },
+      "secondary": {
+        "$type": "color",
+        "$description": "Secondary solid fill in light mode — full navy for secondary buttons and badge backgrounds.",
+        "sourceRef": "semantic.fill.secondary",
+        "light": {
+          "value": "#111D4A",
+          "sourceRef": "semantic.fill.secondary"
+        },
+        "dark": {
+          "value": "rgba(221, 222, 234, 0.8)",
+          "sourceRef": "semantic.fill.secondary"
+        }
+      },
+      "tertiary": {
+        "$type": "color",
+        "$description": "Tertiary fill in light mode — white for ghost buttons and outlined element backgrounds.",
+        "sourceRef": "semantic.fill.tertiary",
+        "light": {
+          "value": "#FFFFFF",
+          "sourceRef": "semantic.fill.tertiary"
+        },
+        "dark": {
+          "value": "#1C1C1E",
+          "sourceRef": "semantic.fill.tertiary"
+        }
+      },
+      "logo": {
+        "$type": "color",
+        "$description": "Logo fill color in light mode — navy ensures brand identity is clear on white surfaces.",
+        "sourceRef": "semantic.fill.logo",
+        "light": {
+          "value": "#111D4A",
+          "sourceRef": "semantic.fill.logo"
+        },
+        "dark": {
+          "value": "#FFFFFF",
+          "sourceRef": "semantic.fill.logo"
+        }
+      },
+      "color_1": {
+        "$type": "color",
+        "$description": "Generic brand color fill slot 1 in light mode — white, flexible placeholder for branded fills.",
+        "sourceRef": "semantic.fill.color_1",
+        "light": {
+          "value": "#FFFFFF",
+          "sourceRef": "semantic.fill.color_1"
+        },
+        "dark": {
+          "value": "#FFFFFF",
+          "sourceRef": "semantic.fill.color_1"
+        }
+      },
+      "color_2": {
+        "$type": "color",
+        "$description": "Generic brand color fill slot 2 in light mode — white, secondary flexible branded fill placeholder.",
+        "sourceRef": "semantic.fill.color_2",
+        "light": {
+          "value": "#FFFFFF",
+          "sourceRef": "semantic.fill.color_2"
+        },
+        "dark": {
+          "value": "#FFFFFF",
+          "sourceRef": "semantic.fill.color_2"
+        }
+      }
+    },
+    "gradient": {
+      "general": {
+        "$type": "gradient",
+        "$description": "General page gradient — near-white blue tint to light gray for soft background depth.",
+        "sourceRef": "semantic.gradient.general",
+        "light": {
+          "value": {
+            "type": "linear",
+            "angle": 180,
+            "stops": [
+              {
+                "position": 0,
+                "color": "#F9FDFF"
+              },
+              {
+                "position": 1,
+                "color": "#F0F1F3"
+              }
+            ]
+          },
+          "sourceRef": "semantic.gradient.general"
+        },
+        "dark": {
+          "value": {
+            "type": "linear",
+            "angle": 180,
+            "stops": [
+              {
+                "position": 0,
+                "color": "#000000"
+              },
+              {
+                "position": 1,
+                "color": "#1F1F1F"
+              }
+            ]
+          },
+          "sourceRef": "semantic.gradient.general"
+        }
+      },
+      "main": {
+        "$type": "gradient",
+        "$description": "Main hero gradient — near-white blue to light blue for branded hero section depth.",
+        "sourceRef": "semantic.gradient.main",
+        "light": {
+          "value": {
+            "type": "linear",
+            "angle": 180,
+            "stops": [
+              {
+                "position": 0,
+                "color": "#F9FDFF"
+              },
+              {
+                "position": 1,
+                "color": "#D6EBFF"
+              }
+            ]
+          },
+          "sourceRef": "semantic.gradient.main"
+        },
+        "dark": {
+          "value": {
+            "type": "linear",
+            "angle": 180,
+            "stops": [
+              {
+                "position": 0,
+                "color": "#000000"
+              },
+              {
+                "position": 1,
+                "color": "#003160"
+              }
+            ]
+          },
+          "sourceRef": "semantic.gradient.main"
+        }
+      },
+      "xaut_card": {
+        "$type": "gradient",
+        "$description": "XAUT card gradient — 60% white glassmorphism to pale blue accent.",
+        "sourceRef": "semantic.gradient.xaut_card",
+        "light": {
+          "value": {
+            "type": "linear",
+            "angle": 180,
+            "stops": [
+              {
+                "position": 0,
+                "color": "rgba(255, 255, 255, 0.6)"
+              },
+              {
+                "position": 1,
+                "color": "#EEF7FF"
+              }
+            ]
+          },
+          "sourceRef": "semantic.gradient.xaut_card"
+        },
+        "dark": {
+          "value": {
+            "type": "linear",
+            "angle": 180,
+            "stops": [
+              {
+                "position": 0,
+                "color": "rgba(21, 20, 23, 0.7)"
+              },
+              {
+                "position": 1,
+                "color": "#2C2C2E"
+              }
+            ]
+          },
+          "sourceRef": "semantic.gradient.xaut_card"
+        }
+      },
+      "bar_backdrop": {
+        "$type": "gradient",
+        "$description": "Tab bar backdrop gradient — transparent white to solid white for feathered top edge.",
+        "sourceRef": "semantic.gradient.bar_backdrop",
+        "light": {
+          "value": {
+            "type": "linear",
+            "angle": 180,
+            "stops": [
+              {
+                "position": 0,
+                "color": "rgba(255, 255, 255, 0)"
+              },
+              {
+                "position": 1,
+                "color": "#FFFFFF"
+              }
+            ]
+          },
+          "sourceRef": "semantic.gradient.bar_backdrop"
+        },
+        "dark": {
+          "value": {
+            "type": "linear",
+            "angle": 180,
+            "stops": [
+              {
+                "position": 0,
+                "color": "rgba(1, 3, 6, 0)"
+              },
+              {
+                "position": 1,
+                "color": "#010306"
+              }
+            ]
+          },
+          "sourceRef": "semantic.gradient.bar_backdrop"
+        }
+      }
+    }
+  },
+  "pattern": {
+    "surface": {
+      "card": {
+        "background": {
+          "$type": "color",
+          "$description": "Reusable card surface background alias for light mode.",
+          "sourceRef": "pattern.surface.card.background",
+          "light": {
+            "value": "#FFFFFF",
+            "sourceRef": "pattern.surface.card.background"
+          },
+          "dark": {
+            "value": "#1C1C1E",
+            "sourceRef": "pattern.surface.card.background"
+          }
+        },
+        "title": {
+          "$type": "color",
+          "$description": "Reusable card title alias for light mode.",
+          "sourceRef": "pattern.surface.card.title",
+          "light": {
+            "value": "#111D4A",
+            "sourceRef": "pattern.surface.card.title"
+          },
+          "dark": {
+            "value": "#D6D7E0",
+            "sourceRef": "pattern.surface.card.title"
+          }
+        },
+        "body": {
+          "$type": "color",
+          "$description": "Reusable card body text alias for light mode.",
+          "sourceRef": "pattern.surface.card.body",
+          "light": {
+            "value": "rgba(17, 29, 74, 0.4)",
+            "sourceRef": "pattern.surface.card.body"
+          },
+          "dark": {
+            "value": "rgba(221, 222, 234, 0.4)",
+            "sourceRef": "pattern.surface.card.body"
+          }
+        },
+        "padding": {
+          "$type": "dimension",
+          "$description": "Reusable card internal padding alias.",
+          "sourceRef": "pattern.surface.card.padding",
+          "light": {
+            "value": "16px",
+            "sourceRef": "pattern.surface.card.padding"
+          },
+          "dark": {
+            "value": "16px",
+            "sourceRef": "pattern.surface.card.padding"
+          }
+        },
+        "radius": {
+          "$type": "string",
+          "$description": "Reusable card radius alias bound to the shared primitive radius scale.",
+          "sourceRef": "pattern.surface.card.radius",
+          "light": {
+            "value": "[MISSING]",
+            "sourceRef": "pattern.surface.card.radius"
+          },
+          "dark": {
+            "value": "[MISSING]",
+            "sourceRef": "pattern.surface.card.radius"
+          }
+        }
+      }
+    },
+    "modal": {
+      "form": {
+        "title": {
+          "$type": "color",
+          "$description": "Modal form title alias for light mode.",
+          "sourceRef": "pattern.modal.form.title",
+          "light": {
+            "value": "#111D4A",
+            "sourceRef": "pattern.modal.form.title"
+          },
+          "dark": {
+            "value": "#D6D7E0",
+            "sourceRef": "pattern.modal.form.title"
+          }
+        },
+        "body": {
+          "$type": "color",
+          "$description": "Modal form body text alias for light mode.",
+          "sourceRef": "pattern.modal.form.body",
+          "light": {
+            "value": "rgba(17, 29, 74, 0.4)",
+            "sourceRef": "pattern.modal.form.body"
+          },
+          "dark": {
+            "value": "rgba(221, 222, 234, 0.4)",
+            "sourceRef": "pattern.modal.form.body"
+          }
+        },
+        "fieldBackground": {
+          "$type": "color",
+          "$description": "Modal form field background alias for light mode.",
+          "sourceRef": "pattern.modal.form.fieldBackground",
+          "light": {
+            "value": "#FFFFFF",
+            "sourceRef": "pattern.modal.form.fieldBackground"
+          },
+          "dark": {
+            "value": "#2C2C2E",
+            "sourceRef": "pattern.modal.form.fieldBackground"
+          }
+        },
+        "fieldPaddingX": {
+          "$type": "dimension",
+          "$description": "Modal form field horizontal padding alias.",
+          "sourceRef": "pattern.modal.form.fieldPaddingX",
+          "light": {
+            "value": "12px",
+            "sourceRef": "pattern.modal.form.fieldPaddingX"
+          },
+          "dark": {
+            "value": "12px",
+            "sourceRef": "pattern.modal.form.fieldPaddingX"
+          }
+        },
+        "fieldHeight": {
+          "$type": "dimension",
+          "$description": "Modal form field height alias.",
+          "sourceRef": "pattern.modal.form.fieldHeight",
+          "light": {
+            "value": "48px",
+            "sourceRef": "pattern.modal.form.fieldHeight"
+          },
+          "dark": {
+            "value": "48px",
+            "sourceRef": "pattern.modal.form.fieldHeight"
+          }
+        },
+        "sectionGap": {
+          "$type": "dimension",
+          "$description": "Modal form section gap alias.",
+          "sourceRef": "pattern.modal.form.sectionGap",
+          "light": {
+            "value": "32px",
+            "sourceRef": "pattern.modal.form.sectionGap"
+          },
+          "dark": {
+            "value": "32px",
+            "sourceRef": "pattern.modal.form.sectionGap"
+          }
+        },
+        "actionGap": {
+          "$type": "dimension",
+          "$description": "Modal form action group gap alias.",
+          "sourceRef": "pattern.modal.form.actionGap",
+          "light": {
+            "value": "32px",
+            "sourceRef": "pattern.modal.form.actionGap"
+          },
+          "dark": {
+            "value": "32px",
+            "sourceRef": "pattern.modal.form.actionGap"
+          }
+        }
+      }
+    },
+    "list": {
+      "tokenItem": {
+        "text": {
+          "$type": "color",
+          "$description": "Token list item primary text alias for light mode.",
+          "sourceRef": "pattern.list.tokenItem.text",
+          "light": {
+            "value": "#111D4A",
+            "sourceRef": "pattern.list.tokenItem.text"
+          },
+          "dark": {
+            "value": "#D6D7E0",
+            "sourceRef": "pattern.list.tokenItem.text"
+          }
+        },
+        "subtext": {
+          "$type": "color",
+          "$description": "Token list item secondary text alias for light mode.",
+          "sourceRef": "pattern.list.tokenItem.subtext",
+          "light": {
+            "value": "rgba(17, 29, 74, 0.4)",
+            "sourceRef": "pattern.list.tokenItem.subtext"
+          },
+          "dark": {
+            "value": "rgba(221, 222, 234, 0.4)",
+            "sourceRef": "pattern.list.tokenItem.subtext"
+          }
+        },
+        "iconSize": {
+          "$type": "dimension",
+          "$description": "Token list item icon size alias.",
+          "sourceRef": "pattern.list.tokenItem.iconSize",
+          "light": {
+            "value": "40px",
+            "sourceRef": "pattern.list.tokenItem.iconSize"
+          },
+          "dark": {
+            "value": "40px",
+            "sourceRef": "pattern.list.tokenItem.iconSize"
+          }
+        },
+        "gap": {
+          "$type": "dimension",
+          "$description": "Token list item internal gap alias.",
+          "sourceRef": "pattern.list.tokenItem.gap",
+          "light": {
+            "value": "12px",
+            "sourceRef": "pattern.list.tokenItem.gap"
+          },
+          "dark": {
+            "value": "12px",
+            "sourceRef": "pattern.list.tokenItem.gap"
+          }
+        },
+        "height": {
+          "$type": "dimension",
+          "$description": "Token list item row height alias preserved from the reviewed design examples.",
+          "sourceRef": "pattern.list.tokenItem.height",
+          "light": {
+            "value": "62px",
+            "sourceRef": "pattern.list.tokenItem.height"
+          },
+          "dark": {
+            "value": "62px",
+            "sourceRef": "pattern.list.tokenItem.height"
+          }
+        }
+      },
+      "statusRow": {
+        "title": {
+          "$type": "color",
+          "$description": "Status row title alias for light mode.",
+          "sourceRef": "pattern.list.statusRow.title",
+          "light": {
+            "value": "#111D4A",
+            "sourceRef": "pattern.list.statusRow.title"
+          },
+          "dark": {
+            "value": "#D6D7E0",
+            "sourceRef": "pattern.list.statusRow.title"
+          }
+        },
+        "meta": {
+          "$type": "color",
+          "$description": "Status row metadata text alias for light mode.",
+          "sourceRef": "pattern.list.statusRow.meta",
+          "light": {
+            "value": "rgba(17, 29, 74, 0.4)",
+            "sourceRef": "pattern.list.statusRow.meta"
+          },
+          "dark": {
+            "value": "rgba(221, 222, 234, 0.4)",
+            "sourceRef": "pattern.list.statusRow.meta"
+          }
+        },
+        "iconSize": {
+          "$type": "dimension",
+          "$description": "Status row icon size alias.",
+          "sourceRef": "pattern.list.statusRow.iconSize",
+          "light": {
+            "value": "20px",
+            "sourceRef": "pattern.list.statusRow.iconSize"
+          },
+          "dark": {
+            "value": "20px",
+            "sourceRef": "pattern.list.statusRow.iconSize"
+          }
+        },
+        "rowGap": {
+          "$type": "dimension",
+          "$description": "Status row internal gap alias.",
+          "sourceRef": "pattern.list.statusRow.rowGap",
+          "light": {
+            "value": "8px",
+            "sourceRef": "pattern.list.statusRow.rowGap"
+          },
+          "dark": {
+            "value": "8px",
+            "sourceRef": "pattern.list.statusRow.rowGap"
+          }
+        },
+        "paddingY": {
+          "$type": "dimension",
+          "$description": "Status row vertical padding alias.",
+          "sourceRef": "pattern.list.statusRow.paddingY",
+          "light": {
+            "value": "16px",
+            "sourceRef": "pattern.list.statusRow.paddingY"
+          },
+          "dark": {
+            "value": "16px",
+            "sourceRef": "pattern.list.statusRow.paddingY"
+          }
+        }
+      }
+    }
+  },
+  "component": {
+    "mobileNav": {
+      "primary": {
+        "default": {
+          "height": {
+            "$type": "dimension",
+            "$description": "Primary mobile nav height alias.",
+            "sourceRef": "component.mobileNav.primary.default.height",
+            "light": {
+              "value": "90px",
+              "sourceRef": "component.mobileNav.primary.default.height"
+            },
+            "dark": {
+              "value": "90px",
+              "sourceRef": "component.mobileNav.primary.default.height"
+            }
+          },
+          "paddingX": {
+            "$type": "dimension",
+            "$description": "Primary mobile nav horizontal padding alias.",
+            "sourceRef": "component.mobileNav.primary.default.paddingX",
+            "light": {
+              "value": "16px",
+              "sourceRef": "component.mobileNav.primary.default.paddingX"
+            },
+            "dark": {
+              "value": "16px",
+              "sourceRef": "component.mobileNav.primary.default.paddingX"
+            }
+          },
+          "title": {
+            "$type": "color",
+            "$description": "Primary mobile nav title alias for light mode.",
+            "sourceRef": "component.mobileNav.primary.default.title",
+            "light": {
+              "value": "#111D4A",
+              "sourceRef": "component.mobileNav.primary.default.title"
+            },
+            "dark": {
+              "value": "#D6D7E0",
+              "sourceRef": "component.mobileNav.primary.default.title"
+            }
+          },
+          "icon": {
+            "$type": "color",
+            "$description": "Primary mobile nav icon alias for light mode.",
+            "sourceRef": "component.mobileNav.primary.default.icon",
+            "light": {
+              "value": "#111D4A",
+              "sourceRef": "component.mobileNav.primary.default.icon"
+            },
+            "dark": {
+              "value": "rgba(221, 222, 234, 0.8)",
+              "sourceRef": "component.mobileNav.primary.default.icon"
+            }
+          }
+        }
+      },
+      "secondary": {
+        "default": {
+          "height": {
+            "$type": "dimension",
+            "$description": "Secondary mobile nav height alias.",
+            "sourceRef": "component.mobileNav.secondary.default.height",
+            "light": {
+              "value": "56px",
+              "sourceRef": "component.mobileNav.secondary.default.height"
+            },
+            "dark": {
+              "value": "56px",
+              "sourceRef": "component.mobileNav.secondary.default.height"
+            }
+          },
+          "paddingX": {
+            "$type": "dimension",
+            "$description": "Secondary mobile nav horizontal padding alias.",
+            "sourceRef": "component.mobileNav.secondary.default.paddingX",
+            "light": {
+              "value": "16px",
+              "sourceRef": "component.mobileNav.secondary.default.paddingX"
+            },
+            "dark": {
+              "value": "16px",
+              "sourceRef": "component.mobileNav.secondary.default.paddingX"
+            }
+          },
+          "title": {
+            "$type": "color",
+            "$description": "Secondary mobile nav title alias for light mode.",
+            "sourceRef": "component.mobileNav.secondary.default.title",
+            "light": {
+              "value": "#111D4A",
+              "sourceRef": "component.mobileNav.secondary.default.title"
+            },
+            "dark": {
+              "value": "#D6D7E0",
+              "sourceRef": "component.mobileNav.secondary.default.title"
+            }
+          },
+          "icon": {
+            "$type": "color",
+            "$description": "Secondary mobile nav icon alias for light mode.",
+            "sourceRef": "component.mobileNav.secondary.default.icon",
+            "light": {
+              "value": "#111D4A",
+              "sourceRef": "component.mobileNav.secondary.default.icon"
+            },
+            "dark": {
+              "value": "rgba(221, 222, 234, 0.8)",
+              "sourceRef": "component.mobileNav.secondary.default.icon"
+            }
+          }
+        }
+      }
+    },
+    "webNav": {
+      "default": {
+        "signedOut": {
+          "height": {
+            "$type": "dimension",
+            "$description": "Signed-out web nav height alias.",
+            "sourceRef": "component.webNav.default.signedOut.height",
+            "light": {
+              "value": "68px",
+              "sourceRef": "component.webNav.default.signedOut.height"
+            },
+            "dark": {
+              "value": "68px",
+              "sourceRef": "component.webNav.default.signedOut.height"
+            }
+          }
+        },
+        "signedIn": {
+          "height": {
+            "$type": "dimension",
+            "$description": "Signed-in web nav height alias.",
+            "sourceRef": "component.webNav.default.signedIn.height",
+            "light": {
+              "value": "68px",
+              "sourceRef": "component.webNav.default.signedIn.height"
+            },
+            "dark": {
+              "value": "68px",
+              "sourceRef": "component.webNav.default.signedIn.height"
+            }
+          }
+        },
+        "default": {
+          "background": {
+            "$type": "color",
+            "$description": "Web nav background alias for light mode.",
+            "sourceRef": "component.webNav.default.default.background",
+            "light": {
+              "value": "#FFFFFF",
+              "sourceRef": "component.webNav.default.default.background"
+            },
+            "dark": {
+              "value": "#1C1C1E",
+              "sourceRef": "component.webNav.default.default.background"
+            }
+          },
+          "title": {
+            "$type": "color",
+            "$description": "Web nav title alias for light mode.",
+            "sourceRef": "component.webNav.default.default.title",
+            "light": {
+              "value": "#111D4A",
+              "sourceRef": "component.webNav.default.default.title"
+            },
+            "dark": {
+              "value": "#D6D7E0",
+              "sourceRef": "component.webNav.default.default.title"
+            }
+          },
+          "icon": {
+            "$type": "color",
+            "$description": "Web nav icon alias for light mode.",
+            "sourceRef": "component.webNav.default.default.icon",
+            "light": {
+              "value": "#111D4A",
+              "sourceRef": "component.webNav.default.default.icon"
+            },
+            "dark": {
+              "value": "rgba(221, 222, 234, 0.8)",
+              "sourceRef": "component.webNav.default.default.icon"
+            }
+          },
+          "border": {
+            "$type": "color",
+            "$description": "Web nav border alias for light mode.",
+            "sourceRef": "component.webNav.default.default.border",
+            "light": {
+              "value": "rgba(17, 29, 74, 0.08)",
+              "sourceRef": "component.webNav.default.default.border"
+            },
+            "dark": {
+              "value": "rgba(221, 222, 234, 0.08)",
+              "sourceRef": "component.webNav.default.default.border"
+            }
+          }
+        }
+      }
+    },
+    "modal": {
+      "default": {
+        "default": {
+          "background": {
+            "$type": "color",
+            "$description": "Modal container background alias for light mode.",
+            "sourceRef": "component.modal.default.default.background",
+            "light": {
+              "value": "#F9FAFB",
+              "sourceRef": "component.modal.default.default.background"
+            },
+            "dark": {
+              "value": "#1C1C1E",
+              "sourceRef": "component.modal.default.default.background"
+            }
+          },
+          "title": {
+            "$type": "color",
+            "$description": "Modal title alias for light mode.",
+            "sourceRef": "component.modal.default.default.title",
+            "light": {
+              "value": "#111D4A",
+              "sourceRef": "component.modal.default.default.title"
+            },
+            "dark": {
+              "value": "#D6D7E0",
+              "sourceRef": "component.modal.default.default.title"
+            }
+          },
+          "body": {
+            "$type": "color",
+            "$description": "Modal body text alias for light mode.",
+            "sourceRef": "component.modal.default.default.body",
+            "light": {
+              "value": "rgba(17, 29, 74, 0.4)",
+              "sourceRef": "component.modal.default.default.body"
+            },
+            "dark": {
+              "value": "rgba(221, 222, 234, 0.4)",
+              "sourceRef": "component.modal.default.default.body"
+            }
+          },
+          "paddingX": {
+            "$type": "dimension",
+            "$description": "Modal horizontal padding alias.",
+            "sourceRef": "component.modal.default.default.paddingX",
+            "light": {
+              "value": "16px",
+              "sourceRef": "component.modal.default.default.paddingX"
+            },
+            "dark": {
+              "value": "16px",
+              "sourceRef": "component.modal.default.default.paddingX"
+            }
+          },
+          "paddingTop": {
+            "$type": "dimension",
+            "$description": "Modal top padding alias.",
+            "sourceRef": "component.modal.default.default.paddingTop",
+            "light": {
+              "value": "8px",
+              "sourceRef": "component.modal.default.default.paddingTop"
+            },
+            "dark": {
+              "value": "8px",
+              "sourceRef": "component.modal.default.default.paddingTop"
+            }
+          },
+          "contentTopGap": {
+            "$type": "dimension",
+            "$description": "Modal content top gap alias.",
+            "sourceRef": "component.modal.default.default.contentTopGap",
+            "light": {
+              "value": "72px",
+              "sourceRef": "component.modal.default.default.contentTopGap"
+            },
+            "dark": {
+              "value": "72px",
+              "sourceRef": "component.modal.default.default.contentTopGap"
+            }
+          },
+          "closeButtonSize": {
+            "$type": "dimension",
+            "$description": "Modal close button size alias.",
+            "sourceRef": "component.modal.default.default.closeButtonSize",
+            "light": {
+              "value": "32px",
+              "sourceRef": "component.modal.default.default.closeButtonSize"
+            },
+            "dark": {
+              "value": "32px",
+              "sourceRef": "component.modal.default.default.closeButtonSize"
+            }
+          },
+          "dragHandleWidth": {
+            "$type": "dimension",
+            "$description": "Modal drag handle width alias.",
+            "sourceRef": "component.modal.default.default.dragHandleWidth",
+            "light": {
+              "value": "36px",
+              "sourceRef": "component.modal.default.default.dragHandleWidth"
+            },
+            "dark": {
+              "value": "36px",
+              "sourceRef": "component.modal.default.default.dragHandleWidth"
+            }
+          },
+          "dragHandleHeight": {
+            "$type": "dimension",
+            "$description": "Modal drag handle height alias.",
+            "sourceRef": "component.modal.default.default.dragHandleHeight",
+            "light": {
+              "value": "4px",
+              "sourceRef": "component.modal.default.default.dragHandleHeight"
+            },
+            "dark": {
+              "value": "4px",
+              "sourceRef": "component.modal.default.default.dragHandleHeight"
+            }
+          },
+          "radius": {
+            "$type": "string",
+            "$description": "Modal radius alias bound to the shared primitive radius scale.",
+            "sourceRef": "component.modal.default.default.radius",
+            "light": {
+              "value": "[MISSING]",
+              "sourceRef": "component.modal.default.default.radius"
+            },
+            "dark": {
+              "value": "[MISSING]",
+              "sourceRef": "component.modal.default.default.radius"
+            }
+          }
+        }
+      }
+    },
+    "button": {
+      "primary": {
+        "default": {
+          "height": {
+            "$type": "dimension",
+            "$description": "Primary button height alias.",
+            "sourceRef": "component.button.primary.default.height",
+            "light": {
+              "value": "52px",
+              "sourceRef": "component.button.primary.default.height"
+            },
+            "dark": {
+              "value": "52px",
+              "sourceRef": "component.button.primary.default.height"
+            }
+          },
+          "paddingX": {
+            "$type": "dimension",
+            "$description": "Primary button horizontal padding alias.",
+            "sourceRef": "component.button.primary.default.paddingX",
+            "light": {
+              "value": "16px",
+              "sourceRef": "component.button.primary.default.paddingX"
+            },
+            "dark": {
+              "value": "16px",
+              "sourceRef": "component.button.primary.default.paddingX"
+            }
+          },
+          "background": {
+            "$type": "color",
+            "$description": "Primary button background alias for light mode.",
+            "sourceRef": "component.button.primary.default.background",
+            "light": {
+              "value": "#111D4A",
+              "sourceRef": "component.button.primary.default.background"
+            },
+            "dark": {
+              "value": "rgba(221, 222, 234, 0.8)",
+              "sourceRef": "component.button.primary.default.background"
+            }
+          },
+          "text": {
+            "$type": "color",
+            "$description": "Primary button text alias resolved to semantic action text.",
+            "sourceRef": "component.button.primary.default.text",
+            "light": {
+              "value": "#007FFF",
+              "sourceRef": "component.button.primary.default.text"
+            },
+            "dark": {
+              "value": "rgba(0, 127, 255, 0.8)",
+              "sourceRef": "component.button.primary.default.text"
+            }
+          },
+          "radius": {
+            "$type": "string",
+            "$description": "Primary button radius alias bound to the shared primitive radius scale.",
+            "sourceRef": "component.button.primary.default.radius",
+            "light": {
+              "value": "[MISSING]",
+              "sourceRef": "component.button.primary.default.radius"
+            },
+            "dark": {
+              "value": "[MISSING]",
+              "sourceRef": "component.button.primary.default.radius"
+            }
+          }
+        }
+      }
+    },
+    "menu": {
+      "default": {
+        "signedOut": {
+          "background": {
+            "$type": "color",
+            "$description": "Signed-out menu background alias for light mode.",
+            "sourceRef": "component.menu.default.signedOut.background",
+            "light": {
+              "value": "#FFFFFF",
+              "sourceRef": "component.menu.default.signedOut.background"
+            },
+            "dark": {
+              "value": "#1C1C1E",
+              "sourceRef": "component.menu.default.signedOut.background"
+            }
+          }
+        },
+        "signedIn": {
+          "background": {
+            "$type": "color",
+            "$description": "Signed-in menu background alias for light mode.",
+            "sourceRef": "component.menu.default.signedIn.background",
+            "light": {
+              "value": "#FFFFFF",
+              "sourceRef": "component.menu.default.signedIn.background"
+            },
+            "dark": {
+              "value": "#1C1C1E",
+              "sourceRef": "component.menu.default.signedIn.background"
+            }
+          }
+        },
+        "default": {
+          "title": {
+            "$type": "color",
+            "$description": "Menu title alias for light mode.",
+            "sourceRef": "component.menu.default.default.title",
+            "light": {
+              "value": "#111D4A",
+              "sourceRef": "component.menu.default.default.title"
+            },
+            "dark": {
+              "value": "#D6D7E0",
+              "sourceRef": "component.menu.default.default.title"
+            }
+          },
+          "body": {
+            "$type": "color",
+            "$description": "Menu body text alias for light mode.",
+            "sourceRef": "component.menu.default.default.body",
+            "light": {
+              "value": "rgba(17, 29, 74, 0.4)",
+              "sourceRef": "component.menu.default.default.body"
+            },
+            "dark": {
+              "value": "rgba(221, 222, 234, 0.4)",
+              "sourceRef": "component.menu.default.default.body"
+            }
+          },
+          "padding": {
+            "$type": "dimension",
+            "$description": "Menu internal padding alias.",
+            "sourceRef": "component.menu.default.default.padding",
+            "light": {
+              "value": "16px",
+              "sourceRef": "component.menu.default.default.padding"
+            },
+            "dark": {
+              "value": "16px",
+              "sourceRef": "component.menu.default.default.padding"
+            }
+          }
+        }
+      }
+    },
+    "tokenList": {
+      "default": {
+        "default": {
+          "height": {
+            "$type": "dimension",
+            "$description": "Default token list control height alias.",
+            "sourceRef": "component.tokenList.default.default.height",
+            "light": {
+              "value": "32px",
+              "sourceRef": "component.tokenList.default.default.height"
+            },
+            "dark": {
+              "value": "32px",
+              "sourceRef": "component.tokenList.default.default.height"
+            }
+          },
+          "text": {
+            "$type": "color",
+            "$description": "Default token list text alias for light mode.",
+            "sourceRef": "component.tokenList.default.default.text",
+            "light": {
+              "value": "#111D4A",
+              "sourceRef": "component.tokenList.default.default.text"
+            },
+            "dark": {
+              "value": "#D6D7E0",
+              "sourceRef": "component.tokenList.default.default.text"
+            }
+          },
+          "icon": {
+            "$type": "color",
+            "$description": "Default token list icon alias for light mode.",
+            "sourceRef": "component.tokenList.default.default.icon",
+            "light": {
+              "value": "#111D4A",
+              "sourceRef": "component.tokenList.default.default.icon"
+            },
+            "dark": {
+              "value": "rgba(221, 222, 234, 0.8)",
+              "sourceRef": "component.tokenList.default.default.icon"
+            }
+          }
+        }
+      },
+      "expand": {
+        "default": {
+          "height": {
+            "$type": "dimension",
+            "$description": "Expanded token list control height alias.",
+            "sourceRef": "component.tokenList.expand.default.height",
+            "light": {
+              "value": "32px",
+              "sourceRef": "component.tokenList.expand.default.height"
+            },
+            "dark": {
+              "value": "32px",
+              "sourceRef": "component.tokenList.expand.default.height"
+            }
+          },
+          "text": {
+            "$type": "color",
+            "$description": "Expanded token list text alias for light mode.",
+            "sourceRef": "component.tokenList.expand.default.text",
+            "light": {
+              "value": "#111D4A",
+              "sourceRef": "component.tokenList.expand.default.text"
+            },
+            "dark": {
+              "value": "#D6D7E0",
+              "sourceRef": "component.tokenList.expand.default.text"
+            }
+          },
+          "icon": {
+            "$type": "color",
+            "$description": "Expanded token list icon alias for light mode.",
+            "sourceRef": "component.tokenList.expand.default.icon",
+            "light": {
+              "value": "#111D4A",
+              "sourceRef": "component.tokenList.expand.default.icon"
+            },
+            "dark": {
+              "value": "rgba(221, 222, 234, 0.8)",
+              "sourceRef": "component.tokenList.expand.default.icon"
+            }
+          }
+        }
+      }
+    }
+  }
+}

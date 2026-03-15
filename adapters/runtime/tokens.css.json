@@ -1,0 +1,870 @@
+{
+  "light": {
+    "variables": {
+      "--semantic-background-general": {
+        "value": "#FFFFFF",
+        "sourceRef": "semantic.background.general",
+        "type": "color"
+      },
+      "--semantic-background-card": {
+        "value": "#FFFFFF",
+        "sourceRef": "semantic.background.card",
+        "type": "color"
+      },
+      "--semantic-background-modal": {
+        "value": "#F9FAFB",
+        "sourceRef": "semantic.background.modal",
+        "type": "color"
+      },
+      "--semantic-background-modal-section": {
+        "value": "#FFFFFF",
+        "sourceRef": "semantic.background.modal_section",
+        "type": "color"
+      },
+      "--semantic-background-modal-section-inner": {
+        "value": "#F0F1F3",
+        "sourceRef": "semantic.background.modal_section_inner",
+        "type": "color"
+      },
+      "--semantic-background-backdrop": {
+        "value": "rgba(255, 255, 255, 0.8)",
+        "sourceRef": "semantic.background.backdrop",
+        "type": "color"
+      },
+      "--semantic-text-core": {
+        "value": "#111D4A",
+        "sourceRef": "semantic.text.core",
+        "type": "color"
+      },
+      "--semantic-text-primary": {
+        "value": "#111D4A",
+        "sourceRef": "semantic.text.primary",
+        "type": "color"
+      },
+      "--semantic-text-secondary": {
+        "value": "rgba(17, 29, 74, 0.4)",
+        "sourceRef": "semantic.text.secondary",
+        "type": "color"
+      },
+      "--semantic-text-action": {
+        "value": "#007FFF",
+        "sourceRef": "semantic.text.action",
+        "type": "color"
+      },
+      "--semantic-text-placeholder": {
+        "value": "rgba(17, 29, 74, 0.2)",
+        "sourceRef": "semantic.text.placeholder",
+        "type": "color"
+      },
+      "--semantic-stroke-icon-primary": {
+        "value": "#111D4A",
+        "sourceRef": "semantic.stroke.icon_primary",
+        "type": "color"
+      },
+      "--semantic-stroke-icon-secondary": {
+        "value": "rgba(17, 29, 74, 0.4)",
+        "sourceRef": "semantic.stroke.icon_secondary",
+        "type": "color"
+      },
+      "--semantic-border-default": {
+        "value": "rgba(17, 29, 74, 0.08)",
+        "sourceRef": "semantic.border.default",
+        "type": "color"
+      },
+      "--semantic-fill-icon-chip": {
+        "value": "#F0F1F3",
+        "sourceRef": "semantic.fill.icon_chip",
+        "type": "color"
+      },
+      "--semantic-fill-secondary": {
+        "value": "#111D4A",
+        "sourceRef": "semantic.fill.secondary",
+        "type": "color"
+      },
+      "--semantic-fill-tertiary": {
+        "value": "#FFFFFF",
+        "sourceRef": "semantic.fill.tertiary",
+        "type": "color"
+      },
+      "--semantic-fill-logo": {
+        "value": "#111D4A",
+        "sourceRef": "semantic.fill.logo",
+        "type": "color"
+      },
+      "--semantic-fill-color-1": {
+        "value": "#FFFFFF",
+        "sourceRef": "semantic.fill.color_1",
+        "type": "color"
+      },
+      "--semantic-fill-color-2": {
+        "value": "#FFFFFF",
+        "sourceRef": "semantic.fill.color_2",
+        "type": "color"
+      },
+      "--semantic-gradient-general": {
+        "value": "linear-gradient(180deg, #F9FDFF 0%, #F0F1F3 100%)",
+        "sourceRef": "semantic.gradient.general",
+        "type": "gradient"
+      },
+      "--semantic-gradient-main": {
+        "value": "linear-gradient(180deg, #F9FDFF 0%, #D6EBFF 100%)",
+        "sourceRef": "semantic.gradient.main",
+        "type": "gradient"
+      },
+      "--semantic-gradient-xaut-card": {
+        "value": "linear-gradient(180deg, rgba(255, 255, 255, 0.6) 0%, #EEF7FF 100%)",
+        "sourceRef": "semantic.gradient.xaut_card",
+        "type": "gradient"
+      },
+      "--semantic-gradient-bar-backdrop": {
+        "value": "linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #FFFFFF 100%)",
+        "sourceRef": "semantic.gradient.bar_backdrop",
+        "type": "gradient"
+      },
+      "--pattern-surface-card-background": {
+        "value": "#FFFFFF",
+        "sourceRef": "pattern.surface.card.background",
+        "type": "color"
+      },
+      "--pattern-surface-card-title": {
+        "value": "#111D4A",
+        "sourceRef": "pattern.surface.card.title",
+        "type": "color"
+      },
+      "--pattern-surface-card-body": {
+        "value": "rgba(17, 29, 74, 0.4)",
+        "sourceRef": "pattern.surface.card.body",
+        "type": "color"
+      },
+      "--pattern-surface-card-padding": {
+        "value": "16px",
+        "sourceRef": "pattern.surface.card.padding",
+        "type": "dimension"
+      },
+      "--pattern-surface-card-radius": {
+        "value": "[MISSING]",
+        "sourceRef": "pattern.surface.card.radius",
+        "type": "string"
+      },
+      "--pattern-modal-form-title": {
+        "value": "#111D4A",
+        "sourceRef": "pattern.modal.form.title",
+        "type": "color"
+      },
+      "--pattern-modal-form-body": {
+        "value": "rgba(17, 29, 74, 0.4)",
+        "sourceRef": "pattern.modal.form.body",
+        "type": "color"
+      },
+      "--pattern-modal-form-fieldBackground": {
+        "value": "#FFFFFF",
+        "sourceRef": "pattern.modal.form.fieldBackground",
+        "type": "color"
+      },
+      "--pattern-modal-form-fieldPaddingX": {
+        "value": "12px",
+        "sourceRef": "pattern.modal.form.fieldPaddingX",
+        "type": "dimension"
+      },
+      "--pattern-modal-form-fieldHeight": {
+        "value": "48px",
+        "sourceRef": "pattern.modal.form.fieldHeight",
+        "type": "dimension"
+      },
+      "--pattern-modal-form-sectionGap": {
+        "value": "32px",
+        "sourceRef": "pattern.modal.form.sectionGap",
+        "type": "dimension"
+      },
+      "--pattern-modal-form-actionGap": {
+        "value": "32px",
+        "sourceRef": "pattern.modal.form.actionGap",
+        "type": "dimension"
+      },
+      "--pattern-list-tokenItem-text": {
+        "value": "#111D4A",
+        "sourceRef": "pattern.list.tokenItem.text",
+        "type": "color"
+      },
+      "--pattern-list-tokenItem-subtext": {
+        "value": "rgba(17, 29, 74, 0.4)",
+        "sourceRef": "pattern.list.tokenItem.subtext",
+        "type": "color"
+      },
+      "--pattern-list-tokenItem-iconSize": {
+        "value": "40px",
+        "sourceRef": "pattern.list.tokenItem.iconSize",
+        "type": "dimension"
+      },
+      "--pattern-list-tokenItem-gap": {
+        "value": "12px",
+        "sourceRef": "pattern.list.tokenItem.gap",
+        "type": "dimension"
+      },
+      "--pattern-list-tokenItem-height": {
+        "value": "62px",
+        "sourceRef": "pattern.list.tokenItem.height",
+        "type": "dimension"
+      },
+      "--pattern-list-statusRow-title": {
+        "value": "#111D4A",
+        "sourceRef": "pattern.list.statusRow.title",
+        "type": "color"
+      },
+      "--pattern-list-statusRow-meta": {
+        "value": "rgba(17, 29, 74, 0.4)",
+        "sourceRef": "pattern.list.statusRow.meta",
+        "type": "color"
+      },
+      "--pattern-list-statusRow-iconSize": {
+        "value": "20px",
+        "sourceRef": "pattern.list.statusRow.iconSize",
+        "type": "dimension"
+      },
+      "--pattern-list-statusRow-rowGap": {
+        "value": "8px",
+        "sourceRef": "pattern.list.statusRow.rowGap",
+        "type": "dimension"
+      },
+      "--pattern-list-statusRow-paddingY": {
+        "value": "16px",
+        "sourceRef": "pattern.list.statusRow.paddingY",
+        "type": "dimension"
+      },
+      "--component-mobileNav-primary-default-height": {
+        "value": "90px",
+        "sourceRef": "component.mobileNav.primary.default.height",
+        "type": "dimension"
+      },
+      "--component-mobileNav-primary-default-paddingX": {
+        "value": "16px",
+        "sourceRef": "component.mobileNav.primary.default.paddingX",
+        "type": "dimension"
+      },
+      "--component-mobileNav-primary-default-title": {
+        "value": "#111D4A",
+        "sourceRef": "component.mobileNav.primary.default.title",
+        "type": "color"
+      },
+      "--component-mobileNav-primary-default-icon": {
+        "value": "#111D4A",
+        "sourceRef": "component.mobileNav.primary.default.icon",
+        "type": "color"
+      },
+      "--component-mobileNav-secondary-default-height": {
+        "value": "56px",
+        "sourceRef": "component.mobileNav.secondary.default.height",
+        "type": "dimension"
+      },
+      "--component-mobileNav-secondary-default-paddingX": {
+        "value": "16px",
+        "sourceRef": "component.mobileNav.secondary.default.paddingX",
+        "type": "dimension"
+      },
+      "--component-mobileNav-secondary-default-title": {
+        "value": "#111D4A",
+        "sourceRef": "component.mobileNav.secondary.default.title",
+        "type": "color"
+      },
+      "--component-mobileNav-secondary-default-icon": {
+        "value": "#111D4A",
+        "sourceRef": "component.mobileNav.secondary.default.icon",
+        "type": "color"
+      },
+      "--component-webNav-default-signedOut-height": {
+        "value": "68px",
+        "sourceRef": "component.webNav.default.signedOut.height",
+        "type": "dimension"
+      },
+      "--component-webNav-default-signedIn-height": {
+        "value": "68px",
+        "sourceRef": "component.webNav.default.signedIn.height",
+        "type": "dimension"
+      },
+      "--component-webNav-default-default-background": {
+        "value": "#FFFFFF",
+        "sourceRef": "component.webNav.default.default.background",
+        "type": "color"
+      },
+      "--component-webNav-default-default-title": {
+        "value": "#111D4A",
+        "sourceRef": "component.webNav.default.default.title",
+        "type": "color"
+      },
+      "--component-webNav-default-default-icon": {
+        "value": "#111D4A",
+        "sourceRef": "component.webNav.default.default.icon",
+        "type": "color"
+      },
+      "--component-webNav-default-default-border": {
+        "value": "rgba(17, 29, 74, 0.08)",
+        "sourceRef": "component.webNav.default.default.border",
+        "type": "color"
+      },
+      "--component-modal-default-default-background": {
+        "value": "#F9FAFB",
+        "sourceRef": "component.modal.default.default.background",
+        "type": "color"
+      },
+      "--component-modal-default-default-title": {
+        "value": "#111D4A",
+        "sourceRef": "component.modal.default.default.title",
+        "type": "color"
+      },
+      "--component-modal-default-default-body": {
+        "value": "rgba(17, 29, 74, 0.4)",
+        "sourceRef": "component.modal.default.default.body",
+        "type": "color"
+      },
+      "--component-modal-default-default-paddingX": {
+        "value": "16px",
+        "sourceRef": "component.modal.default.default.paddingX",
+        "type": "dimension"
+      },
+      "--component-modal-default-default-paddingTop": {
+        "value": "8px",
+        "sourceRef": "component.modal.default.default.paddingTop",
+        "type": "dimension"
+      },
+      "--component-modal-default-default-contentTopGap": {
+        "value": "72px",
+        "sourceRef": "component.modal.default.default.contentTopGap",
+        "type": "dimension"
+      },
+      "--component-modal-default-default-closeButtonSize": {
+        "value": "32px",
+        "sourceRef": "component.modal.default.default.closeButtonSize",
+        "type": "dimension"
+      },
+      "--component-modal-default-default-dragHandleWidth": {
+        "value": "36px",
+        "sourceRef": "component.modal.default.default.dragHandleWidth",
+        "type": "dimension"
+      },
+      "--component-modal-default-default-dragHandleHeight": {
+        "value": "4px",
+        "sourceRef": "component.modal.default.default.dragHandleHeight",
+        "type": "dimension"
+      },
+      "--component-modal-default-default-radius": {
+        "value": "[MISSING]",
+        "sourceRef": "component.modal.default.default.radius",
+        "type": "string"
+      },
+      "--component-button-primary-default-height": {
+        "value": "52px",
+        "sourceRef": "component.button.primary.default.height",
+        "type": "dimension"
+      },
+      "--component-button-primary-default-paddingX": {
+        "value": "16px",
+        "sourceRef": "component.button.primary.default.paddingX",
+        "type": "dimension"
+      },
+      "--component-button-primary-default-background": {
+        "value": "#111D4A",
+        "sourceRef": "component.button.primary.default.background",
+        "type": "color"
+      },
+      "--component-button-primary-default-text": {
+        "value": "#007FFF",
+        "sourceRef": "component.button.primary.default.text",
+        "type": "color"
+      },
+      "--component-button-primary-default-radius": {
+        "value": "[MISSING]",
+        "sourceRef": "component.button.primary.default.radius",
+        "type": "string"
+      },
+      "--component-menu-default-signedOut-background": {
+        "value": "#FFFFFF",
+        "sourceRef": "component.menu.default.signedOut.background",
+        "type": "color"
+      },
+      "--component-menu-default-signedIn-background": {
+        "value": "#FFFFFF",
+        "sourceRef": "component.menu.default.signedIn.background",
+        "type": "color"
+      },
+      "--component-menu-default-default-title": {
+        "value": "#111D4A",
+        "sourceRef": "component.menu.default.default.title",
+        "type": "color"
+      },
+      "--component-menu-default-default-body": {
+        "value": "rgba(17, 29, 74, 0.4)",
+        "sourceRef": "component.menu.default.default.body",
+        "type": "color"
+      },
+      "--component-menu-default-default-padding": {
+        "value": "16px",
+        "sourceRef": "component.menu.default.default.padding",
+        "type": "dimension"
+      },
+      "--component-tokenList-default-default-height": {
+        "value": "32px",
+        "sourceRef": "component.tokenList.default.default.height",
+        "type": "dimension"
+      },
+      "--component-tokenList-default-default-text": {
+        "value": "#111D4A",
+        "sourceRef": "component.tokenList.default.default.text",
+        "type": "color"
+      },
+      "--component-tokenList-default-default-icon": {
+        "value": "#111D4A",
+        "sourceRef": "component.tokenList.default.default.icon",
+        "type": "color"
+      },
+      "--component-tokenList-expand-default-height": {
+        "value": "32px",
+        "sourceRef": "component.tokenList.expand.default.height",
+        "type": "dimension"
+      },
+      "--component-tokenList-expand-default-text": {
+        "value": "#111D4A",
+        "sourceRef": "component.tokenList.expand.default.text",
+        "type": "color"
+      },
+      "--component-tokenList-expand-default-icon": {
+        "value": "#111D4A",
+        "sourceRef": "component.tokenList.expand.default.icon",
+        "type": "color"
+      }
+    }
+  },
+  "dark": {
+    "variables": {
+      "--semantic-background-general": {
+        "value": "#1C1C1E",
+        "sourceRef": "semantic.background.general",
+        "type": "color"
+      },
+      "--semantic-background-card": {
+        "value": "#1C1C1E",
+        "sourceRef": "semantic.background.card",
+        "type": "color"
+      },
+      "--semantic-background-modal": {
+        "value": "#1C1C1E",
+        "sourceRef": "semantic.background.modal",
+        "type": "color"
+      },
+      "--semantic-background-modal-section": {
+        "value": "#2C2C2E",
+        "sourceRef": "semantic.background.modal_section",
+        "type": "color"
+      },
+      "--semantic-background-modal-section-inner": {
+        "value": "#1C1C1E",
+        "sourceRef": "semantic.background.modal_section_inner",
+        "type": "color"
+      },
+      "--semantic-background-backdrop": {
+        "value": "rgba(0, 0, 0, 0.8)",
+        "sourceRef": "semantic.background.backdrop",
+        "type": "color"
+      },
+      "--semantic-text-core": {
+        "value": "#FFFFFF",
+        "sourceRef": "semantic.text.core",
+        "type": "color"
+      },
+      "--semantic-text-primary": {
+        "value": "#D6D7E0",
+        "sourceRef": "semantic.text.primary",
+        "type": "color"
+      },
+      "--semantic-text-secondary": {
+        "value": "rgba(221, 222, 234, 0.4)",
+        "sourceRef": "semantic.text.secondary",
+        "type": "color"
+      },
+      "--semantic-text-action": {
+        "value": "rgba(0, 127, 255, 0.8)",
+        "sourceRef": "semantic.text.action",
+        "type": "color"
+      },
+      "--semantic-text-placeholder": {
+        "value": "rgba(255, 255, 255, 0.2)",
+        "sourceRef": "semantic.text.placeholder",
+        "type": "color"
+      },
+      "--semantic-stroke-icon-primary": {
+        "value": "rgba(221, 222, 234, 0.8)",
+        "sourceRef": "semantic.stroke.icon_primary",
+        "type": "color"
+      },
+      "--semantic-stroke-icon-secondary": {
+        "value": "rgba(221, 222, 234, 0.4)",
+        "sourceRef": "semantic.stroke.icon_secondary",
+        "type": "color"
+      },
+      "--semantic-border-default": {
+        "value": "rgba(221, 222, 234, 0.08)",
+        "sourceRef": "semantic.border.default",
+        "type": "color"
+      },
+      "--semantic-fill-icon-chip": {
+        "value": "#2C2C2E",
+        "sourceRef": "semantic.fill.icon_chip",
+        "type": "color"
+      },
+      "--semantic-fill-secondary": {
+        "value": "rgba(221, 222, 234, 0.8)",
+        "sourceRef": "semantic.fill.secondary",
+        "type": "color"
+      },
+      "--semantic-fill-tertiary": {
+        "value": "#1C1C1E",
+        "sourceRef": "semantic.fill.tertiary",
+        "type": "color"
+      },
+      "--semantic-fill-logo": {
+        "value": "#FFFFFF",
+        "sourceRef": "semantic.fill.logo",
+        "type": "color"
+      },
+      "--semantic-fill-color-1": {
+        "value": "#FFFFFF",
+        "sourceRef": "semantic.fill.color_1",
+        "type": "color"
+      },
+      "--semantic-fill-color-2": {
+        "value": "#FFFFFF",
+        "sourceRef": "semantic.fill.color_2",
+        "type": "color"
+      },
+      "--semantic-gradient-general": {
+        "value": "linear-gradient(180deg, #000000 0%, #1F1F1F 100%)",
+        "sourceRef": "semantic.gradient.general",
+        "type": "gradient"
+      },
+      "--semantic-gradient-main": {
+        "value": "linear-gradient(180deg, #000000 0%, #003160 100%)",
+        "sourceRef": "semantic.gradient.main",
+        "type": "gradient"
+      },
+      "--semantic-gradient-xaut-card": {
+        "value": "linear-gradient(180deg, rgba(21, 20, 23, 0.7) 0%, #2C2C2E 100%)",
+        "sourceRef": "semantic.gradient.xaut_card",
+        "type": "gradient"
+      },
+      "--semantic-gradient-bar-backdrop": {
+        "value": "linear-gradient(180deg, rgba(1, 3, 6, 0) 0%, #010306 100%)",
+        "sourceRef": "semantic.gradient.bar_backdrop",
+        "type": "gradient"
+      },
+      "--pattern-surface-card-background": {
+        "value": "#1C1C1E",
+        "sourceRef": "pattern.surface.card.background",
+        "type": "color"
+      },
+      "--pattern-surface-card-title": {
+        "value": "#D6D7E0",
+        "sourceRef": "pattern.surface.card.title",
+        "type": "color"
+      },
+      "--pattern-surface-card-body": {
+        "value": "rgba(221, 222, 234, 0.4)",
+        "sourceRef": "pattern.surface.card.body",
+        "type": "color"
+      },
+      "--pattern-surface-card-padding": {
+        "value": "16px",
+        "sourceRef": "pattern.surface.card.padding",
+        "type": "dimension"
+      },
+      "--pattern-surface-card-radius": {
+        "value": "[MISSING]",
+        "sourceRef": "pattern.surface.card.radius",
+        "type": "string"
+      },
+      "--pattern-modal-form-title": {
+        "value": "#D6D7E0",
+        "sourceRef": "pattern.modal.form.title",
+        "type": "color"
+      },
+      "--pattern-modal-form-body": {
+        "value": "rgba(221, 222, 234, 0.4)",
+        "sourceRef": "pattern.modal.form.body",
+        "type": "color"
+      },
+      "--pattern-modal-form-fieldBackground": {
+        "value": "#2C2C2E",
+        "sourceRef": "pattern.modal.form.fieldBackground",
+        "type": "color"
+      },
+      "--pattern-modal-form-fieldPaddingX": {
+        "value": "12px",
+        "sourceRef": "pattern.modal.form.fieldPaddingX",
+        "type": "dimension"
+      },
+      "--pattern-modal-form-fieldHeight": {
+        "value": "48px",
+        "sourceRef": "pattern.modal.form.fieldHeight",
+        "type": "dimension"
+      },
+      "--pattern-modal-form-sectionGap": {
+        "value": "32px",
+        "sourceRef": "pattern.modal.form.sectionGap",
+        "type": "dimension"
+      },
+      "--pattern-modal-form-actionGap": {
+        "value": "32px",
+        "sourceRef": "pattern.modal.form.actionGap",
+        "type": "dimension"
+      },
+      "--pattern-list-tokenItem-text": {
+        "value": "#D6D7E0",
+        "sourceRef": "pattern.list.tokenItem.text",
+        "type": "color"
+      },
+      "--pattern-list-tokenItem-subtext": {
+        "value": "rgba(221, 222, 234, 0.4)",
+        "sourceRef": "pattern.list.tokenItem.subtext",
+        "type": "color"
+      },
+      "--pattern-list-tokenItem-iconSize": {
+        "value": "40px",
+        "sourceRef": "pattern.list.tokenItem.iconSize",
+        "type": "dimension"
+      },
+      "--pattern-list-tokenItem-gap": {
+        "value": "12px",
+        "sourceRef": "pattern.list.tokenItem.gap",
+        "type": "dimension"
+      },
+      "--pattern-list-tokenItem-height": {
+        "value": "62px",
+        "sourceRef": "pattern.list.tokenItem.height",
+        "type": "dimension"
+      },
+      "--pattern-list-statusRow-title": {
+        "value": "#D6D7E0",
+        "sourceRef": "pattern.list.statusRow.title",
+        "type": "color"
+      },
+      "--pattern-list-statusRow-meta": {
+        "value": "rgba(221, 222, 234, 0.4)",
+        "sourceRef": "pattern.list.statusRow.meta",
+        "type": "color"
+      },
+      "--pattern-list-statusRow-iconSize": {
+        "value": "20px",
+        "sourceRef": "pattern.list.statusRow.iconSize",
+        "type": "dimension"
+      },
+      "--pattern-list-statusRow-rowGap": {
+        "value": "8px",
+        "sourceRef": "pattern.list.statusRow.rowGap",
+        "type": "dimension"
+      },
+      "--pattern-list-statusRow-paddingY": {
+        "value": "16px",
+        "sourceRef": "pattern.list.statusRow.paddingY",
+        "type": "dimension"
+      },
+      "--component-mobileNav-primary-default-height": {
+        "value": "90px",
+        "sourceRef": "component.mobileNav.primary.default.height",
+        "type": "dimension"
+      },
+      "--component-mobileNav-primary-default-paddingX": {
+        "value": "16px",
+        "sourceRef": "component.mobileNav.primary.default.paddingX",
+        "type": "dimension"
+      },
+      "--component-mobileNav-primary-default-title": {
+        "value": "#D6D7E0",
+        "sourceRef": "component.mobileNav.primary.default.title",
+        "type": "color"
+      },
+      "--component-mobileNav-primary-default-icon": {
+        "value": "rgba(221, 222, 234, 0.8)",
+        "sourceRef": "component.mobileNav.primary.default.icon",
+        "type": "color"
+      },
+      "--component-mobileNav-secondary-default-height": {
+        "value": "56px",
+        "sourceRef": "component.mobileNav.secondary.default.height",
+        "type": "dimension"
+      },
+      "--component-mobileNav-secondary-default-paddingX": {
+        "value": "16px",
+        "sourceRef": "component.mobileNav.secondary.default.paddingX",
+        "type": "dimension"
+      },
+      "--component-mobileNav-secondary-default-title": {
+        "value": "#D6D7E0",
+        "sourceRef": "component.mobileNav.secondary.default.title",
+        "type": "color"
+      },
+      "--component-mobileNav-secondary-default-icon": {
+        "value": "rgba(221, 222, 234, 0.8)",
+        "sourceRef": "component.mobileNav.secondary.default.icon",
+        "type": "color"
+      },
+      "--component-webNav-default-signedOut-height": {
+        "value": "68px",
+        "sourceRef": "component.webNav.default.signedOut.height",
+        "type": "dimension"
+      },
+      "--component-webNav-default-signedIn-height": {
+        "value": "68px",
+        "sourceRef": "component.webNav.default.signedIn.height",
+        "type": "dimension"
+      },
+      "--component-webNav-default-default-background": {
+        "value": "#1C1C1E",
+        "sourceRef": "component.webNav.default.default.background",
+        "type": "color"
+      },
+      "--component-webNav-default-default-title": {
+        "value": "#D6D7E0",
+        "sourceRef": "component.webNav.default.default.title",
+        "type": "color"
+      },
+      "--component-webNav-default-default-icon": {
+        "value": "rgba(221, 222, 234, 0.8)",
+        "sourceRef": "component.webNav.default.default.icon",
+        "type": "color"
+      },
+      "--component-webNav-default-default-border": {
+        "value": "rgba(221, 222, 234, 0.08)",
+        "sourceRef": "component.webNav.default.default.border",
+        "type": "color"
+      },
+      "--component-modal-default-default-background": {
+        "value": "#1C1C1E",
+        "sourceRef": "component.modal.default.default.background",
+        "type": "color"
+      },
+      "--component-modal-default-default-title": {
+        "value": "#D6D7E0",
+        "sourceRef": "component.modal.default.default.title",
+        "type": "color"
+      },
+      "--component-modal-default-default-body": {
+        "value": "rgba(221, 222, 234, 0.4)",
+        "sourceRef": "component.modal.default.default.body",
+        "type": "color"
+      },
+      "--component-modal-default-default-paddingX": {
+        "value": "16px",
+        "sourceRef": "component.modal.default.default.paddingX",
+        "type": "dimension"
+      },
+      "--component-modal-default-default-paddingTop": {
+        "value": "8px",
+        "sourceRef": "component.modal.default.default.paddingTop",
+        "type": "dimension"
+      },
+      "--component-modal-default-default-contentTopGap": {
+        "value": "72px",
+        "sourceRef": "component.modal.default.default.contentTopGap",
+        "type": "dimension"
+      },
+      "--component-modal-default-default-closeButtonSize": {
+        "value": "32px",
+        "sourceRef": "component.modal.default.default.closeButtonSize",
+        "type": "dimension"
+      },
+      "--component-modal-default-default-dragHandleWidth": {
+        "value": "36px",
+        "sourceRef": "component.modal.default.default.dragHandleWidth",
+        "type": "dimension"
+      },
+      "--component-modal-default-default-dragHandleHeight": {
+        "value": "4px",
+        "sourceRef": "component.modal.default.default.dragHandleHeight",
+        "type": "dimension"
+      },
+      "--component-modal-default-default-radius": {
+        "value": "[MISSING]",
+        "sourceRef": "component.modal.default.default.radius",
+        "type": "string"
+      },
+      "--component-button-primary-default-height": {
+        "value": "52px",
+        "sourceRef": "component.button.primary.default.height",
+        "type": "dimension"
+      },
+      "--component-button-primary-default-paddingX": {
+        "value": "16px",
+        "sourceRef": "component.button.primary.default.paddingX",
+        "type": "dimension"
+      },
+      "--component-button-primary-default-background": {
+        "value": "rgba(221, 222, 234, 0.8)",
+        "sourceRef": "component.button.primary.default.background",
+        "type": "color"
+      },
+      "--component-button-primary-default-text": {
+        "value": "rgba(0, 127, 255, 0.8)",
+        "sourceRef": "component.button.primary.default.text",
+        "type": "color"
+      },
+      "--component-button-primary-default-radius": {
+        "value": "[MISSING]",
+        "sourceRef": "component.button.primary.default.radius",
+        "type": "string"
+      },
+      "--component-menu-default-signedOut-background": {
+        "value": "#1C1C1E",
+        "sourceRef": "component.menu.default.signedOut.background",
+        "type": "color"
+      },
+      "--component-menu-default-signedIn-background": {
+        "value": "#1C1C1E",
+        "sourceRef": "component.menu.default.signedIn.background",
+        "type": "color"
+      },
+      "--component-menu-default-default-title": {
+        "value": "#D6D7E0",
+        "sourceRef": "component.menu.default.default.title",
+        "type": "color"
+      },
+      "--component-menu-default-default-body": {
+        "value": "rgba(221, 222, 234, 0.4)",
+        "sourceRef": "component.menu.default.default.body",
+        "type": "color"
+      },
+      "--component-menu-default-default-padding": {
+        "value": "16px",
+        "sourceRef": "component.menu.default.default.padding",
+        "type": "dimension"
+      },
+      "--component-tokenList-default-default-height": {
+        "value": "32px",
+        "sourceRef": "component.tokenList.default.default.height",
+        "type": "dimension"
+      },
+      "--component-tokenList-default-default-text": {
+        "value": "#D6D7E0",
+        "sourceRef": "component.tokenList.default.default.text",
+        "type": "color"
+      },
+      "--component-tokenList-default-default-icon": {
+        "value": "rgba(221, 222, 234, 0.8)",
+        "sourceRef": "component.tokenList.default.default.icon",
+        "type": "color"
+      },
+      "--component-tokenList-expand-default-height": {
+        "value": "32px",
+        "sourceRef": "component.tokenList.expand.default.height",
+        "type": "dimension"
+      },
+      "--component-tokenList-expand-default-text": {
+        "value": "#D6D7E0",
+        "sourceRef": "component.tokenList.expand.default.text",
+        "type": "color"
+      },
+      "--component-tokenList-expand-default-icon": {
+        "value": "rgba(221, 222, 234, 0.8)",
+        "sourceRef": "component.tokenList.expand.default.icon",
+        "type": "color"
+      }
+    }
+  }
+}

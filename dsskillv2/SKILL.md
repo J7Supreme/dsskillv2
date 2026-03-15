@@ -1,13 +1,13 @@
 ---
 name: dsskillv2
-description: Work on a design token source-of-truth repository that syncs tokens to Token Studio, Figma, runtime, or AI consumers. Use this skill when the task involves canonical token sources, adapter generation, token architecture decisions, sync workflows, or token documentation.
+description: Work on a design token source-of-truth repository that syncs tokens to Figma, runtime, or AI consumers. Use this skill when the task involves canonical token sources, adapter generation, token architecture decisions, sync workflows, or token documentation.
 metadata:
   short-description: Maintain a token sync source-of-truth system
 ---
 
 # DSSkillV2
 
-Use this skill when working on a design token repository that has one canonical source and multiple consumer adapters such as Token Studio, Figma, runtime, or AI-facing outputs.
+Use this skill when working on a design token repository that has one canonical source and multiple consumer adapters such as Figma, runtime, or AI-facing outputs.
 
 ## Quick Rules
 
@@ -37,11 +37,11 @@ Use this path when the user asks to add, rename, delete, regroup, or explain tok
 - Preserve theme information and token references where possible.
 - Keep semantic meaning clear; do not collapse semantic tokens into raw primitive values without reason.
 
-### Token Studio / adapter sync
+### Adapter sync
 
-Use this path when the user asks about Token Studio JSON, Figma sync, or adapter exports.
+Use this path when the user asks about Figma sync, runtime outputs, AI-facing outputs, or adapter exports.
 
-- Treat Token Studio, Figma, runtime, and AI adapter files as consumer-facing sync outputs.
+- Treat Figma, runtime, and AI adapter files as consumer-facing sync outputs.
 - Prefer source-driven updates over hand-editing adapter files unless the user explicitly asks for an adapter-only patch.
 - If you make an adapter-only fix, call out the drift risk.
 

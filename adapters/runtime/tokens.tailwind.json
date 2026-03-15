@@ -1,0 +1,718 @@
+{
+  "light": {
+    "theme": {
+      "extend": {
+        "colors": {
+          "semantic-background-general": {
+            "value": "#FFFFFF",
+            "sourceRef": "semantic.background.general"
+          },
+          "semantic-background-card": {
+            "value": "#FFFFFF",
+            "sourceRef": "semantic.background.card"
+          },
+          "semantic-background-modal": {
+            "value": "#F9FAFB",
+            "sourceRef": "semantic.background.modal"
+          },
+          "semantic-background-modal-section": {
+            "value": "#FFFFFF",
+            "sourceRef": "semantic.background.modal_section"
+          },
+          "semantic-background-modal-section-inner": {
+            "value": "#F0F1F3",
+            "sourceRef": "semantic.background.modal_section_inner"
+          },
+          "semantic-background-backdrop": {
+            "value": "rgba(255, 255, 255, 0.8)",
+            "sourceRef": "semantic.background.backdrop"
+          },
+          "semantic-text-core": {
+            "value": "#111D4A",
+            "sourceRef": "semantic.text.core"
+          },
+          "semantic-text-primary": {
+            "value": "#111D4A",
+            "sourceRef": "semantic.text.primary"
+          },
+          "semantic-text-secondary": {
+            "value": "rgba(17, 29, 74, 0.4)",
+            "sourceRef": "semantic.text.secondary"
+          },
+          "semantic-text-action": {
+            "value": "#007FFF",
+            "sourceRef": "semantic.text.action"
+          },
+          "semantic-text-placeholder": {
+            "value": "rgba(17, 29, 74, 0.2)",
+            "sourceRef": "semantic.text.placeholder"
+          },
+          "semantic-stroke-icon-primary": {
+            "value": "#111D4A",
+            "sourceRef": "semantic.stroke.icon_primary"
+          },
+          "semantic-stroke-icon-secondary": {
+            "value": "rgba(17, 29, 74, 0.4)",
+            "sourceRef": "semantic.stroke.icon_secondary"
+          },
+          "semantic-border-default": {
+            "value": "rgba(17, 29, 74, 0.08)",
+            "sourceRef": "semantic.border.default"
+          },
+          "semantic-fill-icon-chip": {
+            "value": "#F0F1F3",
+            "sourceRef": "semantic.fill.icon_chip"
+          },
+          "semantic-fill-secondary": {
+            "value": "#111D4A",
+            "sourceRef": "semantic.fill.secondary"
+          },
+          "semantic-fill-tertiary": {
+            "value": "#FFFFFF",
+            "sourceRef": "semantic.fill.tertiary"
+          },
+          "semantic-fill-logo": {
+            "value": "#111D4A",
+            "sourceRef": "semantic.fill.logo"
+          },
+          "semantic-fill-color-1": {
+            "value": "#FFFFFF",
+            "sourceRef": "semantic.fill.color_1"
+          },
+          "semantic-fill-color-2": {
+            "value": "#FFFFFF",
+            "sourceRef": "semantic.fill.color_2"
+          },
+          "pattern-surface-card-background": {
+            "value": "#FFFFFF",
+            "sourceRef": "pattern.surface.card.background"
+          },
+          "pattern-surface-card-title": {
+            "value": "#111D4A",
+            "sourceRef": "pattern.surface.card.title"
+          },
+          "pattern-surface-card-body": {
+            "value": "rgba(17, 29, 74, 0.4)",
+            "sourceRef": "pattern.surface.card.body"
+          },
+          "pattern-modal-form-title": {
+            "value": "#111D4A",
+            "sourceRef": "pattern.modal.form.title"
+          },
+          "pattern-modal-form-body": {
+            "value": "rgba(17, 29, 74, 0.4)",
+            "sourceRef": "pattern.modal.form.body"
+          },
+          "pattern-modal-form-fieldBackground": {
+            "value": "#FFFFFF",
+            "sourceRef": "pattern.modal.form.fieldBackground"
+          },
+          "pattern-list-tokenItem-text": {
+            "value": "#111D4A",
+            "sourceRef": "pattern.list.tokenItem.text"
+          },
+          "pattern-list-tokenItem-subtext": {
+            "value": "rgba(17, 29, 74, 0.4)",
+            "sourceRef": "pattern.list.tokenItem.subtext"
+          },
+          "pattern-list-statusRow-title": {
+            "value": "#111D4A",
+            "sourceRef": "pattern.list.statusRow.title"
+          },
+          "pattern-list-statusRow-meta": {
+            "value": "rgba(17, 29, 74, 0.4)",
+            "sourceRef": "pattern.list.statusRow.meta"
+          },
+          "component-mobileNav-primary-default-title": {
+            "value": "#111D4A",
+            "sourceRef": "component.mobileNav.primary.default.title"
+          },
+          "component-mobileNav-primary-default-icon": {
+            "value": "#111D4A",
+            "sourceRef": "component.mobileNav.primary.default.icon"
+          },
+          "component-mobileNav-secondary-default-title": {
+            "value": "#111D4A",
+            "sourceRef": "component.mobileNav.secondary.default.title"
+          },
+          "component-mobileNav-secondary-default-icon": {
+            "value": "#111D4A",
+            "sourceRef": "component.mobileNav.secondary.default.icon"
+          },
+          "component-webNav-default-default-background": {
+            "value": "#FFFFFF",
+            "sourceRef": "component.webNav.default.default.background"
+          },
+          "component-webNav-default-default-title": {
+            "value": "#111D4A",
+            "sourceRef": "component.webNav.default.default.title"
+          },
+          "component-webNav-default-default-icon": {
+            "value": "#111D4A",
+            "sourceRef": "component.webNav.default.default.icon"
+          },
+          "component-webNav-default-default-border": {
+            "value": "rgba(17, 29, 74, 0.08)",
+            "sourceRef": "component.webNav.default.default.border"
+          },
+          "component-modal-default-default-background": {
+            "value": "#F9FAFB",
+            "sourceRef": "component.modal.default.default.background"
+          },
+          "component-modal-default-default-title": {
+            "value": "#111D4A",
+            "sourceRef": "component.modal.default.default.title"
+          },
+          "component-modal-default-default-body": {
+            "value": "rgba(17, 29, 74, 0.4)",
+            "sourceRef": "component.modal.default.default.body"
+          },
+          "component-button-primary-default-background": {
+            "value": "#111D4A",
+            "sourceRef": "component.button.primary.default.background"
+          },
+          "component-button-primary-default-text": {
+            "value": "#007FFF",
+            "sourceRef": "component.button.primary.default.text"
+          },
+          "component-menu-default-signedOut-background": {
+            "value": "#FFFFFF",
+            "sourceRef": "component.menu.default.signedOut.background"
+          },
+          "component-menu-default-signedIn-background": {
+            "value": "#FFFFFF",
+            "sourceRef": "component.menu.default.signedIn.background"
+          },
+          "component-menu-default-default-title": {
+            "value": "#111D4A",
+            "sourceRef": "component.menu.default.default.title"
+          },
+          "component-menu-default-default-body": {
+            "value": "rgba(17, 29, 74, 0.4)",
+            "sourceRef": "component.menu.default.default.body"
+          },
+          "component-tokenList-default-default-text": {
+            "value": "#111D4A",
+            "sourceRef": "component.tokenList.default.default.text"
+          },
+          "component-tokenList-default-default-icon": {
+            "value": "#111D4A",
+            "sourceRef": "component.tokenList.default.default.icon"
+          },
+          "component-tokenList-expand-default-text": {
+            "value": "#111D4A",
+            "sourceRef": "component.tokenList.expand.default.text"
+          },
+          "component-tokenList-expand-default-icon": {
+            "value": "#111D4A",
+            "sourceRef": "component.tokenList.expand.default.icon"
+          }
+        },
+        "backgroundImage": {
+          "semantic-gradient-general": {
+            "value": "linear-gradient(180deg, #F9FDFF 0%, #F0F1F3 100%)",
+            "sourceRef": "semantic.gradient.general"
+          },
+          "semantic-gradient-main": {
+            "value": "linear-gradient(180deg, #F9FDFF 0%, #D6EBFF 100%)",
+            "sourceRef": "semantic.gradient.main"
+          },
+          "semantic-gradient-xaut-card": {
+            "value": "linear-gradient(180deg, rgba(255, 255, 255, 0.6) 0%, #EEF7FF 100%)",
+            "sourceRef": "semantic.gradient.xaut_card"
+          },
+          "semantic-gradient-bar-backdrop": {
+            "value": "linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #FFFFFF 100%)",
+            "sourceRef": "semantic.gradient.bar_backdrop"
+          }
+        },
+        "spacing": {
+          "pattern-surface-card-padding": {
+            "value": "16px",
+            "sourceRef": "pattern.surface.card.padding"
+          },
+          "pattern-modal-form-fieldPaddingX": {
+            "value": "12px",
+            "sourceRef": "pattern.modal.form.fieldPaddingX"
+          },
+          "pattern-modal-form-fieldHeight": {
+            "value": "48px",
+            "sourceRef": "pattern.modal.form.fieldHeight"
+          },
+          "pattern-modal-form-sectionGap": {
+            "value": "32px",
+            "sourceRef": "pattern.modal.form.sectionGap"
+          },
+          "pattern-modal-form-actionGap": {
+            "value": "32px",
+            "sourceRef": "pattern.modal.form.actionGap"
+          },
+          "pattern-list-tokenItem-iconSize": {
+            "value": "40px",
+            "sourceRef": "pattern.list.tokenItem.iconSize"
+          },
+          "pattern-list-tokenItem-gap": {
+            "value": "12px",
+            "sourceRef": "pattern.list.tokenItem.gap"
+          },
+          "pattern-list-tokenItem-height": {
+            "value": "62px",
+            "sourceRef": "pattern.list.tokenItem.height"
+          },
+          "pattern-list-statusRow-iconSize": {
+            "value": "20px",
+            "sourceRef": "pattern.list.statusRow.iconSize"
+          },
+          "pattern-list-statusRow-rowGap": {
+            "value": "8px",
+            "sourceRef": "pattern.list.statusRow.rowGap"
+          },
+          "pattern-list-statusRow-paddingY": {
+            "value": "16px",
+            "sourceRef": "pattern.list.statusRow.paddingY"
+          },
+          "component-mobileNav-primary-default-height": {
+            "value": "90px",
+            "sourceRef": "component.mobileNav.primary.default.height"
+          },
+          "component-mobileNav-primary-default-paddingX": {
+            "value": "16px",
+            "sourceRef": "component.mobileNav.primary.default.paddingX"
+          },
+          "component-mobileNav-secondary-default-height": {
+            "value": "56px",
+            "sourceRef": "component.mobileNav.secondary.default.height"
+          },
+          "component-mobileNav-secondary-default-paddingX": {
+            "value": "16px",
+            "sourceRef": "component.mobileNav.secondary.default.paddingX"
+          },
+          "component-webNav-default-signedOut-height": {
+            "value": "68px",
+            "sourceRef": "component.webNav.default.signedOut.height"
+          },
+          "component-webNav-default-signedIn-height": {
+            "value": "68px",
+            "sourceRef": "component.webNav.default.signedIn.height"
+          },
+          "component-modal-default-default-paddingX": {
+            "value": "16px",
+            "sourceRef": "component.modal.default.default.paddingX"
+          },
+          "component-modal-default-default-paddingTop": {
+            "value": "8px",
+            "sourceRef": "component.modal.default.default.paddingTop"
+          },
+          "component-modal-default-default-contentTopGap": {
+            "value": "72px",
+            "sourceRef": "component.modal.default.default.contentTopGap"
+          },
+          "component-modal-default-default-closeButtonSize": {
+            "value": "32px",
+            "sourceRef": "component.modal.default.default.closeButtonSize"
+          },
+          "component-modal-default-default-dragHandleWidth": {
+            "value": "36px",
+            "sourceRef": "component.modal.default.default.dragHandleWidth"
+          },
+          "component-modal-default-default-dragHandleHeight": {
+            "value": "4px",
+            "sourceRef": "component.modal.default.default.dragHandleHeight"
+          },
+          "component-button-primary-default-height": {
+            "value": "52px",
+            "sourceRef": "component.button.primary.default.height"
+          },
+          "component-button-primary-default-paddingX": {
+            "value": "16px",
+            "sourceRef": "component.button.primary.default.paddingX"
+          },
+          "component-menu-default-default-padding": {
+            "value": "16px",
+            "sourceRef": "component.menu.default.default.padding"
+          },
+          "component-tokenList-default-default-height": {
+            "value": "32px",
+            "sourceRef": "component.tokenList.default.default.height"
+          },
+          "component-tokenList-expand-default-height": {
+            "value": "32px",
+            "sourceRef": "component.tokenList.expand.default.height"
+          }
+        },
+        "strings": {
+          "pattern-surface-card-radius": {
+            "value": "[MISSING]",
+            "sourceRef": "pattern.surface.card.radius"
+          },
+          "component-modal-default-default-radius": {
+            "value": "[MISSING]",
+            "sourceRef": "component.modal.default.default.radius"
+          },
+          "component-button-primary-default-radius": {
+            "value": "[MISSING]",
+            "sourceRef": "component.button.primary.default.radius"
+          }
+        }
+      }
+    }
+  },
+  "dark": {
+    "theme": {
+      "extend": {
+        "colors": {
+          "semantic-background-general": {
+            "value": "#1C1C1E",
+            "sourceRef": "semantic.background.general"
+          },
+          "semantic-background-card": {
+            "value": "#1C1C1E",
+            "sourceRef": "semantic.background.card"
+          },
+          "semantic-background-modal": {
+            "value": "#1C1C1E",
+            "sourceRef": "semantic.background.modal"
+          },
+          "semantic-background-modal-section": {
+            "value": "#2C2C2E",
+            "sourceRef": "semantic.background.modal_section"
+          },
+          "semantic-background-modal-section-inner": {
+            "value": "#1C1C1E",
+            "sourceRef": "semantic.background.modal_section_inner"
+          },
+          "semantic-background-backdrop": {
+            "value": "rgba(0, 0, 0, 0.8)",
+            "sourceRef": "semantic.background.backdrop"
+          },
+          "semantic-text-core": {
+            "value": "#FFFFFF",
+            "sourceRef": "semantic.text.core"
+          },
+          "semantic-text-primary": {
+            "value": "#D6D7E0",
+            "sourceRef": "semantic.text.primary"
+          },
+          "semantic-text-secondary": {
+            "value": "rgba(221, 222, 234, 0.4)",
+            "sourceRef": "semantic.text.secondary"
+          },
+          "semantic-text-action": {
+            "value": "rgba(0, 127, 255, 0.8)",
+            "sourceRef": "semantic.text.action"
+          },
+          "semantic-text-placeholder": {
+            "value": "rgba(255, 255, 255, 0.2)",
+            "sourceRef": "semantic.text.placeholder"
+          },
+          "semantic-stroke-icon-primary": {
+            "value": "rgba(221, 222, 234, 0.8)",
+            "sourceRef": "semantic.stroke.icon_primary"
+          },
+          "semantic-stroke-icon-secondary": {
+            "value": "rgba(221, 222, 234, 0.4)",
+            "sourceRef": "semantic.stroke.icon_secondary"
+          },
+          "semantic-border-default": {
+            "value": "rgba(221, 222, 234, 0.08)",
+            "sourceRef": "semantic.border.default"
+          },
+          "semantic-fill-icon-chip": {
+            "value": "#2C2C2E",
+            "sourceRef": "semantic.fill.icon_chip"
+          },
+          "semantic-fill-secondary": {
+            "value": "rgba(221, 222, 234, 0.8)",
+            "sourceRef": "semantic.fill.secondary"
+          },
+          "semantic-fill-tertiary": {
+            "value": "#1C1C1E",
+            "sourceRef": "semantic.fill.tertiary"
+          },
+          "semantic-fill-logo": {
+            "value": "#FFFFFF",
+            "sourceRef": "semantic.fill.logo"
+          },
+          "semantic-fill-color-1": {
+            "value": "#FFFFFF",
+            "sourceRef": "semantic.fill.color_1"
+          },
+          "semantic-fill-color-2": {
+            "value": "#FFFFFF",
+            "sourceRef": "semantic.fill.color_2"
+          },
+          "pattern-surface-card-background": {
+            "value": "#1C1C1E",
+            "sourceRef": "pattern.surface.card.background"
+          },
+          "pattern-surface-card-title": {
+            "value": "#D6D7E0",
+            "sourceRef": "pattern.surface.card.title"
+          },
+          "pattern-surface-card-body": {
+            "value": "rgba(221, 222, 234, 0.4)",
+            "sourceRef": "pattern.surface.card.body"
+          },
+          "pattern-modal-form-title": {
+            "value": "#D6D7E0",
+            "sourceRef": "pattern.modal.form.title"
+          },
+          "pattern-modal-form-body": {
+            "value": "rgba(221, 222, 234, 0.4)",
+            "sourceRef": "pattern.modal.form.body"
+          },
+          "pattern-modal-form-fieldBackground": {
+            "value": "#2C2C2E",
+            "sourceRef": "pattern.modal.form.fieldBackground"
+          },
+          "pattern-list-tokenItem-text": {
+            "value": "#D6D7E0",
+            "sourceRef": "pattern.list.tokenItem.text"
+          },
+          "pattern-list-tokenItem-subtext": {
+            "value": "rgba(221, 222, 234, 0.4)",
+            "sourceRef": "pattern.list.tokenItem.subtext"
+          },
+          "pattern-list-statusRow-title": {
+            "value": "#D6D7E0",
+            "sourceRef": "pattern.list.statusRow.title"
+          },
+          "pattern-list-statusRow-meta": {
+            "value": "rgba(221, 222, 234, 0.4)",
+            "sourceRef": "pattern.list.statusRow.meta"
+          },
+          "component-mobileNav-primary-default-title": {
+            "value": "#D6D7E0",
+            "sourceRef": "component.mobileNav.primary.default.title"
+          },
+          "component-mobileNav-primary-default-icon": {
+            "value": "rgba(221, 222, 234, 0.8)",
+            "sourceRef": "component.mobileNav.primary.default.icon"
+          },
+          "component-mobileNav-secondary-default-title": {
+            "value": "#D6D7E0",
+            "sourceRef": "component.mobileNav.secondary.default.title"
+          },
+          "component-mobileNav-secondary-default-icon": {
+            "value": "rgba(221, 222, 234, 0.8)",
+            "sourceRef": "component.mobileNav.secondary.default.icon"
+          },
+          "component-webNav-default-default-background": {
+            "value": "#1C1C1E",
+            "sourceRef": "component.webNav.default.default.background"
+          },
+          "component-webNav-default-default-title": {
+            "value": "#D6D7E0",
+            "sourceRef": "component.webNav.default.default.title"
+          },
+          "component-webNav-default-default-icon": {
+            "value": "rgba(221, 222, 234, 0.8)",
+            "sourceRef": "component.webNav.default.default.icon"
+          },
+          "component-webNav-default-default-border": {
+            "value": "rgba(221, 222, 234, 0.08)",
+            "sourceRef": "component.webNav.default.default.border"
+          },
+          "component-modal-default-default-background": {
+            "value": "#1C1C1E",
+            "sourceRef": "component.modal.default.default.background"
+          },
+          "component-modal-default-default-title": {
+            "value": "#D6D7E0",
+            "sourceRef": "component.modal.default.default.title"
+          },
+          "component-modal-default-default-body": {
+            "value": "rgba(221, 222, 234, 0.4)",
+            "sourceRef": "component.modal.default.default.body"
+          },
+          "component-button-primary-default-background": {
+            "value": "rgba(221, 222, 234, 0.8)",
+            "sourceRef": "component.button.primary.default.background"
+          },
+          "component-button-primary-default-text": {
+            "value": "rgba(0, 127, 255, 0.8)",
+            "sourceRef": "component.button.primary.default.text"
+          },
+          "component-menu-default-signedOut-background": {
+            "value": "#1C1C1E",
+            "sourceRef": "component.menu.default.signedOut.background"
+          },
+          "component-menu-default-signedIn-background": {
+            "value": "#1C1C1E",
+            "sourceRef": "component.menu.default.signedIn.background"
+          },
+          "component-menu-default-default-title": {
+            "value": "#D6D7E0",
+            "sourceRef": "component.menu.default.default.title"
+          },
+          "component-menu-default-default-body": {
+            "value": "rgba(221, 222, 234, 0.4)",
+            "sourceRef": "component.menu.default.default.body"
+          },
+          "component-tokenList-default-default-text": {
+            "value": "#D6D7E0",
+            "sourceRef": "component.tokenList.default.default.text"
+          },
+          "component-tokenList-default-default-icon": {
+            "value": "rgba(221, 222, 234, 0.8)",
+            "sourceRef": "component.tokenList.default.default.icon"
+          },
+          "component-tokenList-expand-default-text": {
+            "value": "#D6D7E0",
+            "sourceRef": "component.tokenList.expand.default.text"
+          },
+          "component-tokenList-expand-default-icon": {
+            "value": "rgba(221, 222, 234, 0.8)",
+            "sourceRef": "component.tokenList.expand.default.icon"
+          }
+        },
+        "backgroundImage": {
+          "semantic-gradient-general": {
+            "value": "linear-gradient(180deg, #000000 0%, #1F1F1F 100%)",
+            "sourceRef": "semantic.gradient.general"
+          },
+          "semantic-gradient-main": {
+            "value": "linear-gradient(180deg, #000000 0%, #003160 100%)",
+            "sourceRef": "semantic.gradient.main"
+          },
+          "semantic-gradient-xaut-card": {
+            "value": "linear-gradient(180deg, rgba(21, 20, 23, 0.7) 0%, #2C2C2E 100%)",
+            "sourceRef": "semantic.gradient.xaut_card"
+          },
+          "semantic-gradient-bar-backdrop": {
+            "value": "linear-gradient(180deg, rgba(1, 3, 6, 0) 0%, #010306 100%)",
+            "sourceRef": "semantic.gradient.bar_backdrop"
+          }
+        },
+        "spacing": {
+          "pattern-surface-card-padding": {
+            "value": "16px",
+            "sourceRef": "pattern.surface.card.padding"
+          },
+          "pattern-modal-form-fieldPaddingX": {
+            "value": "12px",
+            "sourceRef": "pattern.modal.form.fieldPaddingX"
+          },
+          "pattern-modal-form-fieldHeight": {
+            "value": "48px",
+            "sourceRef": "pattern.modal.form.fieldHeight"
+          },
+          "pattern-modal-form-sectionGap": {
+            "value": "32px",
+            "sourceRef": "pattern.modal.form.sectionGap"
+          },
+          "pattern-modal-form-actionGap": {
+            "value": "32px",
+            "sourceRef": "pattern.modal.form.actionGap"
+          },
+          "pattern-list-tokenItem-iconSize": {
+            "value": "40px",
+            "sourceRef": "pattern.list.tokenItem.iconSize"
+          },
+          "pattern-list-tokenItem-gap": {
+            "value": "12px",
+            "sourceRef": "pattern.list.tokenItem.gap"
+          },
+          "pattern-list-tokenItem-height": {
+            "value": "62px",
+            "sourceRef": "pattern.list.tokenItem.height"
+          },
+          "pattern-list-statusRow-iconSize": {
+            "value": "20px",
+            "sourceRef": "pattern.list.statusRow.iconSize"
+          },
+          "pattern-list-statusRow-rowGap": {
+            "value": "8px",
+            "sourceRef": "pattern.list.statusRow.rowGap"
+          },
+          "pattern-list-statusRow-paddingY": {
+            "value": "16px",
+            "sourceRef": "pattern.list.statusRow.paddingY"
+          },
+          "component-mobileNav-primary-default-height": {
+            "value": "90px",
+            "sourceRef": "component.mobileNav.primary.default.height"
+          },
+          "component-mobileNav-primary-default-paddingX": {
+            "value": "16px",
+            "sourceRef": "component.mobileNav.primary.default.paddingX"
+          },
+          "component-mobileNav-secondary-default-height": {
+            "value": "56px",
+            "sourceRef": "component.mobileNav.secondary.default.height"
+          },
+          "component-mobileNav-secondary-default-paddingX": {
+            "value": "16px",
+            "sourceRef": "component.mobileNav.secondary.default.paddingX"
+          },
+          "component-webNav-default-signedOut-height": {
+            "value": "68px",
+            "sourceRef": "component.webNav.default.signedOut.height"
+          },
+          "component-webNav-default-signedIn-height": {
+            "value": "68px",
+            "sourceRef": "component.webNav.default.signedIn.height"
+          },
+          "component-modal-default-default-paddingX": {
+            "value": "16px",
+            "sourceRef": "component.modal.default.default.paddingX"
+          },
+          "component-modal-default-default-paddingTop": {
+            "value": "8px",
+            "sourceRef": "component.modal.default.default.paddingTop"
+          },
+          "component-modal-default-default-contentTopGap": {
+            "value": "72px",
+            "sourceRef": "component.modal.default.default.contentTopGap"
+          },
+          "component-modal-default-default-closeButtonSize": {
+            "value": "32px",
+            "sourceRef": "component.modal.default.default.closeButtonSize"
+          },
+          "component-modal-default-default-dragHandleWidth": {
+            "value": "36px",
+            "sourceRef": "component.modal.default.default.dragHandleWidth"
+          },
+          "component-modal-default-default-dragHandleHeight": {
+            "value": "4px",
+            "sourceRef": "component.modal.default.default.dragHandleHeight"
+          },
+          "component-button-primary-default-height": {
+            "value": "52px",
+            "sourceRef": "component.button.primary.default.height"
+          },
+          "component-button-primary-default-paddingX": {
+            "value": "16px",
+            "sourceRef": "component.button.primary.default.paddingX"
+          },
+          "component-menu-default-default-padding": {
+            "value": "16px",
+            "sourceRef": "component.menu.default.default.padding"
+          },
+          "component-tokenList-default-default-height": {
+            "value": "32px",
+            "sourceRef": "component.tokenList.default.default.height"
+          },
+          "component-tokenList-expand-default-height": {
+            "value": "32px",
+            "sourceRef": "component.tokenList.expand.default.height"
+          }
+        },
+        "strings": {
+          "pattern-surface-card-radius": {
+            "value": "[MISSING]",
+            "sourceRef": "pattern.surface.card.radius"
+          },
+          "component-modal-default-default-radius": {
+            "value": "[MISSING]",
+            "sourceRef": "component.modal.default.default.radius"
+          },
+          "component-button-primary-default-radius": {
+            "value": "[MISSING]",
+            "sourceRef": "component.button.primary.default.radius"
+          }
+        }
+      }
+    }
+  }
+}

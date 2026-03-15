@@ -941,8 +941,8 @@
                         <div class="arch-label">Adapter Layer (Transformation)</div>
                         <div class="arch-layer">
                             <div class="arch-box adapter">🎨 Figma<br>Adapter</div>
-                            <div class="arch-box adapter">🔗 TokenStudio<br>Adapter</div>
-                            <div class="arch-box adapter">⚡ Runtime<br>Adapter</div>
+                            <div class="arch-box adapter">🧩 Web Runtime<br>Adapter</div>
+                            <div class="arch-box adapter">📱 Mobile Runtime<br>Adapter</div>
                             <div class="arch-box adapter">🤖 AI Semantic<br>Adapter</div>
                         </div>
                     </div>
@@ -997,7 +997,7 @@
                 <div class="risk-card decision">
                     <div class="risk-title">🔵 Token Schema 差异与兼容性</div>
                     <div class="risk-desc">
-                        Figma 原生 Schema 较为保守（不支持 Gradient 等）且与其它插件 Schema（TokenStudio）标准存在差异。四层语义必须统一范式。
+                        Figma 原生 Schema 较为保守（不支持 Gradient 等），因此需要通过独立 Adapter 统一转换到 Figma、Runtime 与 AI 消费格式。四层语义必须统一范式。
                         <div style="margin-top: 6px; font-weight: 600; color: var(--accent-cyan);">↳ 决定采用 <strong>SSOT +
                                 Adapter Layer</strong> 架构，在应用层统一转换与分流。</div>
                     </div>
@@ -1090,7 +1090,7 @@
                                 style="background: var(--bg-card-hover); border-bottom: 2px solid var(--border-subtle);">
                                 <th style="padding: 14px 20px; color: var(--accent-blue);">对比维度</th>
                                 <th style="padding: 14px 20px;">Figma Native</th>
-                                <th style="padding: 14px 20px;">Token Studio</th>
+                                <th style="padding: 14px 20px;">Figma</th>
                                 <th style="padding: 14px 20px; color: var(--accent-purple);">Source (SSOT)</th>
                                 <th style="padding: 14px 20px;">Tailwind CSS</th>
                             </tr>
@@ -1430,7 +1430,7 @@
             <div class="slide-content">
                 <div class="slide-label">七 · Skill Sample</div>
                 <h1 class="slide-title">DSSkillV2 已整理为可转发的 Skill 样本</h1>
-                <p class="slide-subtitle">当前仓库已输出一个可独立分发的 skill 包，用于维护以单一 Token Source 为核心、并向 Token Studio / Figma / Runtime / AI 同步的设计系统仓库。</p>
+                <p class="slide-subtitle">当前仓库已输出一个可独立分发的 skill 包，用于维护以单一 Token Source 为核心、并向 Figma / Runtime / AI 同步的设计系统仓库。</p>
 
                 <div class="cards-grid cols-2" style="align-items: stretch;">
                     <div class="card gradient-purple">
@@ -1448,7 +1448,7 @@
                         <div class="card-desc" style="margin-bottom: 14px;">这个样本适用于以下类型的项目：</div>
                         <ul style="color: var(--text-secondary); font-size: 14px; line-height: 1.85; padding-left: 20px;">
                             <li>存在一个 canonical token source</li>
-                            <li>下游同步到 Token Studio / Figma / Runtime</li>
+                            <li>下游同步到 Figma / Runtime / AI</li>
                             <li>需要维护 `primitive / semantic / pattern / component` 视角</li>
                             <li>需要用 Git 保持 token 变更可追溯</li>
                         </ul>

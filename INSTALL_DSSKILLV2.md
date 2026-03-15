@@ -14,7 +14,7 @@
 ## Use
 
 - Invoke with `$dsskillv2`
-- Best for projects that use one canonical token source and sync tokens to Token Studio, Figma, runtime, or AI consumers.
+- Best for projects that use one canonical token source and sync tokens to Figma, runtime, or AI consumers.
 
 ## Notes
 
