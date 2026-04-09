@@ -1,463 +1,906 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>UX 资产体系简报 — AI 全流程自动化</title>
   <style>
-    /* ── Airbnb Design System Tokens ── */
+    /* ── WebApp DS v2 Token System ── */
     :root {
-      --color-bg:           #ffffff;
-      --color-text:         #222222;
-      --color-text-muted:   #6a6a6a;
-      --color-text-focused: #3f3f3f;
-      --color-brand:        #ff385c;
-      --color-brand-dark:   #e00b41;
-      --color-surface:      #f2f2f2;
-      --color-border:       #c1c1c1;
-      --color-border-light: rgba(0,0,0,0.08);
-      --color-disabled:     rgba(0,0,0,0.24);
-      --shadow-card:        rgba(0,0,0,0.02) 0px 0px 0px 1px,
-                            rgba(0,0,0,0.04) 0px 2px 6px,
-                            rgba(0,0,0,0.10) 0px 4px 8px;
-      --shadow-hover:       rgba(0,0,0,0.08) 0px 4px 12px;
-      --shadow-focus:       rgb(255,255,255) 0px 0px 0px 4px;
-      --radius-btn:         8px;
-      --radius-badge:       14px;
-      --radius-card:        20px;
-      --radius-large:       32px;
-      --radius-circle:      50%;
-      --font: 'Circular', -apple-system, system-ui, Roboto, 'Helvetica Neue',
-              'PingFang SC', 'Hiragino Sans GB', sans-serif;
+      /* Primitive colors */
+      --blue-500: #007FFF;
+      --blue-600: #066BD2;
+      --blue-100: #E0EFFF;
+      --navy: #111D4A;
+      --gray-50: #F9FAFB;
+      --gray-100: #F0F1F3;
+      --gray-200: #E4E6EA;
+      --gray-350: #C2C6D0;
+      --gray-500: #8C91A0;
+      --gray-700: #4A5068;
+      --white: #FFFFFF;
+      --success: #4BCE71;
+      --error: #F3636F;
+      --warning: #FC8C4D;
+
+      /* Semantic roles */
+      --bg-page: var(--gray-100);
+      --bg-card: var(--white);
+      --bg-modal: var(--gray-50);
+      --bg-surface: var(--gray-100);
+      --text-core: var(--navy);
+      --text-primary: var(--navy);
+      --text-secondary: var(--gray-700);
+      --text-tertiary: var(--gray-500);
+      --text-action: var(--blue-500);
+      --border-default: var(--gray-200);
+      --action-primary: var(--blue-500);
+
+      /* Gradients */
+      --gradient-page: linear-gradient(180deg, #EDF3FC 0%, #F0F1F3 100%);
+      --gradient-hero: linear-gradient(180deg, #E8F1FD 0%, #F4F6FA 60%, #F0F1F3 100%);
+      --gradient-btn: linear-gradient(135deg, #0FA3FF 0%, #007FFF 50%, #066BD2 100%);
+      --gradient-bar: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0) 100%);
+
+      /* Radius (primitive scale) */
+      --radius-sm: 4px;
+      --radius-md: 10px;
+      --radius-lg: 16px;
+      --radius-full: 9999px;
+
+      /* Shadows */
+      --shadow-card: 0 1px 3px rgba(17, 29, 74, 0.06), 0 1px 2px rgba(17, 29, 74, 0.04);
+      --shadow-float: 0 4px 16px rgba(17, 29, 74, 0.10), 0 1px 4px rgba(17, 29, 74, 0.06);
+      --shadow-modal: 0 8px 32px rgba(17, 29, 74, 0.14), 0 2px 8px rgba(17, 29, 74, 0.08);
+
+      /* Spacing (token scale) */
+      --sp-4: 4px;
+      --sp-8: 8px;
+      --sp-12: 12px;
+      --sp-16: 16px;
+      --sp-20: 20px;
+      --sp-24: 24px;
+      --sp-32: 32px;
+      --sp-40: 40px;
+
+      /* Typography */
+      --font: 'Noto Sans', 'Noto Sans SC', -apple-system, system-ui,
+        'PingFang SC', 'Hiragino Sans GB', sans-serif;
     }
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
     body {
       font-family: var(--font);
-      background: var(--color-bg);
-      color: var(--color-text);
+      background: var(--gradient-page);
+      background-attachment: fixed;
+      color: var(--text-primary);
       min-height: 100vh;
       font-size: 14px;
-      line-height: 1.43;
+      line-height: 1.6;
       -webkit-font-smoothing: antialiased;
     }
 
     /* ── Layout ── */
-    .container { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 var(--sp-24);
+    }
 
     /* ── Header ── */
     header {
-      position: sticky; top: 0; z-index: 20;
-      background: rgba(255,255,255,0.96);
-      backdrop-filter: blur(8px);
-      border-bottom: 1px solid var(--color-border-light);
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(255, 255, 255, 0.90);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-default);
     }
+
     .header-inner {
-      display: flex; align-items: center; justify-content: space-between;
-      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
     }
-    .header-left { display: flex; align-items: center; gap: 12px; }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-12);
+    }
+
     .header-logo {
-      color: var(--color-brand);
-      font-size: 22px; font-weight: 700; line-height: 1;
-      letter-spacing: -0.44px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: var(--white);
+      background: var(--gradient-btn);
+      border-radius: var(--radius-md);
+      padding: 4px 10px;
+      line-height: 1;
     }
+
     .header-divider {
-      width: 1px; height: 16px;
-      background: var(--color-border);
+      width: 1px;
+      height: 14px;
+      background: var(--border-default);
     }
+
     .header-label {
-      font-size: 12px; font-weight: 600;
-      text-transform: uppercase; letter-spacing: 0.08em;
-      color: var(--color-text-muted);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-tertiary);
     }
+
     .header-title {
-      font-size: 14px; font-weight: 500;
-      color: var(--color-text);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-primary);
     }
-    .badge {
-      display: inline-flex; align-items: center;
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius-badge);
+
+    .nav-badge {
+      display: inline-flex;
+      align-items: center;
+      background: var(--gray-100);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-full);
       padding: 3px 10px;
-      font-size: 11px; font-weight: 600;
-      color: var(--color-text-muted);
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-tertiary);
     }
 
     /* ── Main ── */
-    main { padding: 48px 0 80px; }
-    .stack { display: flex; flex-direction: column; gap: 56px; }
-
-    /* ── Section headings ── */
-    .section-label {
-      font-size: 11px; font-weight: 700;
-      text-transform: uppercase; letter-spacing: 0.08em;
-      color: var(--color-text-muted);
-      margin-bottom: 8px;
-    }
-    h1 {
-      font-size: 28px; font-weight: 700;
-      line-height: 1.25; letter-spacing: -0.44px;
-      color: var(--color-text);
-    }
-    h2 {
-      font-size: 22px; font-weight: 600;
-      line-height: 1.18; letter-spacing: -0.44px;
-    }
-    .section-desc {
-      font-size: 16px; font-weight: 500;
-      color: var(--color-text-muted);
-      line-height: 1.5; max-width: 640px;
+    main {
+      padding: var(--sp-40) 0 80px;
     }
 
-    /* ── Pills (tags) ── */
-    .pill-group { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+    .stack {
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-40);
+    }
+
+    /* ── Hero ── */
+    .hero-panel {
+      background: var(--gradient-hero);
+      border-radius: var(--radius-lg);
+      padding: var(--sp-32) var(--sp-32) var(--sp-24);
+      border: 1px solid rgba(0, 127, 255, 0.10);
+    }
+
+    .pill-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--sp-8);
+      margin-bottom: var(--sp-20);
+    }
+
     .pill {
-      display: inline-flex; align-items: center;
-      background: var(--color-surface);
-      border-radius: var(--radius-large);
+      display: inline-flex;
+      align-items: center;
+      background: rgba(0, 127, 255, 0.08);
+      border: 1px solid rgba(0, 127, 255, 0.18);
+      border-radius: var(--radius-full);
       padding: 4px 12px;
-      font-size: 12px; font-weight: 600;
-      color: var(--color-text-focused);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--blue-600);
     }
 
-    /* ── TL;DR grid ── */
-    .tldr-panel {
-      background: var(--color-surface);
-      border-radius: var(--radius-card);
-      padding: 24px;
+    h1 {
+      font-size: 28px;
+      font-weight: 700;
+      line-height: 1.3;
+      color: var(--text-core);
+      margin-bottom: var(--sp-12);
     }
+
+    .hero-desc {
+      font-size: 15px;
+      font-weight: 400;
+      color: var(--text-secondary);
+      line-height: 1.65;
+      max-width: 640px;
+    }
+
+    /* ── Section heading ── */
+    h2 {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-core);
+      line-height: 1.4;
+      margin-bottom: var(--sp-16);
+    }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-tertiary);
+      margin-bottom: var(--sp-8);
+    }
+
+    /* ── TL;DR ── */
+    .tldr-panel {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-default);
+      padding: var(--sp-24);
+      box-shadow: var(--shadow-card);
+    }
+
     .tldr-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-      margin-top: 16px;
+      gap: var(--sp-12);
+      margin-top: var(--sp-16);
     }
+
     @media (min-width: 640px) {
-      .tldr-grid { grid-template-columns: repeat(4, 1fr); }
+      .tldr-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
     }
+
     .tldr-card {
-      background: var(--color-bg);
-      border-radius: var(--radius-btn);
-      padding: 16px;
-      box-shadow: var(--shadow-card);
+      background: var(--gray-50);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-default);
+      padding: var(--sp-16);
     }
+
     .tldr-card-label {
-      font-size: 11px; font-weight: 600;
-      color: var(--color-text-muted);
-      margin-bottom: 6px;
-      text-transform: uppercase; letter-spacing: 0.06em;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-tertiary);
+      margin-bottom: var(--sp-8);
     }
+
     .tldr-card-value {
-      font-size: 14px; font-weight: 600;
-      color: var(--color-text);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-core);
       line-height: 1.4;
     }
 
-    /* ── Core problem ── */
-    .problem-card {
-      background: var(--color-bg);
-      border-radius: var(--radius-card);
-      padding: 24px 28px;
+    /* ── Problem card ── */
+    .content-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-default);
+      padding: var(--sp-24) var(--sp-24);
       box-shadow: var(--shadow-card);
     }
-    .problem-card p { font-size: 14px; color: var(--color-text-muted); line-height: 1.6; margin-bottom: 20px; }
-    .bullet-grid {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 10px; margin-bottom: 20px;
-    }
-    @media (max-width: 480px) { .bullet-grid { grid-template-columns: 1fr; } }
-    .bullet-item {
-      display: flex; align-items: flex-start; gap: 10px;
-      font-size: 14px; font-weight: 500; line-height: 1.4;
-    }
-    .bullet-dot {
-      width: 6px; height: 6px; border-radius: 50%;
-      background: var(--color-text);
-      flex-shrink: 0; margin-top: 6px;
-    }
-    .bullet-item.full { grid-column: 1 / -1; }
-    .conclusion {
-      font-size: 14px; font-weight: 600;
-      border-top: 1px solid var(--color-border-light);
-      padding-top: 16px; color: var(--color-text);
-    }
-    .conclusion strong { color: var(--color-brand); }
 
-    /* ── Asset cards (accordion) ── */
-    .asset-list { display: flex; flex-direction: column; gap: 12px; }
-    .asset-card {
-      background: var(--color-bg);
-      border-radius: var(--radius-card);
+    .content-card p {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.65;
+      margin-bottom: var(--sp-20);
+    }
+
+    .bullet-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--sp-12);
+      margin-bottom: var(--sp-20);
+    }
+
+    @media (max-width: 480px) {
+      .bullet-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .bullet-item {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--sp-8);
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 1.5;
+      color: var(--text-core);
+    }
+
+    .bullet-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--blue-500);
+      flex-shrink: 0;
+      margin-top: 7px;
+    }
+
+    .bullet-item.full {
+      grid-column: 1 / -1;
+    }
+
+    .conclusion {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-core);
+      border-top: 1px solid var(--border-default);
+      padding-top: var(--sp-16);
+    }
+
+    .conclusion strong {
+      color: var(--blue-500);
+    }
+
+    /* ── Asset accordion cards ── */
+    .asset-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-8);
+    }
+
+    details.asset-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-default);
       box-shadow: var(--shadow-card);
       overflow: hidden;
-      transition: box-shadow 0.2s ease;
+      transition: box-shadow 0.18s ease, border-color 0.18s ease;
     }
-    .asset-card:hover { box-shadow: var(--shadow-hover); }
-    details.asset-card summary { list-style: none; cursor: pointer; }
-    details.asset-card summary::-webkit-details-marker { display: none; }
-    details.asset-card[open] .chevron { transform: rotate(180deg); }
-    .chevron { transition: transform 0.2s ease; flex-shrink: 0; }
-    .asset-summary {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 20px 24px; gap: 16px;
+
+    details.asset-card:hover {
+      box-shadow: var(--shadow-float);
+      border-color: rgba(0, 127, 255, 0.20);
     }
-    .asset-summary-left { display: flex; align-items: center; gap: 16px; }
-    .asset-num {
-      width: 32px; height: 32px; border-radius: var(--radius-circle);
-      background: var(--color-surface);
-      display: inline-flex; align-items: center; justify-content: center;
-      font-size: 11px; font-weight: 700; color: var(--color-text-muted);
+
+    details.asset-card summary {
+      list-style: none;
+      cursor: pointer;
+    }
+
+    details.asset-card summary::-webkit-details-marker {
+      display: none;
+    }
+
+    details.asset-card[open] .chevron {
+      transform: rotate(180deg);
+    }
+
+    .chevron {
+      transition: transform 0.2s ease;
       flex-shrink: 0;
     }
+
+    .asset-summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--sp-16) var(--sp-20);
+      gap: var(--sp-16);
+    }
+
+    .asset-summary-left {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-16);
+    }
+
+    .asset-num {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-md);
+      background: var(--blue-100);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--blue-600);
+      flex-shrink: 0;
+    }
+
     .asset-name {
-      font-size: 16px; font-weight: 600; color: var(--color-text);
-      letter-spacing: -0.18px;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-core);
     }
-    .asset-desc { font-size: 12px; color: var(--color-text-muted); margin-top: 2px; }
+
+    .asset-desc {
+      font-size: 12px;
+      color: var(--text-tertiary);
+      margin-top: 2px;
+    }
+
     .asset-body {
-      border-top: 1px solid rgba(0,0,0,0.06);
-      padding: 20px 24px;
-      display: flex; flex-direction: column; gap: 16px;
+      border-top: 1px solid var(--border-default);
+      padding: var(--sp-20) var(--sp-20);
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-16);
+      background: var(--gray-50);
     }
-    .asset-intro { font-size: 13px; color: var(--color-text-muted); line-height: 1.6; }
-    .asset-items { display: flex; flex-direction: column; gap: 8px; }
+
+    .asset-intro {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.65;
+    }
+
+    .asset-items {
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-8);
+    }
+
     .asset-item {
-      display: flex; align-items: flex-start; gap: 8px;
-      font-size: 13px; line-height: 1.5;
+      display: flex;
+      align-items: flex-start;
+      gap: var(--sp-8);
+      font-size: 13px;
+      font-weight: 400;
+      line-height: 1.55;
+      color: var(--text-primary);
     }
-    .asset-item span { color: var(--color-text-muted); font-size: 16px; line-height: 1; }
+
+    .asset-item-dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--blue-500);
+      flex-shrink: 0;
+      margin-top: 8px;
+    }
 
     /* ── Code blocks ── */
     .code-section-title {
-      font-size: 11px; font-weight: 700; text-transform: uppercase;
-      letter-spacing: 0.08em; color: var(--color-text-muted);
-      margin-top: 8px;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.10em;
+      color: var(--text-tertiary);
     }
+
     .code-block {
-      background: #f8f8f8;
-      border-radius: var(--radius-btn);
+      background: var(--bg-card);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-default);
       overflow: hidden;
-      border: 1px solid rgba(0,0,0,0.06);
     }
+
     .code-header {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 8px 14px;
-      background: var(--color-surface);
-      border-bottom: 1px solid rgba(0,0,0,0.06);
+      display: flex;
+      align-items: center;
+      padding: 6px 14px;
+      background: var(--gray-100);
+      border-bottom: 1px solid var(--border-default);
     }
+
     .code-label {
-      font-size: 11px; font-weight: 600; color: var(--color-text-muted);
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-tertiary);
       font-family: ui-monospace, 'SF Mono', Menlo, monospace;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.02em;
     }
+
     .code-block pre {
-      margin: 0; padding: 14px 16px;
-      font-size: 12px; line-height: 1.65;
+      margin: 0;
+      padding: 14px 16px;
+      font-size: 12px;
+      line-height: 1.65;
       font-family: ui-monospace, 'SF Mono', Menlo, monospace;
-      color: var(--color-text-focused);
-      white-space: pre; overflow-x: auto;
+      color: var(--navy);
+      white-space: pre;
+      overflow-x: auto;
     }
 
     /* ── Experience Matching ── */
-    .match-card {
-      background: var(--color-bg);
-      border-radius: var(--radius-card);
-      padding: 24px 28px;
-      box-shadow: var(--shadow-card);
-    }
-    .match-card > p { font-size: 13px; color: var(--color-text-muted); margin-bottom: 16px; }
     .match-grid {
-      display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--sp-8);
+      margin-bottom: var(--sp-24);
     }
-    @media (min-width: 640px) { .match-grid { grid-template-columns: repeat(3, 1fr); } }
+
+    @media (min-width: 640px) {
+      .match-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
     .match-item {
-      background: var(--color-surface);
-      border-radius: var(--radius-btn);
-      padding: 12px 14px;
+      background: var(--gray-100);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-default);
+      padding: var(--sp-12) var(--sp-16);
     }
-    .match-item-label {
-      font-size: 11px; color: var(--color-text-muted); margin-bottom: 4px; font-weight: 500;
+
+    .match-label {
+      font-size: 11px;
+      color: var(--text-tertiary);
+      margin-bottom: 4px;
+      font-weight: 500;
     }
-    .match-item-value { font-size: 12px; font-weight: 600; color: var(--color-text); }
+
+    .match-value {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-core);
+    }
+
+    .layers-divider {
+      border: none;
+      border-top: 1px solid var(--border-default);
+      margin: var(--sp-20) 0 var(--sp-16);
+    }
+
     .layers-title {
-      font-size: 11px; font-weight: 700; text-transform: uppercase;
-      letter-spacing: 0.08em; color: var(--color-text-muted);
-      margin-top: 24px; margin-bottom: 12px;
-      padding-top: 20px; border-top: 1px solid rgba(0,0,0,0.06);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-tertiary);
+      margin-bottom: var(--sp-12);
     }
-    .layer-list { display: flex; flex-direction: column; gap: 10px; }
-    .layer-item { display: flex; align-items: flex-start; gap: 12px; font-size: 14px; }
+
+    .layer-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-12);
+    }
+
+    .layer-item {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--sp-12);
+      font-size: 14px;
+    }
+
     .layer-dot {
-      width: 8px; height: 8px; border-radius: 50%;
-      background: var(--color-brand);
-      flex-shrink: 0; margin-top: 6px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--blue-500);
+      flex-shrink: 0;
+      margin-top: 6px;
     }
 
     /* ── Roadmap ── */
-    .roadmap-phases { display: flex; flex-direction: column; gap: 12px; }
+    .roadmap-phases {
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-8);
+    }
+
     .phase-card {
-      background: var(--color-bg);
-      border-radius: var(--radius-card);
-      padding: 20px 24px;
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-default);
+      padding: var(--sp-20) var(--sp-20);
       box-shadow: var(--shadow-card);
-      transition: box-shadow 0.2s ease;
+      transition: box-shadow 0.18s ease, border-color 0.18s ease;
     }
-    .phase-card:hover { box-shadow: var(--shadow-hover); }
-    .phase-card-head {
-      display: flex; align-items: flex-start; justify-content: space-between;
-      gap: 16px; margin-bottom: 14px;
+
+    .phase-card:hover {
+      box-shadow: var(--shadow-float);
+      border-color: rgba(0, 127, 255, 0.20);
     }
+
+    .phase-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: var(--sp-16);
+      margin-bottom: var(--sp-16);
+    }
+
     .phase-num-row {
-      display: flex; align-items: center; gap: 8px; margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: var(--sp-8);
+      margin-bottom: var(--sp-4);
     }
+
     .phase-num {
-      width: 22px; height: 22px; border-radius: var(--radius-circle);
-      background: var(--color-text);
-      display: inline-flex; align-items: center; justify-content: center;
-      font-size: 11px; font-weight: 700; color: white;
-    }
-    .phase-sub {
-      font-size: 11px; font-weight: 700; text-transform: uppercase;
-      letter-spacing: 0.06em; color: var(--color-text-muted);
-    }
-    .phase-title { font-size: 16px; font-weight: 600; letter-spacing: -0.18px; }
-    .phase-subtitle { font-size: 12px; color: var(--color-text-muted); margin-top: 2px; }
-    .phase-tag {
-      display: inline-flex; align-items: center;
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius-badge);
-      padding: 3px 10px;
-      font-size: 11px; font-weight: 600;
-      color: var(--color-text-muted);
+      width: 24px;
+      height: 24px;
+      border-radius: var(--radius-full);
+      background: var(--gradient-btn);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 700;
+      color: white;
       flex-shrink: 0;
     }
+
+    .phase-sub {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-tertiary);
+    }
+
+    .phase-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-core);
+    }
+
+    .phase-subtitle {
+      font-size: 12px;
+      color: var(--text-tertiary);
+      margin-top: 2px;
+    }
+
+    .phase-tag {
+      display: inline-flex;
+      align-items: center;
+      background: var(--gray-100);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-full);
+      padding: 3px 10px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-tertiary);
+      flex-shrink: 0;
+    }
+
     .phase-items {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 6px 24px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px var(--sp-24);
     }
+
     .phase-item {
-      display: flex; align-items: center; gap: 8px;
-      font-size: 12px; color: var(--color-text-muted);
+      display: flex;
+      align-items: center;
+      gap: var(--sp-8);
+      font-size: 12px;
+      color: var(--text-secondary);
     }
+
     .phase-dot {
-      width: 4px; height: 4px; border-radius: 50%;
-      background: var(--color-text-muted); flex-shrink: 0;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--gray-350);
+      flex-shrink: 0;
     }
+
     .asset-link {
-      color: var(--color-text);
+      color: var(--text-secondary);
       text-decoration: underline;
-      text-decoration-color: var(--color-border);
+      text-decoration-color: var(--gray-350);
       text-underline-offset: 2px;
       cursor: pointer;
-      background: none; border: none; padding: 0;
-      font: inherit; font-size: 12px;
-      transition: text-decoration-color 0.15s, color 0.15s;
+      background: none;
+      border: none;
+      padding: 0;
+      font: inherit;
+      font-size: 12px;
+      transition: color 0.12s, text-decoration-color 0.12s;
     }
+
     .asset-link:hover {
-      color: var(--color-brand);
-      text-decoration-color: var(--color-brand);
+      color: var(--blue-500);
+      text-decoration-color: var(--blue-500);
     }
 
     /* ── Table ── */
     .table-card {
-      background: var(--color-bg);
-      border-radius: var(--radius-card);
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-default);
       box-shadow: var(--shadow-card);
       overflow: hidden;
     }
-    table { width: 100%; border-collapse: collapse; }
-    thead { background: var(--color-surface); }
-    th {
-      text-align: left; padding: 12px 20px;
-      font-size: 11px; font-weight: 700; text-transform: uppercase;
-      letter-spacing: 0.06em; color: var(--color-text-muted);
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
     }
-    tbody tr { border-top: 1px solid rgba(0,0,0,0.06); transition: background 0.1s; }
-    tbody tr:hover { background: #fafafa; }
-    td { padding: 12px 20px; }
-    td:first-child { font-size: 13px; font-weight: 600; color: var(--color-text); }
-    td:last-child { font-size: 13px; color: var(--color-text-muted); }
+
+    thead {
+      background: var(--gray-100);
+    }
+
+    th {
+      text-align: left;
+      padding: var(--sp-12) var(--sp-20);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-tertiary);
+    }
+
+    tbody tr {
+      border-top: 1px solid var(--border-default);
+      transition: background 0.1s;
+    }
+
+    tbody tr:hover {
+      background: var(--gray-50);
+    }
+
+    td {
+      padding: 12px var(--sp-20);
+    }
+
+    td:first-child {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-core);
+      width: 180px;
+    }
+
+    td:last-child {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
 
     /* ── Footer ── */
     footer {
-      border-top: 1px solid rgba(0,0,0,0.06);
+      border-top: 1px solid var(--border-default);
+      background: var(--white);
     }
+
     .footer-inner {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 24px 0;
-      font-size: 12px; color: var(--color-text-muted);
-      flex-wrap: wrap; gap: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--sp-20) 0;
+      font-size: 12px;
+      color: var(--text-tertiary);
+      flex-wrap: wrap;
+      gap: var(--sp-8);
     }
 
     /* ── Modal ── */
     #asset-modal {
-      position: fixed; inset: 0; z-index: 50;
-      background: rgba(0,0,0,0.40);
-      display: flex; align-items: center; justify-content: center;
-      padding: 16px;
-      opacity: 0; pointer-events: none;
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      background: rgba(17, 29, 74, 0.35);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--sp-16);
+      opacity: 0;
+      pointer-events: none;
       transition: opacity 0.18s ease;
     }
-    #asset-modal.open { opacity: 1; pointer-events: all; }
-    #asset-modal.open .modal-panel { transform: translateY(0); }
+
+    #asset-modal.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    #asset-modal.open .modal-panel {
+      transform: translateY(0) scale(1);
+    }
+
     .modal-panel {
-      background: white;
-      border-radius: var(--radius-card);
-      width: 100%; max-width: 640px; max-height: 80vh;
-      display: flex; flex-direction: column;
-      box-shadow: 0 8px 40px rgba(0,0,0,0.18);
-      transform: translateY(12px);
+      background: var(--bg-modal);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-default);
+      width: 100%;
+      max-width: 640px;
+      max-height: 80vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: var(--shadow-modal);
+      transform: translateY(10px) scale(0.98);
       transition: transform 0.18s ease;
       overflow: hidden;
     }
+
     .modal-header {
-      display: flex; align-items: flex-start; justify-content: space-between;
-      padding: 20px 24px;
-      border-bottom: 1px solid rgba(0,0,0,0.06);
-      gap: 12px; flex-shrink: 0;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      padding: var(--sp-20) var(--sp-20);
+      border-bottom: 1px solid var(--border-default);
+      gap: var(--sp-12);
+      flex-shrink: 0;
+      background: var(--bg-card);
     }
+
     .modal-title {
-      font-size: 16px; font-weight: 600; color: var(--color-text);
-      letter-spacing: -0.18px;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-core);
     }
+
     .modal-label {
-      font-size: 11px; color: var(--color-text-muted); margin-top: 2px;
+      font-size: 11px;
+      color: var(--text-tertiary);
+      margin-top: 2px;
       font-family: ui-monospace, monospace;
     }
+
     .modal-close {
-      width: 32px; height: 32px;
-      border-radius: var(--radius-circle);
-      border: none;
-      background: var(--color-surface);
-      cursor: pointer; display: flex; align-items: center; justify-content: center;
-      color: var(--color-text-muted); flex-shrink: 0;
-      font-size: 14px; line-height: 1;
-      transition: background 0.1s;
+      width: 30px;
+      height: 30px;
+      border-radius: var(--radius-full);
+      border: 1px solid var(--border-default);
+      background: var(--gray-100);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-tertiary);
+      flex-shrink: 0;
+      font-size: 13px;
+      line-height: 1;
+      transition: background 0.1s, border-color 0.1s;
     }
-    .modal-close:hover { background: #e8e8e8; }
-    .modal-body { overflow-y: auto; }
+
+    .modal-close:hover {
+      background: var(--gray-200);
+      border-color: var(--gray-350);
+    }
+
+    .modal-body {
+      overflow-y: auto;
+    }
+
     .modal-body pre {
-      margin: 0; padding: 20px 24px;
-      font-size: 12px; line-height: 1.65;
+      margin: 0;
+      padding: var(--sp-20);
+      font-size: 12px;
+      line-height: 1.65;
       font-family: ui-monospace, 'SF Mono', Menlo, monospace;
-      color: var(--color-text-focused);
-      white-space: pre; overflow-x: auto;
+      color: var(--navy);
+      white-space: pre;
+      overflow-x: auto;
     }
 
     /* ── Animations ── */
-    .fade-in { animation: fadeIn 0.4s ease-out both; }
+    .fade-in {
+      animation: fadeIn 0.4s ease-out both;
+    }
+
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to   { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     @media print {
-      .no-print { display: none; }
-      body { font-size: 12px; }
+      body {
+        background: white;
+      }
+
+      header {
+        position: static;
+      }
     }
   </style>
 </head>
+
 <body>
 
   <!-- Header -->
@@ -465,13 +908,13 @@
     <div class="container">
       <div class="header-inner">
         <div class="header-left">
-          <span class="header-logo">UX</span>
+          <span class="header-logo">PRD</span>
           <div class="header-divider"></div>
-          <span class="header-label">PRD 简报</span>
+          <span class="header-label">UX 资产体系</span>
           <div class="header-divider"></div>
-          <span class="header-title">资产体系 · AI 自动化</span>
+          <span class="header-title">AI 全流程自动化</span>
         </div>
-        <span class="badge">2026-03</span>
+        <span class="nav-badge">2026-03</span>
       </div>
     </div>
   </header>
@@ -482,15 +925,17 @@
 
         <!-- Hero -->
         <section class="fade-in" style="animation-delay:0s">
-          <div class="pill-group">
-            <span class="pill">UX Strategy</span>
-            <span class="pill">AI 自动化</span>
-            <span class="pill">生产级代码</span>
+          <div class="hero-panel">
+            <div class="pill-group">
+              <span class="pill">UX Strategy</span>
+              <span class="pill">AI 自动化</span>
+              <span class="pill">生产级代码</span>
+            </div>
+            <h1>面向 AI 全流程自动化的<br />UX 资产体系</h1>
+            <p class="hero-desc">
+              目标不是生成"看起来像产品的页面"，而是建立一套可被 AI 消费、可映射、可约束、可评估的体验资产体系，支撑从业务语义到可上线代码的全链路稳定生成。
+            </p>
           </div>
-          <h1>面向 AI 全流程自动化的<br/>UX 资产体系</h1>
-          <p class="section-desc" style="margin-top:16px;">
-            目标不是生成"看起来像产品的页面"，而是建立一套可被 AI 消费、可映射、可约束、可评估的体验资产体系，支撑从业务语义到可上线代码的全链路稳定生成。
-          </p>
         </section>
 
         <!-- TL;DR -->
@@ -519,10 +964,11 @@
         </section>
 
         <!-- Core Problem -->
-        <section class="fade-in" style="animation-delay:0.1s">
-          <h2 style="margin-bottom:16px;">核心问题</h2>
-          <div class="problem-card">
-            <p>即使上游业务语义已经结构化传递，<strong>业务语义并不等于用户体验决策</strong>。语义到代码之间缺少一层体验映射机制：</p>
+        <section class="fade-in" style="animation-delay:0.10s">
+          <h2>核心问题</h2>
+          <div class="content-card">
+            <p>即使上游业务语义已经结构化传递，<strong
+                style="color:var(--text-core);font-weight:600;">业务语义并不等于用户体验决策</strong>。语义到代码之间缺少一层体验映射机制：</p>
             <div class="bullet-grid">
               <div class="bullet-item">
                 <span class="bullet-dot"></span>
@@ -551,9 +997,9 @@
 
         <!-- 6 Asset Categories -->
         <section class="fade-in" style="animation-delay:0.15s">
-          <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:20px;">
-            <h2>UX 资产清单（六类）</h2>
-            <span style="font-size:12px;color:var(--color-text-muted);">点击展开详情</span>
+          <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:var(--sp-16);">
+            <h2 style="margin-bottom:0">UX 资产清单（六类）</h2>
+            <span style="font-size:12px;color:var(--text-tertiary);">点击展开详情</span>
           </div>
           <div class="asset-list">
 
@@ -567,20 +1013,24 @@
                     <div class="asset-desc">帮助 AI 判断"该生成哪种体验"</div>
                   </div>
                 </div>
-                <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-muted)" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                  stroke="var(--text-tertiary)" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
               </summary>
               <div class="asset-body">
                 <p class="asset-intro">把上游需求稳定翻译成体验决策，避免功能语义正确但交互模式错误。</p>
                 <div class="asset-items">
-                  <div class="asset-item"><span>·</span>用户任务模型：目标、核心任务、成功标准</div>
-                  <div class="asset-item"><span>·</span>场景模型：角色、上下文、设备、频率、风险等级</div>
-                  <div class="asset-item"><span>·</span>任务流与状态机：主流程 / 分支流程 / 异常流程 / 回退路径</div>
-                  <div class="asset-item"><span>·</span>语义到交互模式映射表（表单流、配置流、审批流、诊断流…）</div>
-                  <div class="asset-item"><span>·</span>UX decision tree：基于复杂度、风险、熟练度、时长匹配体验层</div>
+                  <div class="asset-item"><span class="asset-item-dot"></span>用户任务模型：目标、核心任务、成功标准</div>
+                  <div class="asset-item"><span class="asset-item-dot"></span>场景模型：角色、上下文、设备、频率、风险等级</div>
+                  <div class="asset-item"><span class="asset-item-dot"></span>任务流与状态机：主流程 / 分支流程 / 异常流程 / 回退路径</div>
+                  <div class="asset-item"><span class="asset-item-dot"></span>语义到交互模式映射表（表单流、配置流、审批流、诊断流…）</div>
+                  <div class="asset-item"><span class="asset-item-dot"></span>UX decision tree：基于复杂度、风险、熟练度、时长匹配体验层
+                  </div>
                 </div>
                 <div class="code-section-title">具体产出样例</div>
                 <div class="code-block">
-                  <div class="code-header"><span class="code-label">task-model.yaml &nbsp;·&nbsp; 用户任务模型</span></div>
+                  <div class="code-header"><span class="code-label">task-model.yaml · 用户任务模型</span></div>
                   <pre>task: "发起转账"
 goal: "将指定金额发送给目标地址"
 success_criteria:
@@ -594,7 +1044,7 @@ risk_level: high
 frequency: weekly</pre>
                 </div>
                 <div class="code-block">
-                  <div class="code-header"><span class="code-label">scenario.yaml &nbsp;·&nbsp; 场景模型</span></div>
+                  <div class="code-header"><span class="code-label">scenario.yaml · 场景模型</span></div>
                   <pre>role: DeFi 新手用户
 device: mobile
 context: 首次操作，不确定流程
@@ -603,7 +1053,7 @@ risk_level: high
 expertise: beginner</pre>
                 </div>
                 <div class="code-block">
-                  <div class="code-header"><span class="code-label">state-machine.md &nbsp;·&nbsp; 任务流与状态机（Mermaid）</span></div>
+                  <div class="code-header"><span class="code-label">state-machine.md · 任务流与状态机（Mermaid）</span></div>
                   <pre>stateDiagram-v2
   [*] --> 输入金额
   输入金额 --> 预览确认
@@ -614,7 +1064,7 @@ expertise: beginner</pre>
   重试 --> 提交中</pre>
                 </div>
                 <div class="code-block">
-                  <div class="code-header"><span class="code-label">pattern-mapping.json &nbsp;·&nbsp; 语义到交互模式映射表</span></div>
+                  <div class="code-header"><span class="code-label">pattern-mapping.json · 语义到交互模式映射表</span></div>
                   <pre>{
   "semantic": "批量审批",
   "pattern": "审核确认层",
@@ -624,13 +1074,13 @@ expertise: beginner</pre>
 }</pre>
                 </div>
                 <div class="code-block">
-                  <div class="code-header"><span class="code-label">decision-tree.json &nbsp;·&nbsp; UX Decision Tree</span></div>
+                  <div class="code-header"><span class="code-label">decision-tree.json · UX Decision Tree</span></div>
                   <pre>{
   "if": { "risk": "high", "frequency": "low" },
   "then": { "layer": "审核确认层", "require_preview": true }
 }</pre>
                 </div>
-                <p style="font-size:12px;color:var(--color-text-muted);">存储建议：统一放 Git repo，版本可追踪，AI 工具可直接读取作为上下文。</p>
+                <p style="font-size:12px;color:var(--text-tertiary);">存储建议：统一放 Git repo，版本可追踪，AI 工具可直接读取作为上下文。</p>
               </div>
             </details>
 
@@ -644,20 +1094,24 @@ expertise: beginner</pre>
                     <div class="asset-desc">帮助 AI 判断"怎样做才符合 UX 标准"</div>
                   </div>
                 </div>
-                <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-muted)" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                  stroke="var(--text-tertiary)" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
               </summary>
               <div class="asset-body">
                 <p class="asset-intro">凌驾于组件之上的行为规则层 — 回答"该怎么做"，与具体用什么组件无关，在任何组件库下都成立。</p>
                 <div class="asset-items">
-                  <div class="asset-item"><span>·</span>交互原则：效率 / 可解释 / 风险控制 / 一致性</div>
-                  <div class="asset-item"><span>·</span>页面级模式规范：列表页、详情页、创建页、编辑页、配置页、空状态页、错误页</div>
-                  <div class="asset-item"><span>·</span>关键交互规范：搜索、筛选、批量操作、编辑、删除、确认、提交流程</div>
-                  <div class="asset-item"><span>·</span>反馈规范：loading / success / error / warning / partial success</div>
-                  <div class="asset-item"><span>·</span>高风险操作规范：二次确认、预览、撤销、权限说明、审批路径</div>
+                  <div class="asset-item"><span class="asset-item-dot"></span>交互原则：效率 / 可解释 / 风险控制 / 一致性</div>
+                  <div class="asset-item"><span class="asset-item-dot"></span>页面级模式规范：列表页、详情页、创建页、编辑页、配置页、空状态页、错误页</div>
+                  <div class="asset-item"><span class="asset-item-dot"></span>关键交互规范：搜索、筛选、批量操作、编辑、删除、确认、提交流程</div>
+                  <div class="asset-item"><span class="asset-item-dot"></span>反馈规范：loading / success / error / warning /
+                    partial success</div>
+                  <div class="asset-item"><span class="asset-item-dot"></span>高风险操作规范：二次确认、预览、撤销、权限说明、审批路径</div>
                 </div>
                 <div class="code-section-title">具体产出样例</div>
                 <div class="code-block">
-                  <div class="code-header"><span class="code-label">interaction-principles.yaml &nbsp;·&nbsp; 交互原则</span></div>
+                  <div class="code-header"><span class="code-label">interaction-principles.yaml · 交互原则</span></div>
                   <pre>principles:
   - id: risk-control
     rule: "高风险操作必须二次确认，不可直接执行"
@@ -670,7 +1124,7 @@ expertise: beginner</pre>
     applies_to: [ai-generated-content]</pre>
                 </div>
                 <div class="code-block">
-                  <div class="code-header"><span class="code-label">page-pattern.yaml &nbsp;·&nbsp; 页面级模式规范（列表页）</span></div>
+                  <div class="code-header"><span class="code-label">page-pattern.yaml · 页面级模式规范（列表页）</span></div>
                   <pre>page: list
 required_zones:
   - search-filter-bar
@@ -685,7 +1139,7 @@ rules:
   - 批量操作超过 20 条需显示进度，不能 block UI</pre>
                 </div>
                 <div class="code-block">
-                  <div class="code-header"><span class="code-label">feedback-spec.yaml &nbsp;·&nbsp; 反馈规范</span></div>
+                  <div class="code-header"><span class="code-label">feedback-spec.yaml · 反馈规范</span></div>
                   <pre>feedback:
   loading:
     duration: "< 300ms: 无反馈  |  300ms-3s: spinner  |  >3s: 骨架屏"
@@ -699,7 +1153,7 @@ rules:
     rule: "批量操作部分失败时，逐条列出失败原因"</pre>
                 </div>
                 <div class="code-block">
-                  <div class="code-header"><span class="code-label">high-risk-spec.yaml &nbsp;·&nbsp; 高风险操作规范</span></div>
+                  <div class="code-header"><span class="code-label">high-risk-spec.yaml · 高风险操作规范</span></div>
                   <pre>high_risk_ops:
   delete:
     require: [二次确认弹窗, 明确说明影响范围]
@@ -725,21 +1179,27 @@ rules:
                     <div class="asset-desc">帮助 AI 判断"用什么来构建页面"</div>
                   </div>
                 </div>
-                <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-muted)" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                  stroke="var(--text-tertiary)" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
               </summary>
               <div class="asset-body">
                 <p class="asset-intro">回答"用什么来实现" — 提供具体构建材料。与体验规范（02）协同：02 定规则，03 给工具。</p>
                 <div class="asset-items">
-                  <div class="asset-item"><span>·</span>基础 token：颜色、字体、间距、圆角、阴影、动效</div>
-                  <div class="asset-item"><span>·</span>组件库：Button、Input、Form、Table、Modal、Drawer、Toast、Tabs…</div>
-                  <div class="asset-item"><span>·</span>组件使用规则：何时用 modal / drawer / inline / stepper</div>
-                  <div class="asset-item"><span>·</span>Pattern 库：搜索筛选区、表单区、详情区、对比区、结果反馈区、操作栏</div>
-                  <div class="asset-item"><span>·</span>页面模板：标准 CRUD、审批流、配置流、数据分析流、运营流</div>
-                  <div class="asset-item"><span>·</span>多端适配规则：桌面 / 移动 / 响应式断点变体</div>
+                  <div class="asset-item"><span class="asset-item-dot"></span>基础 token：颜色、字体、间距、圆角、阴影、动效</div>
+                  <div class="asset-item"><span
+                      class="asset-item-dot"></span>组件库：Button、Input、Form、Table、Modal、Drawer、Toast、Tabs…</div>
+                  <div class="asset-item"><span class="asset-item-dot"></span>组件使用规则：何时用 modal / drawer / inline /
+                    stepper</div>
+                  <div class="asset-item"><span class="asset-item-dot"></span>Pattern 库：搜索筛选区、表单区、详情区、对比区、结果反馈区、操作栏
+                  </div>
+                  <div class="asset-item"><span class="asset-item-dot"></span>页面模板：标准 CRUD、审批流、配置流、数据分析流、运营流</div>
+                  <div class="asset-item"><span class="asset-item-dot"></span>多端适配规则：桌面 / 移动 / 响应式断点变体</div>
                 </div>
                 <div class="code-section-title">具体产出样例</div>
                 <div class="code-block">
-                  <div class="code-header"><span class="code-label">tokens.json &nbsp;·&nbsp; 基础 Token</span></div>
+                  <div class="code-header"><span class="code-label">tokens.json · 基础 Token</span></div>
                   <pre>{
   "color": {
     "primary": "#0F172A",
@@ -753,7 +1213,7 @@ rules:
 }</pre>
                 </div>
                 <div class="code-block">
-                  <div class="code-header"><span class="code-label">component-rules.yaml &nbsp;·&nbsp; 组件使用规则</span></div>
+                  <div class="code-header"><span class="code-label">component-rules.yaml · 组件使用规则</span></div>
                   <pre>component_selection:
   - trigger: "需要打断用户当前流程并要求确认"
     use: AlertDialog
@@ -772,7 +1232,8 @@ rules:
     avoid: 跳转到编辑页</pre>
                 </div>
                 <div class="code-block">
-                  <div class="code-header"><span class="code-label">pattern-search-filter.yaml &nbsp;·&nbsp; Pattern 库：搜索筛选区</span></div>
+                  <div class="code-header"><span class="code-label">pattern-search-filter.yaml · Pattern 库：搜索筛选区</span>
+                  </div>
                   <pre>pattern: search-filter-bar
 slots:
   - name: keyword-input
@@ -790,7 +1251,7 @@ behavior:
   - 筛选条件以 Tag 形式展示，可单独删除</pre>
                 </div>
                 <div class="code-block">
-                  <div class="code-header"><span class="code-label">page-template-crud.yaml &nbsp;·&nbsp; 页面模板：标准 CRUD</span></div>
+                  <div class="code-header"><span class="code-label">page-template-crud.yaml · 页面模板：标准 CRUD</span></div>
                   <pre>template: standard-crud
 zones:
   header:   { title, description, primary-action }
@@ -815,21 +1276,25 @@ variants:
                     <div class="asset-desc">帮助 AI 判断"什么才叫生产级"</div>
                   </div>
                 </div>
-                <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-muted)" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                  stroke="var(--text-tertiary)" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
               </summary>
               <div class="asset-body">
                 <p class="asset-intro">保证生成结果可以上线，不只是主路径可用，显性化传统上依赖人工补齐的隐性要求。</p>
                 <div class="asset-items">
-                  <div class="asset-item"><span>·</span>状态覆盖清单：empty / loading / error / disabled / permission denied / offline</div>
-                  <div class="asset-item"><span>·</span>边界 case：超长文本、缺失字段、异常数据、重复提交、并发冲突</div>
-                  <div class="asset-item"><span>·</span>Accessibility：键盘可达、焦点管理、语义标签、读屏支持</div>
-                  <div class="asset-item"><span>·</span>i18n：文本膨胀、日期 / 数字格式、RTL 适配</div>
-                  <div class="asset-item"><span>·</span>性能体验：骨架屏、懒加载、渐进式反馈、乐观更新、失败回滚</div>
-                  <div class="asset-item"><span>·</span>埋点与可观测性：关键事件、漏斗节点、错误上报点</div>
+                  <div class="asset-item"><span class="asset-item-dot"></span>状态覆盖清单：empty / loading / error / disabled
+                    / permission denied / offline</div>
+                  <div class="asset-item"><span class="asset-item-dot"></span>边界 case：超长文本、缺失字段、异常数据、重复提交、并发冲突</div>
+                  <div class="asset-item"><span class="asset-item-dot"></span>Accessibility：键盘可达、焦点管理、语义标签、读屏支持</div>
+                  <div class="asset-item"><span class="asset-item-dot"></span>i18n：文本膨胀、日期 / 数字格式、RTL 适配</div>
+                  <div class="asset-item"><span class="asset-item-dot"></span>性能体验：骨架屏、懒加载、渐进式反馈、乐观更新、失败回滚</div>
+                  <div class="asset-item"><span class="asset-item-dot"></span>埋点与可观测性：关键事件、漏斗节点、错误上报点</div>
                 </div>
                 <div class="code-section-title">具体产出样例</div>
                 <div class="code-block">
-                  <div class="code-header"><span class="code-label">state-checklist.yaml &nbsp;·&nbsp; 状态覆盖清单</span></div>
+                  <div class="code-header"><span class="code-label">state-checklist.yaml · 状态覆盖清单</span></div>
                   <pre>component: TransferForm
 states:
   empty:
@@ -852,7 +1317,7 @@ states:
     display: 顶部 Toast 警告，禁止提交</pre>
                 </div>
                 <div class="code-block">
-                  <div class="code-header"><span class="code-label">edge-cases.yaml &nbsp;·&nbsp; 边界 Case 清单</span></div>
+                  <div class="code-header"><span class="code-label">edge-cases.yaml · 边界 Case 清单</span></div>
                   <pre>edge_cases:
   - scenario: 超长地址输入
     expect: 截断显示 + tooltip 展示完整，不撑破布局
@@ -866,7 +1331,7 @@ states:
     expect: 逐字段标红，滚动至第一个错误位置</pre>
                 </div>
                 <div class="code-block">
-                  <div class="code-header"><span class="code-label">a11y-spec.yaml &nbsp;·&nbsp; Accessibility 规范</span></div>
+                  <div class="code-header"><span class="code-label">a11y-spec.yaml · Accessibility 规范</span></div>
                   <pre>rules:
   - id: keyboard-nav
     rule: 所有交互元素可通过 Tab 键到达，顺序符合视觉阅读顺序
@@ -880,7 +1345,7 @@ states:
     rule: 动态更新内容使用 aria-live，错误提示使用 role="alert"</pre>
                 </div>
                 <div class="code-block">
-                  <div class="code-header"><span class="code-label">performance-spec.yaml &nbsp;·&nbsp; 性能体验规范</span></div>
+                  <div class="code-header"><span class="code-label">performance-spec.yaml · 性能体验规范</span></div>
                   <pre>loading_strategy:
   skeleton_screen:
     use_when: 内容结构已知，加载时间预计 > 300ms
@@ -908,20 +1373,24 @@ states:
                     <div class="asset-desc">帮助 AI 判断"结果是否合格"</div>
                   </div>
                 </div>
-                <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-muted)" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                  stroke="var(--text-tertiary)" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
               </summary>
               <div class="asset-body">
                 <p class="asset-intro">定义什么叫好结果，为自动评估、人工 review 和模型优化提供统一基准。</p>
                 <div class="asset-items">
-                  <div class="asset-item"><span>·</span>高质量参考样本：需求语义 → UX 方案 → 最终代码</div>
-                  <div class="asset-item"><span>·</span>Few-shot 样例库：不同任务类型的标准输入输出</div>
-                  <div class="asset-item"><span>·</span>反例库：常见错误体验、错误模式选择、缺失状态处理</div>
-                  <div class="asset-item"><span>·</span>UX review checklist：一致性、效率、易懂性、可恢复性、可访问性</div>
-                  <div class="asset-item"><span>·</span>自动评估 rubric：主 / 异常流程覆盖、状态完整性、设计一致性</div>
+                  <div class="asset-item"><span class="asset-item-dot"></span>高质量参考样本：需求语义 → UX 方案 → 最终代码</div>
+                  <div class="asset-item"><span class="asset-item-dot"></span>Few-shot 样例库：不同任务类型的标准输入输出</div>
+                  <div class="asset-item"><span class="asset-item-dot"></span>反例库：常见错误体验、错误模式选择、缺失状态处理</div>
+                  <div class="asset-item"><span class="asset-item-dot"></span>UX review checklist：一致性、效率、易懂性、可恢复性、可访问性
+                  </div>
+                  <div class="asset-item"><span class="asset-item-dot"></span>自动评估 rubric：主 / 异常流程覆盖、状态完整性、设计一致性</div>
                 </div>
                 <div class="code-section-title">具体产出样例</div>
                 <div class="code-block">
-                  <div class="code-header"><span class="code-label">few-shot-sample.yaml &nbsp;·&nbsp; Few-shot 样例</span></div>
+                  <div class="code-header"><span class="code-label">few-shot-sample.yaml · Few-shot 样例</span></div>
                   <pre>- input:
     semantic: "用户发起一笔 ETH 转账，金额较大，目标地址首次使用"
     risk: high
@@ -939,7 +1408,7 @@ states:
     must_have: [地址校验, 金额预览, 二次确认, 失败重试]</pre>
                 </div>
                 <div class="code-block">
-                  <div class="code-header"><span class="code-label">anti-patterns.yaml &nbsp;·&nbsp; 反例库</span></div>
+                  <div class="code-header"><span class="code-label">anti-patterns.yaml · 反例库</span></div>
                   <pre>anti_patterns:
   - id: empty-state-no-action
     wrong: 列表为空时只显示"暂无数据"文字
@@ -962,7 +1431,8 @@ states:
     reason: 无反馈会导致重复提交</pre>
                 </div>
                 <div class="code-block">
-                  <div class="code-header"><span class="code-label">ux-review-checklist.yaml &nbsp;·&nbsp; UX Review Checklist</span></div>
+                  <div class="code-header"><span class="code-label">ux-review-checklist.yaml · UX Review
+                      Checklist</span></div>
                   <pre>checklist:
   consistency:
     - 同类操作使用相同组件和交互模式
@@ -981,7 +1451,7 @@ states:
     - 色彩对比度达标</pre>
                 </div>
                 <div class="code-block">
-                  <div class="code-header"><span class="code-label">eval-rubric.yaml &nbsp;·&nbsp; 自动评估 Rubric</span></div>
+                  <div class="code-header"><span class="code-label">eval-rubric.yaml · 自动评估 Rubric</span></div>
                   <pre>rubric:
   - dimension: 主流程覆盖
     score_4: 主流程完整，无缺失步骤
@@ -1011,20 +1481,25 @@ states:
                     <div class="asset-desc">帮助 AI 判断"如何稳定读取并执行 UX 资产"</div>
                   </div>
                 </div>
-                <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-muted)" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                  stroke="var(--text-tertiary)" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
               </summary>
               <div class="asset-body">
                 <p class="asset-intro">让 UX 资产能够被产品、设计、工程和 AI 一起消费，降低不同团队之间的语义损耗。</p>
                 <div class="asset-items">
-                  <div class="asset-item"><span>·</span>结构化 spec 模板：页面目标、输入、输出、状态、规则、组件依赖</div>
-                  <div class="asset-item"><span>·</span>Figma 规范化文件：命名规则、组件层级、variant、token 映射</div>
-                  <div class="asset-item"><span>·</span>设计到代码映射：组件名、属性 schema、交互 contract</div>
-                  <div class="asset-item"><span>·</span>Prompt / DSL 模板：将 UX 规则和语义约束喂给 AI 的标准格式</div>
-                  <div class="asset-item"><span>·</span>版本管理机制：设计系统版本、规范版本、模板版本</div>
+                  <div class="asset-item"><span class="asset-item-dot"></span>结构化 spec 模板：页面目标、输入、输出、状态、规则、组件依赖</div>
+                  <div class="asset-item"><span class="asset-item-dot"></span>Figma 规范化文件：命名规则、组件层级、variant、token 映射
+                  </div>
+                  <div class="asset-item"><span class="asset-item-dot"></span>设计到代码映射：组件名、属性 schema、交互 contract</div>
+                  <div class="asset-item"><span class="asset-item-dot"></span>Prompt / DSL 模板：将 UX 规则和语义约束喂给 AI 的标准格式
+                  </div>
+                  <div class="asset-item"><span class="asset-item-dot"></span>版本管理机制：设计系统版本、规范版本、模板版本</div>
                 </div>
                 <div class="code-section-title">具体产出样例</div>
                 <div class="code-block">
-                  <div class="code-header"><span class="code-label">page-spec.yaml &nbsp;·&nbsp; 结构化 Spec 模板</span></div>
+                  <div class="code-header"><span class="code-label">page-spec.yaml · 结构化 Spec 模板</span></div>
                   <pre>page: TransferPage
 goal: 用户发起一笔链上转账
 inputs:
@@ -1042,7 +1517,7 @@ rules:
 component_deps: [Input, AddressInput, FeePreview, ConfirmDialog, Toast]</pre>
                 </div>
                 <div class="code-block">
-                  <div class="code-header"><span class="code-label">component-mapping.json &nbsp;·&nbsp; 设计到代码映射</span></div>
+                  <div class="code-header"><span class="code-label">component-mapping.json · 设计到代码映射</span></div>
                   <pre>{
   "figma_component": "Button/Primary",
   "code_component": "Button",
@@ -1058,7 +1533,7 @@ component_deps: [Input, AddressInput, FeePreview, ConfirmDialog, Toast]</pre>
 }</pre>
                 </div>
                 <div class="code-block">
-                  <div class="code-header"><span class="code-label">prompt-template.md &nbsp;·&nbsp; Prompt / DSL 模板</span></div>
+                  <div class="code-header"><span class="code-label">prompt-template.md · Prompt / DSL 模板</span></div>
                   <pre># UX Generation Prompt
 
 ## 任务语义
@@ -1082,7 +1557,7 @@ component_deps: [Input, AddressInput, FeePreview, ConfirmDialog, Toast]</pre>
 请生成：页面结构 / 组件组合 / 状态覆盖清单 / 交互说明</pre>
                 </div>
                 <div class="code-block">
-                  <div class="code-header"><span class="code-label">version.yaml &nbsp;·&nbsp; 版本管理机制</span></div>
+                  <div class="code-header"><span class="code-label">version.yaml · 版本管理机制</span></div>
                   <pre>versions:
   design_system: "2.4.1"
   ux_spec: "1.2.0"
@@ -1105,53 +1580,64 @@ compatibility:
 
         <!-- Experience Matching -->
         <section class="fade-in" style="animation-delay:0.2s">
-          <h2 style="margin-bottom:16px;">体验层匹配机制</h2>
-          <div class="match-card">
-            <p>基于以下维度判断匹配哪一种体验层：</p>
+          <h2>体验层匹配机制</h2>
+          <div class="content-card">
+            <p style="margin-bottom:var(--sp-16);">基于以下维度判断匹配哪一种体验层：</p>
             <div class="match-grid">
               <div class="match-item">
-                <div class="match-item-label">任务复杂度</div>
-                <div class="match-item-value">低 → 轻量直达 / 高 → 分步引导</div>
+                <div class="match-label">任务复杂度</div>
+                <div class="match-value">低 → 轻量直达 / 高 → 分步引导</div>
               </div>
               <div class="match-item">
-                <div class="match-item-label">风险强度</div>
-                <div class="match-item-value">高 → 确认 / 预览 / 可回退</div>
+                <div class="match-label">风险强度</div>
+                <div class="match-value">高 → 确认 / 预览 / 可回退</div>
               </div>
               <div class="match-item">
-                <div class="match-item-label">使用频率</div>
-                <div class="match-item-value">高频 → 减少阻力 / 低频 → 增加解释</div>
+                <div class="match-label">使用频率</div>
+                <div class="match-value">高频 → 减少阻力 / 低频 → 增加解释</div>
               </div>
               <div class="match-item">
-                <div class="match-item-label">信息不确定性</div>
-                <div class="match-item-value">高 → 先澄清 / 低 → 直接执行</div>
+                <div class="match-label">信息不确定性</div>
+                <div class="match-value">高 → 先澄清 / 低 → 直接执行</div>
               </div>
               <div class="match-item">
-                <div class="match-item-label">用户熟练度</div>
-                <div class="match-item-value">新手 → 引导 / 专家 → 效率</div>
+                <div class="match-label">用户熟练度</div>
+                <div class="match-value">新手 → 引导 / 专家 → 效率</div>
               </div>
               <div class="match-item">
-                <div class="match-item-label">场景时长</div>
-                <div class="match-item-value">短 → 快 / 长 → 进度感 / 恢复能力</div>
+                <div class="match-label">场景时长</div>
+                <div class="match-value">短 → 快 / 长 → 进度感 / 恢复能力</div>
               </div>
             </div>
+            <hr class="layers-divider" />
             <div class="layers-title">五类典型体验层</div>
             <div class="layer-list">
-              <div class="layer-item"><span class="layer-dot"></span><div><strong>直接操作层</strong> — 一键执行、内联编辑、即时反馈</div></div>
-              <div class="layer-item"><span class="layer-dot"></span><div><strong>引导操作层</strong> — 分步表单、默认推荐、过程解释</div></div>
-              <div class="layer-item"><span class="layer-dot"></span><div><strong>审核确认层</strong> — 预览、差异对比、二次确认、审批流</div></div>
-              <div class="layer-item"><span class="layer-dot"></span><div><strong>策略配置层</strong> — 规则设置、自动化编排、批量处理</div></div>
-              <div class="layer-item"><span class="layer-dot"></span><div><strong>诊断恢复层</strong> — 错误定位、原因解释、修复建议、重试路径</div></div>
+              <div class="layer-item"><span class="layer-dot"></span>
+                <div><strong>直接操作层</strong> — 一键执行、内联编辑、即时反馈</div>
+              </div>
+              <div class="layer-item"><span class="layer-dot"></span>
+                <div><strong>引导操作层</strong> — 分步表单、默认推荐、过程解释</div>
+              </div>
+              <div class="layer-item"><span class="layer-dot"></span>
+                <div><strong>审核确认层</strong> — 预览、差异对比、二次确认、审批流</div>
+              </div>
+              <div class="layer-item"><span class="layer-dot"></span>
+                <div><strong>策略配置层</strong> — 规则设置、自动化编排、批量处理</div>
+              </div>
+              <div class="layer-item"><span class="layer-dot"></span>
+                <div><strong>诊断恢复层</strong> — 错误定位、原因解释、修复建议、重试路径</div>
+              </div>
             </div>
           </div>
         </section>
 
         <!-- Roadmap -->
         <section class="fade-in" style="animation-delay:0.25s">
-          <h2 style="margin-bottom:20px;">Roadmap</h2>
+          <h2>Roadmap</h2>
           <div class="roadmap-phases">
 
             <div class="phase-card">
-              <div class="phase-card-head">
+              <div class="phase-head">
                 <div>
                   <div class="phase-num-row">
                     <span class="phase-num">1</span>
@@ -1163,16 +1649,21 @@ compatibility:
                 <span class="phase-tag">底座</span>
               </div>
               <div class="phase-items">
-                <div class="phase-item"><span class="phase-dot"></span><button class="asset-link" onclick="openModal('design-token')">设计 token</button></div>
-                <div class="phase-item"><span class="phase-dot"></span><button class="asset-link" onclick="openModal('component-lib')">基础组件库</button></div>
-                <div class="phase-item"><span class="phase-dot"></span><button class="asset-link" onclick="openModal('page-template')">页面模板</button></div>
-                <div class="phase-item"><span class="phase-dot"></span><button class="asset-link" onclick="openModal('core-interaction')">核心交互规范</button></div>
-                <div class="phase-item"><span class="phase-dot"></span><button class="asset-link" onclick="openModal('state-checklist')">状态清单</button></div>
+                <div class="phase-item"><span class="phase-dot"></span><button class="asset-link"
+                    onclick="openModal('design-token')">设计 token</button></div>
+                <div class="phase-item"><span class="phase-dot"></span><button class="asset-link"
+                    onclick="openModal('component-lib')">基础组件库</button></div>
+                <div class="phase-item"><span class="phase-dot"></span><button class="asset-link"
+                    onclick="openModal('page-template')">页面模板</button></div>
+                <div class="phase-item"><span class="phase-dot"></span><button class="asset-link"
+                    onclick="openModal('core-interaction')">核心交互规范</button></div>
+                <div class="phase-item"><span class="phase-dot"></span><button class="asset-link"
+                    onclick="openModal('state-checklist')">状态清单</button></div>
               </div>
             </div>
 
             <div class="phase-card">
-              <div class="phase-card-head">
+              <div class="phase-head">
                 <div>
                   <div class="phase-num-row">
                     <span class="phase-num">2</span>
@@ -1184,16 +1675,21 @@ compatibility:
                 <span class="phase-tag">映射</span>
               </div>
               <div class="phase-items">
-                <div class="phase-item"><span class="phase-dot"></span><button class="asset-link" onclick="openModal('task-model')">用户任务模型</button></div>
-                <div class="phase-item"><span class="phase-dot"></span><button class="asset-link" onclick="openModal('scenario-model')">场景模型</button></div>
-                <div class="phase-item"><span class="phase-dot"></span><button class="asset-link" onclick="openModal('state-machine')">任务流与状态机</button></div>
-                <div class="phase-item"><span class="phase-dot"></span><button class="asset-link" onclick="openModal('pattern-mapping')">语义到交互模式映射表</button></div>
-                <div class="phase-item"><span class="phase-dot"></span><button class="asset-link" onclick="openModal('ux-decision-tree')">UX decision tree</button></div>
+                <div class="phase-item"><span class="phase-dot"></span><button class="asset-link"
+                    onclick="openModal('task-model')">用户任务模型</button></div>
+                <div class="phase-item"><span class="phase-dot"></span><button class="asset-link"
+                    onclick="openModal('scenario-model')">场景模型</button></div>
+                <div class="phase-item"><span class="phase-dot"></span><button class="asset-link"
+                    onclick="openModal('state-machine')">任务流与状态机</button></div>
+                <div class="phase-item"><span class="phase-dot"></span><button class="asset-link"
+                    onclick="openModal('pattern-mapping')">语义到交互模式映射表</button></div>
+                <div class="phase-item"><span class="phase-dot"></span><button class="asset-link"
+                    onclick="openModal('ux-decision-tree')">UX decision tree</button></div>
               </div>
             </div>
 
             <div class="phase-card">
-              <div class="phase-card-head">
+              <div class="phase-head">
                 <div>
                   <div class="phase-num-row">
                     <span class="phase-num">3</span>
@@ -1205,16 +1701,19 @@ compatibility:
                 <span class="phase-tag">上线</span>
               </div>
               <div class="phase-items">
-                <div class="phase-item"><span class="phase-dot"></span><button class="asset-link" onclick="openModal('a11y-spec')">Accessibility 规范</button></div>
+                <div class="phase-item"><span class="phase-dot"></span><button class="asset-link"
+                    onclick="openModal('a11y-spec')">Accessibility 规范</button></div>
                 <div class="phase-item"><span class="phase-dot"></span><span>i18n 规范</span></div>
-                <div class="phase-item"><span class="phase-dot"></span><button class="asset-link" onclick="openModal('performance-spec')">性能体验规范</button></div>
-                <div class="phase-item"><span class="phase-dot"></span><button class="asset-link" onclick="openModal('edge-cases')">异常和边界 case 规范</button></div>
+                <div class="phase-item"><span class="phase-dot"></span><button class="asset-link"
+                    onclick="openModal('performance-spec')">性能体验规范</button></div>
+                <div class="phase-item"><span class="phase-dot"></span><button class="asset-link"
+                    onclick="openModal('edge-cases')">异常和边界 case 规范</button></div>
                 <div class="phase-item"><span class="phase-dot"></span><span>埋点与可观测性规范</span></div>
               </div>
             </div>
 
             <div class="phase-card">
-              <div class="phase-card-head">
+              <div class="phase-head">
                 <div>
                   <div class="phase-num-row">
                     <span class="phase-num">4</span>
@@ -1227,10 +1726,14 @@ compatibility:
               </div>
               <div class="phase-items">
                 <div class="phase-item"><span class="phase-dot"></span><span>高质量样本库</span></div>
-                <div class="phase-item"><span class="phase-dot"></span><button class="asset-link" onclick="openModal('few-shot')">Few-shot 示例</button></div>
-                <div class="phase-item"><span class="phase-dot"></span><button class="asset-link" onclick="openModal('anti-patterns')">反例库</button></div>
-                <div class="phase-item"><span class="phase-dot"></span><button class="asset-link" onclick="openModal('eval-rubric')">自动评估 rubric</button></div>
-                <div class="phase-item"><span class="phase-dot"></span><button class="asset-link" onclick="openModal('prompt-template')">Prompt / DSL 模板</button></div>
+                <div class="phase-item"><span class="phase-dot"></span><button class="asset-link"
+                    onclick="openModal('few-shot')">Few-shot 示例</button></div>
+                <div class="phase-item"><span class="phase-dot"></span><button class="asset-link"
+                    onclick="openModal('anti-patterns')">反例库</button></div>
+                <div class="phase-item"><span class="phase-dot"></span><button class="asset-link"
+                    onclick="openModal('eval-rubric')">自动评估 rubric</button></div>
+                <div class="phase-item"><span class="phase-dot"></span><button class="asset-link"
+                    onclick="openModal('prompt-template')">Prompt / DSL 模板</button></div>
               </div>
             </div>
 
@@ -1239,7 +1742,7 @@ compatibility:
 
         <!-- Asset Table Fields -->
         <section class="fade-in" style="animation-delay:0.3s">
-          <h2 style="margin-bottom:16px;">资产清单字段建议</h2>
+          <h2>资产清单字段建议</h2>
           <div class="table-card">
             <div style="overflow-x:auto;">
               <table>
@@ -1250,15 +1753,42 @@ compatibility:
                   </tr>
                 </thead>
                 <tbody>
-                  <tr><td>Asset 名称</td><td>资产的唯一标识名称</td></tr>
-                  <tr><td>资产类型</td><td>六类之一（语义映射 / 体验规范 / 设计系统…）</td></tr>
-                  <tr><td>目标</td><td>该资产解决什么问题</td></tr>
-                  <tr><td>具体产出物</td><td>实际交付的文档 / 文件 / 数据结构</td></tr>
-                  <tr><td>使用方</td><td>产品 / 设计 / 工程 / AI</td></tr>
-                  <tr><td>优先级</td><td>P0 / P1 / P2</td></tr>
-                  <tr><td>所属阶段</td><td>Phase 1 — 4</td></tr>
-                  <tr><td>Owner</td><td>负责人</td></tr>
-                  <tr><td>当前状态</td><td>Not started / In progress / Done</td></tr>
+                  <tr>
+                    <td>Asset 名称</td>
+                    <td>资产的唯一标识名称</td>
+                  </tr>
+                  <tr>
+                    <td>资产类型</td>
+                    <td>六类之一（语义映射 / 体验规范 / 设计系统…）</td>
+                  </tr>
+                  <tr>
+                    <td>目标</td>
+                    <td>该资产解决什么问题</td>
+                  </tr>
+                  <tr>
+                    <td>具体产出物</td>
+                    <td>实际交付的文档 / 文件 / 数据结构</td>
+                  </tr>
+                  <tr>
+                    <td>使用方</td>
+                    <td>产品 / 设计 / 工程 / AI</td>
+                  </tr>
+                  <tr>
+                    <td>优先级</td>
+                    <td>P0 / P1 / P2</td>
+                  </tr>
+                  <tr>
+                    <td>所属阶段</td>
+                    <td>Phase 1 — 4</td>
+                  </tr>
+                  <tr>
+                    <td>Owner</td>
+                    <td>负责人</td>
+                  </tr>
+                  <tr>
+                    <td>当前状态</td>
+                    <td>Not started / In progress / Done</td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -1601,4 +2131,5 @@ expertise: beginner`
   </script>
 
 </body>
+
 </html>

@@ -1,0 +1,1472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>alpha.token.im · Send Token Interactive Demo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&family=Noto+Sans+SC:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light;
+      --surface-page: #fafaf9;
+      --card: #ffffff;
+      --surface-cool: #f2f6fb;
+      --surface-blue: #f8fafe;
+      --surface-blue-light: #f2f6ff;
+      --surface-blue-dim: #eff6ff;
+      --surface-blue-info: #eef5ff;
+      --secondary: #f0f1f3;
+      --foreground: #111d4a;
+      --muted-foreground: #717182;
+      --text-tertiary: #99a1af;
+      --text-secondary-gray: #475467;
+      --primary: #007fff;
+      --accent: #0cc5ff;
+      --primary-foreground: #ffffff;
+      --success: #10b981;
+      --success-text: #0f9f6e;
+      --success-surface: #ecfdf5;
+      --success-surface-tint: #f2fcf7;
+      --success-border: #b6e3cf;
+      --destructive: #d4183d;
+      --border: rgba(17, 29, 74, 0.08);
+      --input: rgba(17, 29, 74, 0.08);
+      --info-border: #d8e8ff;
+      --shadow-card: 0 1px 3px rgba(17, 29, 74, 0.04), 0 1px 2px rgba(17, 29, 74, 0.06);
+      --shadow-card-md: 0 2px 8px rgba(17, 29, 74, 0.06);
+      --shadow-card-lg: 0 8px 24px rgba(17, 29, 74, 0.05);
+      --shadow-cta-sm: 0 4px 14px rgba(0, 127, 255, 0.22);
+      --shadow-dialog: 0 24px 60px rgba(17, 29, 74, 0.18);
+      --ease-emphasis: cubic-bezier(0.22, 1, 0.36, 1);
+      --font-sans: "Noto Sans", "Noto Sans SC", ui-sans-serif, system-ui, -apple-system, sans-serif;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-18: 18px;
+      --radius-20: 20px;
+      --radius-pill: 9999px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      min-height: 100%;
+      margin: 0;
+      font-family: var(--font-sans);
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      background:
+        radial-gradient(circle at 12% 0%, rgba(12, 197, 255, 0.08), transparent 28%),
+        radial-gradient(circle at 88% 0%, rgba(0, 127, 255, 0.12), transparent 34%),
+        var(--surface-page);
+      color: var(--foreground);
+    }
+
+    body {
+      padding: 24px 16px 40px;
+      display: grid;
+      place-items: center;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    button {
+      border: 0;
+      background: none;
+      color: inherit;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .stage {
+      width: min(100%, 420px);
+      display: grid;
+      gap: 16px;
+      justify-items: center;
+    }
+
+    .demo-meta {
+      width: min(100%, 375px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      font-size: 12px;
+      color: var(--muted-foreground);
+    }
+
+    .meta-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: var(--radius-pill);
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-card);
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    .phone-shell {
+      width: 100%;
+      max-width: 391px;
+      aspect-ratio: 375 / 812;
+      border-radius: 40px;
+      padding: 8px;
+      background: linear-gradient(145deg, #d9dde6, #bcc2cf 52%, #d6dbe5);
+      box-shadow: 0 28px 64px rgba(17, 29, 74, 0.18);
+    }
+
+    .phone {
+      position: relative;
+      height: 100%;
+      overflow: hidden;
+      border-radius: 34px;
+      border: 1px solid rgba(255, 255, 255, 0.72);
+      background:
+        radial-gradient(circle at top center, rgba(12, 197, 255, 0.08), transparent 24%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(250, 250, 249, 0.98)),
+        var(--surface-page);
+    }
+
+    .notch {
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      width: 108px;
+      height: 26px;
+      transform: translateX(-50%);
+      border-radius: 0 0 18px 18px;
+      background: #0d111f;
+      z-index: 6;
+    }
+
+    .phone-inner {
+      position: relative;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      padding: 18px 16px 18px;
+    }
+
+    .status-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 10px 12px;
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1;
+      color: var(--foreground);
+      flex: 0 0 auto;
+    }
+
+    .status-icons {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .signal {
+      display: inline-flex;
+      gap: 2px;
+      align-items: flex-end;
+      height: 10px;
+    }
+
+    .signal span {
+      width: 2px;
+      border-radius: 999px;
+      background: currentColor;
+      display: block;
+    }
+
+    .signal span:nth-child(1) { height: 4px; opacity: 0.55; }
+    .signal span:nth-child(2) { height: 6px; opacity: 0.7; }
+    .signal span:nth-child(3) { height: 8px; opacity: 0.85; }
+    .signal span:nth-child(4) { height: 10px; }
+
+    .battery {
+      position: relative;
+      width: 22px;
+      height: 11px;
+      border-radius: 999px;
+      border: 1.5px solid currentColor;
+    }
+
+    .battery::before {
+      content: "";
+      position: absolute;
+      inset: 2px;
+      border-radius: 999px;
+      background: currentColor;
+    }
+
+    .nav {
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex: 0 0 auto;
+    }
+
+    .nav-center {
+      text-align: center;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .nav-title {
+      font-size: 16px;
+      line-height: 1.4;
+      font-weight: 700;
+    }
+
+    .nav-subtitle {
+      margin-top: 2px;
+      font-size: 11px;
+      line-height: 1.33;
+      color: var(--muted-foreground);
+    }
+
+    .icon-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-pill);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--foreground);
+      flex: 0 0 auto;
+    }
+
+    .icon-btn:disabled {
+      color: var(--text-tertiary);
+      cursor: default;
+    }
+
+    .screen-shell {
+      position: relative;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    .screen {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      grid-template-rows: 1fr auto;
+      gap: 16px;
+      transform: translateX(104%);
+      opacity: 0;
+      pointer-events: none;
+      transition: transform 280ms var(--ease-emphasis), opacity 220ms ease;
+    }
+
+    .screen.active {
+      transform: translateX(0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .screen-body {
+      min-height: 0;
+      display: grid;
+      gap: 16px;
+      align-content: start;
+      overflow: auto;
+      padding-bottom: 6px;
+      scrollbar-width: none;
+    }
+
+    .screen-body::-webkit-scrollbar {
+      display: none;
+    }
+
+    .section-panel,
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-card);
+    }
+
+    .hero-card {
+      padding: 20px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(248, 250, 254, 1)),
+        var(--card);
+      box-shadow: var(--shadow-card-md);
+      display: grid;
+      gap: 14px;
+    }
+
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      width: fit-content;
+      padding: 6px 10px;
+      border-radius: var(--radius-pill);
+      background: var(--surface-blue-light);
+      color: var(--primary);
+      font-size: 11px;
+      line-height: 1;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .hero-balance {
+      font-size: 40px;
+      line-height: 1;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+    }
+
+    .hero-note {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 12px;
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--muted-foreground);
+    }
+
+    .search-wrap {
+      padding: 0 2px;
+    }
+
+    .search-field,
+    .text-input {
+      height: 40px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 12px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--input);
+      background: rgba(255, 255, 255, 0.84);
+      color: var(--muted-foreground);
+      font-size: 14px;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.72);
+    }
+
+    .text-input input {
+      flex: 1;
+      min-width: 0;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      color: var(--foreground);
+      font-size: 14px;
+    }
+
+    .token-list {
+      display: grid;
+      gap: 8px;
+      padding: 8px;
+    }
+
+    .token-row {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px;
+      border-radius: var(--radius-sm);
+      border: 1px solid transparent;
+      background: transparent;
+      text-align: left;
+      transition: background 180ms ease, border-color 180ms ease;
+    }
+
+    .token-row.selected {
+      background: var(--surface-blue);
+      border-color: var(--info-border);
+    }
+
+    .token-left,
+    .summary-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      line-height: 1;
+      font-weight: 700;
+      box-shadow: var(--shadow-card);
+      flex: 0 0 auto;
+    }
+
+    .avatar.eth {
+      background: rgba(98, 126, 234, 0.14);
+      color: #627eea;
+    }
+
+    .avatar.usdc {
+      background: rgba(39, 117, 202, 0.12);
+      color: #2775ca;
+    }
+
+    .avatar.imx {
+      background: rgba(12, 197, 255, 0.14);
+      color: #0cc5ff;
+    }
+
+    .avatar.success {
+      background: var(--success-surface);
+      color: var(--success);
+    }
+
+    .line-copy {
+      min-width: 0;
+    }
+
+    .line-title {
+      font-size: 16px;
+      line-height: 1.4;
+      font-weight: 600;
+      color: var(--foreground);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .line-detail {
+      margin-top: 2px;
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--muted-foreground);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .line-value {
+      text-align: right;
+      flex: 0 0 auto;
+    }
+
+    .line-value strong {
+      display: block;
+      font-size: 15px;
+      line-height: 1.4;
+      font-weight: 600;
+      color: var(--foreground);
+    }
+
+    .line-value span {
+      display: block;
+      margin-top: 2px;
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--muted-foreground);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      width: fit-content;
+      padding: 6px 10px;
+      border-radius: var(--radius-pill);
+      font-size: 12px;
+      line-height: 1.33;
+      font-weight: 600;
+    }
+
+    .badge.primary {
+      background: var(--surface-blue-light);
+      color: var(--primary);
+    }
+
+    .badge.success {
+      background: var(--success-surface);
+      color: var(--success-text);
+    }
+
+    .input-card,
+    .detail-card,
+    .sign-card {
+      padding: 16px;
+      display: grid;
+      gap: 16px;
+    }
+
+    .section-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .field-label {
+      font-size: 11px;
+      line-height: 1;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+      font-weight: 600;
+    }
+
+    .recipient-row {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--info-border);
+      background: var(--surface-blue);
+    }
+
+    .recipient-actions,
+    .quick-row,
+    .speed-row,
+    .contact-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .chip,
+    .option-pill {
+      min-height: 32px;
+      padding: 0 14px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--foreground);
+      font-size: 13px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color 160ms ease, background 160ms ease, color 160ms ease;
+    }
+
+    .chip.active,
+    .option-pill.active {
+      border-color: var(--primary);
+      background: rgba(0, 127, 255, 0.08);
+      color: var(--primary);
+    }
+
+    .amount-block {
+      display: grid;
+      gap: 12px;
+      padding: 16px;
+    }
+
+    .amount-value {
+      display: flex;
+      align-items: flex-end;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .amount-value input {
+      min-width: 0;
+      width: 180px;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      font-size: 40px;
+      line-height: 1;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      color: var(--foreground);
+      padding: 0;
+    }
+
+    .amount-unit {
+      font-size: 15px;
+      line-height: 1.4;
+      font-weight: 600;
+      color: var(--muted-foreground);
+      padding-bottom: 4px;
+    }
+
+    .helper {
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--muted-foreground);
+    }
+
+    .detail-list {
+      display: grid;
+      gap: 16px;
+    }
+
+    .detail-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .detail-row + .detail-row {
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+
+    .detail-row span {
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--muted-foreground);
+    }
+
+    .detail-row strong {
+      font-size: 14px;
+      line-height: 1.5;
+      font-weight: 600;
+      color: var(--foreground);
+      text-align: right;
+    }
+
+    .detail-row strong.primary {
+      color: var(--primary);
+    }
+
+    .step-card {
+      padding: 16px;
+      border-radius: var(--radius-md);
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      border: 1px solid var(--border);
+      background: var(--card);
+    }
+
+    .step-card.completed {
+      border-color: var(--success-border);
+      background: var(--success-surface-tint);
+    }
+
+    .step-card.active {
+      border-color: var(--info-border);
+      background: var(--surface-blue);
+    }
+
+    .step-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--surface-blue-dim);
+      color: var(--primary);
+      flex: 0 0 auto;
+    }
+
+    .step-card.completed .step-icon {
+      background: var(--success);
+      color: var(--primary-foreground);
+    }
+
+    .step-copy strong {
+      display: block;
+      font-size: 15px;
+      line-height: 1.4;
+      font-weight: 700;
+      color: var(--foreground);
+    }
+
+    .step-copy span {
+      display: block;
+      margin-top: 4px;
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--muted-foreground);
+    }
+
+    .screen-actions {
+      display: grid;
+      gap: 12px;
+      padding-top: 4px;
+    }
+
+    .button {
+      width: 100%;
+      min-height: 48px;
+      padding: 0 20px;
+      border-radius: var(--radius-pill);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-size: 14px;
+      line-height: 1.4;
+      font-weight: 600;
+    }
+
+    .button.primary {
+      background: var(--primary);
+      color: var(--primary-foreground);
+      box-shadow: var(--shadow-cta-sm);
+    }
+
+    .button.secondary {
+      background: var(--secondary);
+      color: var(--foreground);
+    }
+
+    .button:disabled {
+      opacity: 0.45;
+      cursor: default;
+      box-shadow: none;
+    }
+
+    .result-hero {
+      padding: 28px 20px 20px;
+      border-radius: 24px;
+      background:
+        radial-gradient(circle at top center, rgba(12, 197, 255, 0.14), transparent 32%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(242, 252, 247, 1)),
+        var(--card);
+      border: 1px solid var(--success-border);
+      box-shadow: var(--shadow-card-lg);
+      display: grid;
+      justify-items: center;
+      text-align: center;
+      gap: 12px;
+    }
+
+    .success-ring {
+      width: 88px;
+      height: 88px;
+      border-radius: 28px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(180deg, rgba(16, 185, 129, 0.12), rgba(255, 255, 255, 0.9));
+      box-shadow: 0 10px 28px rgba(16, 185, 129, 0.14);
+      color: var(--success);
+    }
+
+    .result-title {
+      font-size: 24px;
+      line-height: 1.2;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+    }
+
+    .result-copy {
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--muted-foreground);
+      max-width: 26ch;
+    }
+
+    .toast {
+      position: absolute;
+      left: 16px;
+      right: 16px;
+      bottom: 22px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      border-radius: 20px;
+      background: rgba(17, 29, 74, 0.96);
+      color: var(--primary-foreground);
+      box-shadow: var(--shadow-dialog);
+      transform: translateY(24px);
+      opacity: 0;
+      pointer-events: none;
+      transition: transform 260ms var(--ease-emphasis), opacity 220ms ease;
+      z-index: 8;
+    }
+
+    .toast.visible {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .toast-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(12, 197, 255, 0.16);
+      color: var(--accent);
+      flex: 0 0 auto;
+    }
+
+    .toast-copy strong {
+      display: block;
+      font-size: 13px;
+      line-height: 1.5;
+      font-weight: 600;
+    }
+
+    .toast-copy span {
+      display: block;
+      font-size: 12px;
+      line-height: 1.33;
+      color: rgba(255, 255, 255, 0.68);
+    }
+
+    svg {
+      width: 20px;
+      height: 20px;
+      display: block;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .footer-hint {
+      width: min(100%, 375px);
+      text-align: center;
+      font-size: 12px;
+      line-height: 1.5;
+      color: var(--muted-foreground);
+    }
+
+    @media (max-width: 420px) {
+      .demo-meta,
+      .footer-hint {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="stage">
+    <div class="demo-meta">
+      <div class="meta-pill">Interactive send demo</div>
+      <div>Tap tokens, contacts, speed, and amount presets</div>
+    </div>
+
+    <section class="phone-shell">
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="phone-inner">
+          <div class="status-bar">
+            <span>9:41</span>
+            <div class="status-icons">
+              <div class="signal"><span></span><span></span><span></span><span></span></div>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12a10 10 0 0 1 14 0"></path><path d="M8 15a6 6 0 0 1 8 0"></path><path d="M11.5 18.5a1 1 0 0 1 1 0"></path></svg>
+              <div class="battery" aria-hidden="true"></div>
+            </div>
+          </div>
+
+          <div class="nav">
+            <button class="icon-btn" id="backButton" aria-label="Back">
+              <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"></path></svg>
+            </button>
+            <div class="nav-center">
+              <div class="nav-title" id="navTitle">Send token</div>
+              <div class="nav-subtitle" id="navSubtitle">Choose what to send</div>
+            </div>
+            <button class="icon-btn" id="resetButton" aria-label="Reset flow">
+              <svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7"></path><path d="M3 3v6h6"></path></svg>
+            </button>
+          </div>
+
+          <div class="screen-shell">
+            <section class="screen active" data-screen="select">
+              <div class="screen-body">
+                <div class="hero-card">
+                  <div class="kicker">Unified balance</div>
+                  <div class="hero-balance" id="heroBalance">$7,486.18</div>
+                  <div class="hero-note">
+                    <span>Token-first transfer flow</span>
+                    <span class="badge primary" id="selectedTokenBadge">ETH selected</span>
+                  </div>
+                </div>
+
+                <div class="search-wrap">
+                  <div class="search-field">
+                    <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"></circle><path d="M20 20l-4.2-4.2"></path></svg>
+                    Search token
+                  </div>
+                </div>
+
+                <div class="section-panel">
+                  <div class="token-list" id="tokenList"></div>
+                </div>
+              </div>
+
+              <div class="screen-actions">
+                <button class="button primary" id="toAmountButton">Continue with <span id="continueTokenLabel">ETH</span></button>
+              </div>
+            </section>
+
+            <section class="screen" data-screen="amount">
+              <div class="screen-body">
+                <div class="card input-card">
+                  <div class="field-label">Recipient</div>
+                  <div class="text-input">
+                    <svg viewBox="0 0 24 24"><path d="M4 19a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4"></path><circle cx="12" cy="8" r="4"></circle></svg>
+                    <input id="recipientInput" type="text" placeholder="Paste address or ENS" autocomplete="off">
+                  </div>
+                  <div class="contact-row" id="contactRow"></div>
+                </div>
+
+                <div class="card amount-block">
+                  <div class="section-top">
+                    <div class="field-label">Amount</div>
+                    <span class="badge primary" id="maxBadge">Max 2.3841 ETH</span>
+                  </div>
+                  <div class="amount-value">
+                    <input id="amountInput" type="number" inputmode="decimal" min="0" step="0.0001" value="0.42">
+                    <span class="amount-unit" id="amountUnit">ETH</span>
+                  </div>
+                  <div class="helper" id="amountHelper">$858.56 estimated value</div>
+                  <div class="quick-row" id="quickRow"></div>
+                </div>
+
+                <div class="card detail-card">
+                  <div class="section-top">
+                    <div class="field-label">Transaction details</div>
+                    <span class="badge primary" id="networkBadge">Ethereum mainnet</span>
+                  </div>
+                  <div class="speed-row" id="speedRow"></div>
+                  <div class="detail-list">
+                    <div class="detail-row">
+                      <span>Selected token</span>
+                      <strong id="detailToken">ETH</strong>
+                    </div>
+                    <div class="detail-row">
+                      <span>Recipient</span>
+                      <strong id="detailRecipient">Select a contact</strong>
+                    </div>
+                    <div class="detail-row">
+                      <span>Estimated fee</span>
+                      <strong id="detailFee">0.0012 ETH</strong>
+                    </div>
+                    <div class="detail-row">
+                      <span>Total debit</span>
+                      <strong class="primary" id="detailTotal">0.4212 ETH</strong>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="screen-actions">
+                <button class="button primary" id="toPreviewButton">Continue to sign preview</button>
+                <button class="button secondary" id="changeTokenButton">Change token</button>
+              </div>
+            </section>
+
+            <section class="screen" data-screen="preview">
+              <div class="screen-body">
+                <div class="card sign-card">
+                  <div class="section-top">
+                    <span class="badge primary">Signature required</span>
+                    <span class="badge success" id="walletBadge">Ledger ready</span>
+                  </div>
+                  <div>
+                    <div class="line-title" id="previewTitle">Send 0.42 ETH</div>
+                    <div class="line-detail" id="previewSubtitle">to satoshi.alpha.eth on Ethereum mainnet</div>
+                  </div>
+                  <div class="detail-list">
+                    <div class="detail-row">
+                      <span>Recipient</span>
+                      <strong id="previewRecipient">satoshi.alpha.eth</strong>
+                    </div>
+                    <div class="detail-row">
+                      <span>Network fee cap</span>
+                      <strong id="previewFee">0.0015 ETH</strong>
+                    </div>
+                    <div class="detail-row">
+                      <span>Estimated arrival</span>
+                      <strong id="previewEta">~18 sec</strong>
+                    </div>
+                    <div class="detail-row">
+                      <span>Total debit</span>
+                      <strong class="primary" id="previewTotal">0.4212 ETH</strong>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="step-card completed">
+                  <div class="step-icon">
+                    <svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-9"></path></svg>
+                  </div>
+                  <div class="step-copy">
+                    <strong>Payload prepared</strong>
+                    <span>Token, recipient, network route, and fee cap are locked for review.</span>
+                  </div>
+                </div>
+
+                <div class="step-card active">
+                  <div class="step-icon">
+                    <svg viewBox="0 0 24 24"><path d="M12 3v6"></path><path d="M12 21v-2"></path><path d="M4.9 4.9l4.2 4.2"></path><path d="M19.1 19.1l-1.4-1.4"></path><path d="M3 12h2"></path><path d="M19 12h2"></path><path d="M4.9 19.1l4.2-4.2"></path><path d="M19.1 4.9l-1.4 1.4"></path></svg>
+                  </div>
+                  <div class="step-copy">
+                    <strong>Sign on device</strong>
+                    <span>Confirm amount, recipient, and gas details before broadcast.</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="screen-actions">
+                <button class="button primary" id="signButton">Sign and broadcast</button>
+                <button class="button secondary" id="editButton">Edit transaction</button>
+              </div>
+            </section>
+
+            <section class="screen" data-screen="result">
+              <div class="screen-body">
+                <div class="result-hero">
+                  <div class="success-ring">
+                    <svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-9"></path></svg>
+                  </div>
+                  <div class="result-title" id="resultTitle">0.42 ETH sent</div>
+                  <div class="result-copy" id="resultCopy">The transaction is onchain and the recipient has been notified through the activity feed.</div>
+                  <span class="badge success" id="resultStatus">Confirmed in block 22048162</span>
+                </div>
+
+                <div class="card detail-card">
+                  <div class="detail-list">
+                    <div class="detail-row">
+                      <span>Recipient</span>
+                      <strong id="resultRecipient">satoshi.alpha.eth</strong>
+                    </div>
+                    <div class="detail-row">
+                      <span>Transaction hash</span>
+                      <strong id="resultHash">0xa3f1...9b6c</strong>
+                    </div>
+                    <div class="detail-row">
+                      <span>Total paid</span>
+                      <strong class="primary" id="resultTotal">0.4211 ETH</strong>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="screen-actions">
+                <button class="button primary" id="againButton">Send another token</button>
+                <button class="button secondary" id="receiptButton">Show receipt</button>
+              </div>
+            </section>
+          </div>
+        </div>
+
+        <div class="toast" id="toast">
+          <div class="toast-icon">
+            <svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-9"></path></svg>
+          </div>
+          <div class="toast-copy">
+            <strong id="toastTitle">Sent successfully</strong>
+            <span id="toastText">Activity updated and receipt ready to share.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="footer-hint">Use the back button, reset button, amount field, quick percentages, contact chips, and speed pills to test the full flow.</div>
+  </main>
+
+  <script>
+    const TOKENS = [
+      {
+        id: "eth",
+        symbol: "ETH",
+        name: "Ethereum",
+        network: "Ethereum mainnet",
+        networkShort: "Ethereum",
+        balance: 2.3841,
+        fiatRate: 2044.19,
+        avatarClass: "eth",
+        feeToken: "ETH"
+      },
+      {
+        id: "usdc",
+        symbol: "USDC",
+        name: "USD Coin",
+        network: "Base mainnet",
+        networkShort: "Base",
+        balance: 1860.0,
+        fiatRate: 1,
+        avatarClass: "usdc",
+        feeToken: "ETH"
+      },
+      {
+        id: "imx",
+        symbol: "IMX",
+        name: "Immutable",
+        network: "Immutable zkEVM",
+        networkShort: "Immutable",
+        balance: 980.0,
+        fiatRate: 0.7734,
+        avatarClass: "imx",
+        feeToken: "ETH"
+      }
+    ];
+
+    const CONTACTS = [
+      { id: "satoshi", label: "satoshi.alpha.eth", short: "ENS", address: "0x7A1E...9F20" },
+      { id: "studio", label: "studio.safe", short: "Team", address: "0x4C72...01AF" },
+      { id: "alice", label: "alice.base.eth", short: "Base", address: "0xAA91...22D8" }
+    ];
+
+    const SPEEDS = {
+      standard: { label: "Standard", feeEth: 0.0008, eta: "~45 sec" },
+      fast: { label: "Fast", feeEth: 0.0012, eta: "~18 sec" },
+      priority: { label: "Priority", feeEth: 0.0019, eta: "~8 sec" }
+    };
+
+    const state = {
+      screen: "select",
+      tokenId: "eth",
+      recipient: CONTACTS[0].label,
+      amount: 0.42,
+      speed: "fast",
+      txHash: "0xa3f1...9b6c"
+    };
+
+    const screenOrder = ["select", "amount", "preview", "result"];
+    const els = {
+      screens: document.querySelectorAll(".screen"),
+      backButton: document.getElementById("backButton"),
+      resetButton: document.getElementById("resetButton"),
+      navTitle: document.getElementById("navTitle"),
+      navSubtitle: document.getElementById("navSubtitle"),
+      tokenList: document.getElementById("tokenList"),
+      selectedTokenBadge: document.getElementById("selectedTokenBadge"),
+      continueTokenLabel: document.getElementById("continueTokenLabel"),
+      toAmountButton: document.getElementById("toAmountButton"),
+      recipientInput: document.getElementById("recipientInput"),
+      contactRow: document.getElementById("contactRow"),
+      amountInput: document.getElementById("amountInput"),
+      amountUnit: document.getElementById("amountUnit"),
+      amountHelper: document.getElementById("amountHelper"),
+      maxBadge: document.getElementById("maxBadge"),
+      quickRow: document.getElementById("quickRow"),
+      networkBadge: document.getElementById("networkBadge"),
+      speedRow: document.getElementById("speedRow"),
+      detailToken: document.getElementById("detailToken"),
+      detailRecipient: document.getElementById("detailRecipient"),
+      detailFee: document.getElementById("detailFee"),
+      detailTotal: document.getElementById("detailTotal"),
+      toPreviewButton: document.getElementById("toPreviewButton"),
+      changeTokenButton: document.getElementById("changeTokenButton"),
+      previewTitle: document.getElementById("previewTitle"),
+      previewSubtitle: document.getElementById("previewSubtitle"),
+      previewRecipient: document.getElementById("previewRecipient"),
+      previewFee: document.getElementById("previewFee"),
+      previewEta: document.getElementById("previewEta"),
+      previewTotal: document.getElementById("previewTotal"),
+      signButton: document.getElementById("signButton"),
+      editButton: document.getElementById("editButton"),
+      resultTitle: document.getElementById("resultTitle"),
+      resultCopy: document.getElementById("resultCopy"),
+      resultStatus: document.getElementById("resultStatus"),
+      resultRecipient: document.getElementById("resultRecipient"),
+      resultHash: document.getElementById("resultHash"),
+      resultTotal: document.getElementById("resultTotal"),
+      againButton: document.getElementById("againButton"),
+      receiptButton: document.getElementById("receiptButton"),
+      heroBalance: document.getElementById("heroBalance"),
+      toast: document.getElementById("toast"),
+      toastTitle: document.getElementById("toastTitle"),
+      toastText: document.getElementById("toastText")
+    };
+
+    let toastTimer = null;
+
+    function getToken() {
+      return TOKENS.find((token) => token.id === state.tokenId);
+    }
+
+    function getSpeed() {
+      return SPEEDS[state.speed];
+    }
+
+    function formatCurrency(value) {
+      return new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "USD",
+        maximumFractionDigits: value >= 100 ? 2 : 2
+      }).format(value);
+    }
+
+    function formatToken(value, symbol) {
+      const decimals = value >= 100 ? 2 : value >= 1 ? 4 : 6;
+      return `${Number(value).toLocaleString("en-US", {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: decimals
+      })} ${symbol}`;
+    }
+
+    function totalBalance() {
+      return TOKENS.reduce((sum, token) => sum + token.balance * token.fiatRate, 0);
+    }
+
+    function currentFiat() {
+      const token = getToken();
+      return state.amount * token.fiatRate;
+    }
+
+    function currentFeeEth() {
+      return getSpeed().feeEth;
+    }
+
+    function currentTotalToken() {
+      const token = getToken();
+      if (token.symbol === "ETH") {
+        return state.amount + currentFeeEth();
+      }
+      return state.amount;
+    }
+
+    function renderTokenList() {
+      els.tokenList.innerHTML = "";
+      TOKENS.forEach((token) => {
+        const button = document.createElement("button");
+        button.className = `token-row${token.id === state.tokenId ? " selected" : ""}`;
+        button.type = "button";
+        button.innerHTML = `
+          <div class="token-left">
+            <div class="avatar ${token.avatarClass}">${token.symbol[0]}</div>
+            <div class="line-copy">
+              <div class="line-title">${token.symbol}</div>
+              <div class="line-detail">${token.balance.toLocaleString("en-US", { maximumFractionDigits: 4 })} available</div>
+            </div>
+          </div>
+          <div class="line-value">
+            <strong>${formatCurrency(token.balance * token.fiatRate)}</strong>
+            <span>${token.networkShort}</span>
+          </div>
+        `;
+        button.addEventListener("click", () => {
+          state.tokenId = token.id;
+          state.amount = Math.min(state.amount, token.balance);
+          render();
+        });
+        els.tokenList.appendChild(button);
+      });
+    }
+
+    function renderContacts() {
+      els.contactRow.innerHTML = "";
+      CONTACTS.forEach((contact) => {
+        const button = document.createElement("button");
+        button.className = `chip${state.recipient === contact.label ? " active" : ""}`;
+        button.type = "button";
+        button.textContent = contact.label;
+        button.addEventListener("click", () => {
+          state.recipient = contact.label;
+          els.recipientInput.value = contact.label;
+          render();
+        });
+        els.contactRow.appendChild(button);
+      });
+    }
+
+    function renderQuickAmounts() {
+      const token = getToken();
+      const options = [
+        { label: "25%", value: token.balance * 0.25 },
+        { label: "50%", value: token.balance * 0.5 },
+        { label: "75%", value: token.balance * 0.75 },
+        { label: "Max", value: token.balance }
+      ];
+      els.quickRow.innerHTML = "";
+      options.forEach((option) => {
+        const selected = Math.abs(state.amount - option.value) < Math.max(0.0001, token.balance * 0.001);
+        const button = document.createElement("button");
+        button.className = `option-pill${selected ? " active" : ""}`;
+        button.type = "button";
+        button.textContent = option.label;
+        button.addEventListener("click", () => {
+          state.amount = Number(option.value.toFixed(token.symbol === "USDC" ? 2 : 4));
+          els.amountInput.value = state.amount;
+          render();
+        });
+        els.quickRow.appendChild(button);
+      });
+    }
+
+    function renderSpeeds() {
+      els.speedRow.innerHTML = "";
+      Object.entries(SPEEDS).forEach(([key, speed]) => {
+        const button = document.createElement("button");
+        button.className = `option-pill${state.speed === key ? " active" : ""}`;
+        button.type = "button";
+        button.textContent = `${speed.label} · ${speed.eta}`;
+        button.addEventListener("click", () => {
+          state.speed = key;
+          render();
+        });
+        els.speedRow.appendChild(button);
+      });
+    }
+
+    function updateNav() {
+      const meta = {
+        select: { title: "Send token", subtitle: "Choose what to send" },
+        amount: { title: `Send ${getToken().symbol}`, subtitle: "Recipient, amount, and fee" },
+        preview: { title: "Sign preview", subtitle: "Final approval before broadcast" },
+        result: { title: "Transaction sent", subtitle: "Confirmation and receipt" }
+      };
+      els.navTitle.textContent = meta[state.screen].title;
+      els.navSubtitle.textContent = meta[state.screen].subtitle;
+      els.backButton.disabled = state.screen === "select";
+    }
+
+    function updateSelect() {
+      const token = getToken();
+      els.heroBalance.textContent = formatCurrency(totalBalance());
+      els.selectedTokenBadge.textContent = `${token.symbol} selected`;
+      els.continueTokenLabel.textContent = token.symbol;
+    }
+
+    function updateAmount() {
+      const token = getToken();
+      const recipient = state.recipient || "Select a contact";
+      const fee = currentFeeEth();
+      els.recipientInput.value = state.recipient;
+      els.amountInput.value = state.amount;
+      els.amountUnit.textContent = token.symbol;
+      els.maxBadge.textContent = `Max ${token.balance.toLocaleString("en-US", { maximumFractionDigits: token.symbol === "USDC" ? 2 : 4 })} ${token.symbol}`;
+      els.amountHelper.textContent = `${formatCurrency(currentFiat())} estimated value`;
+      els.networkBadge.textContent = token.network;
+      els.detailToken.textContent = token.symbol;
+      els.detailRecipient.textContent = recipient;
+      els.detailFee.textContent = `${fee.toFixed(4)} ${token.feeToken}`;
+      els.detailTotal.textContent = formatToken(currentTotalToken(), token.symbol);
+      els.toPreviewButton.disabled = !state.recipient || !(state.amount > 0) || state.amount > token.balance;
+    }
+
+    function updatePreview() {
+      const token = getToken();
+      const fee = currentFeeEth();
+      els.previewTitle.textContent = `Send ${formatToken(state.amount, token.symbol)}`;
+      els.previewSubtitle.textContent = `to ${state.recipient} on ${token.network}`;
+      els.previewRecipient.textContent = state.recipient;
+      els.previewFee.textContent = `${fee.toFixed(4)} ${token.feeToken}`;
+      els.previewEta.textContent = getSpeed().eta;
+      els.previewTotal.textContent = formatToken(currentTotalToken(), token.symbol);
+    }
+
+    function updateResult() {
+      const token = getToken();
+      const fee = currentFeeEth();
+      els.resultTitle.textContent = `${formatToken(state.amount, token.symbol)} sent`;
+      els.resultCopy.textContent = `${state.recipient} can now see the transfer in activity. The flow stays token-first while network details remain visible in the receipt.`;
+      els.resultStatus.textContent = `Confirmed on ${token.networkShort}`;
+      els.resultRecipient.textContent = state.recipient;
+      els.resultHash.textContent = state.txHash;
+      els.resultTotal.textContent = `${formatToken(currentTotalToken(), token.symbol)} total`;
+      els.toastTitle.textContent = "Sent successfully";
+      els.toastText.textContent = `${formatToken(state.amount, token.symbol)} delivered to ${state.recipient}.`;
+      void fee;
+    }
+
+    function showScreen(name) {
+      state.screen = name;
+      els.screens.forEach((screen) => {
+        screen.classList.toggle("active", screen.dataset.screen === name);
+      });
+      updateNav();
+      if (name === "result") {
+        showToast();
+      } else {
+        hideToast();
+      }
+    }
+
+    function showToast() {
+      clearTimeout(toastTimer);
+      els.toast.classList.add("visible");
+      toastTimer = setTimeout(() => {
+        els.toast.classList.remove("visible");
+      }, 2800);
+    }
+
+    function hideToast() {
+      clearTimeout(toastTimer);
+      els.toast.classList.remove("visible");
+    }
+
+    function render() {
+      renderTokenList();
+      renderContacts();
+      renderQuickAmounts();
+      renderSpeeds();
+      updateSelect();
+      updateAmount();
+      updatePreview();
+      updateResult();
+      showScreen(state.screen);
+    }
+
+    function goBack() {
+      const currentIndex = screenOrder.indexOf(state.screen);
+      if (currentIndex > 0) {
+        showScreen(screenOrder[currentIndex - 1]);
+      }
+    }
+
+    function resetFlow() {
+      state.screen = "select";
+      state.tokenId = "eth";
+      state.recipient = CONTACTS[0].label;
+      state.amount = 0.42;
+      state.speed = "fast";
+      state.txHash = "0xa3f1...9b6c";
+      render();
+    }
+
+    els.backButton.addEventListener("click", goBack);
+    els.resetButton.addEventListener("click", resetFlow);
+    els.toAmountButton.addEventListener("click", () => showScreen("amount"));
+    els.changeTokenButton.addEventListener("click", () => showScreen("select"));
+    els.toPreviewButton.addEventListener("click", () => {
+      if (!els.toPreviewButton.disabled) showScreen("preview");
+    });
+    els.editButton.addEventListener("click", () => showScreen("amount"));
+    els.signButton.addEventListener("click", () => {
+      state.txHash = `0x${Math.random().toString(16).slice(2, 6)}...${Math.random().toString(16).slice(2, 6)}`;
+      showScreen("result");
+      updateResult();
+    });
+    els.againButton.addEventListener("click", resetFlow);
+    els.receiptButton.addEventListener("click", showToast);
+
+    els.recipientInput.addEventListener("input", (event) => {
+      state.recipient = event.target.value.trim();
+      render();
+    });
+
+    els.amountInput.addEventListener("input", (event) => {
+      const value = Number(event.target.value);
+      state.amount = Number.isFinite(value) ? Math.max(0, value) : 0;
+      render();
+    });
+
+    render();
+  </script>
+</body>
+</html>

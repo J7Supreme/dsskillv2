@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>alpha.token.im · Send Token Flow</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    /* ─── Design Tokens ─────────────────────────────────── */
+    :root {
+      --primary: #007fff;
+      --primary-foreground: #ffffff;
+      --accent: #0cc5ff;
+      --brand-hover: #66b2ff;
+      --ring: #007fff;
+
+      --surface-page: #fafaf9;
+      --card: #ffffff;
+      --surface-cool: #f2f6fb;
+      --surface-blue: #f8fafe;
+      --surface-blue-light: #f2f6ff;
+      --surface-blue-dim: #eff6ff;
+      --surface-blue-info: #eef5ff;
+      --secondary: #f0f1f3;
+
+      --foreground: #111d4a;
+      --secondary-foreground: #111d4a;
+      --muted-foreground: #717182;
+      --text-tertiary: #99a1af;
+      --text-secondary-gray: #475467;
+
+      --success: #10b981;
+      --success-text: #0f9f6e;
+      --success-surface: #ecfdf5;
+      --success-border: #b6e3cf;
+      --success-surface-tint: #f2fcf7;
+      --positive: #00a63e;
+      --destructive: #d4183d;
+
+      --border: rgba(17,29,74,0.08);
+      --input: rgba(17,29,74,0.10);
+      --info-border: #d8e8ff;
+
+      --shadow-card: 0 1px 3px rgba(17,29,74,0.04), 0 1px 2px rgba(17,29,74,0.06);
+      --shadow-card-md: 0 2px 8px rgba(17,29,74,0.06);
+      --shadow-cta-sm: 0 4px 14px rgba(0,127,255,0.22);
+      --shadow-cta: 0 8px 28px rgba(0,127,255,0.28);
+      --shadow-dialog: 0 24px 60px rgba(17,29,74,0.18);
+
+      --font-sans: "Noto Sans", ui-sans-serif, system-ui, -apple-system, sans-serif;
+      --ease-emphasis: cubic-bezier(0.22,1,0.36,1);
+      --duration-fast: 150ms;
+      --duration-normal: 220ms;
+      --duration-soft: 420ms;
+    }
+
+    /* ─── Reset ──────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-sans);
+      background: #dde3ee;
+      color: var(--foreground);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 24px;
+      gap: 24px;
+    }
+
+    /* ─── Page header ────────────────────────────────────── */
+    .page-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: rgba(17,29,74,0.35);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-align: center;
+    }
+
+    /* ─── Phone shell ────────────────────────────────────── */
+    .phone {
+      width: 390px;
+      height: 780px;
+      background: var(--surface-page);
+      border-radius: 44px;
+      box-shadow:
+        0 0 0 8px #1a1a2e,
+        0 0 0 10px #2a2a3e,
+        0 32px 80px rgba(17,29,74,0.28),
+        0 8px 24px rgba(17,29,74,0.16);
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Dynamic island */
+    .dynamic-island {
+      position: absolute;
+      top: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 34px;
+      background: #1a1a2e;
+      border-radius: 20px;
+      z-index: 100;
+    }
+
+    /* ─── Screen container ───────────────────────────────── */
+    .screen-wrap {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .screen {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      background: var(--surface-page);
+      transition: transform var(--duration-soft) var(--ease-emphasis),
+                  opacity 280ms ease;
+      will-change: transform, opacity;
+    }
+
+    /* States */
+    .screen[data-state="active"]  { transform: translateX(0);      opacity: 1;   pointer-events: auto; }
+    .screen[data-state="left"]    { transform: translateX(-100%);   opacity: 0;   pointer-events: none; }
+    .screen[data-state="right"]   { transform: translateX(100%);    opacity: 0;   pointer-events: none; }
+
+    /* ─── Status Bar ─────────────────────────────────────── */
+    .status-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 56px 24px 8px;
+      background: var(--surface-page);
+      flex-shrink: 0;
+    }
+    .status-bar .time { font-size: 15px; font-weight: 700; color: var(--foreground); }
+    .status-bar .icons { display: flex; gap: 5px; align-items: center; color: var(--foreground); }
+
+    /* ─── Nav Bar ────────────────────────────────────────── */
+    .nav-bar {
+      display: flex;
+      align-items: center;
+      padding: 4px 20px 12px;
+      background: var(--surface-page);
+      position: relative;
+      flex-shrink: 0;
+    }
+    .back-btn {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      border: none;
+      background: var(--secondary);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      color: var(--foreground);
+      flex-shrink: 0;
+      transition: filter var(--duration-fast);
+    }
+    .back-btn:hover { filter: brightness(0.95); }
+    .nav-title {
+      position: absolute;
+      left: 50%; transform: translateX(-50%);
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--foreground);
+    }
+    .nav-action-text {
+      margin-left: auto;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--primary);
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    /* ─── Step Dots ──────────────────────────────────────── */
+    .step-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      padding: 0 20px 14px;
+      background: var(--surface-page);
+      flex-shrink: 0;
+    }
+    .step-dot {
+      width: 6px; height: 6px;
+      border-radius: 100px;
+      background: var(--border);
+      transition: all var(--duration-normal) var(--ease-emphasis);
+      flex-shrink: 0;
+    }
+    .step-dot.active { width: 22px; background: var(--primary); }
+    .step-dot.done   { background: var(--success); }
+    .step-seg {
+      width: 14px; height: 1px;
+      background: var(--border);
+      margin: 0 2px;
+      flex-shrink: 0;
+    }
+
+    /* ─── Scrollable body ────────────────────────────────── */
+    .screen-body {
+      flex: 1;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding: 0 16px 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .screen-body::-webkit-scrollbar { display: none; }
+
+    /* ─── CTA footer ─────────────────────────────────────── */
+    .cta-area {
+      padding: 12px 16px 24px;
+      background: var(--surface-page);
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    /* ─── Buttons ────────────────────────────────────────── */
+    .btn-primary {
+      width: 100%; height: 52px;
+      border-radius: 100px;
+      background: var(--primary);
+      color: #fff;
+      font-family: var(--font-sans);
+      font-size: 15px; font-weight: 600;
+      border: none; cursor: pointer;
+      box-shadow: var(--shadow-cta-sm);
+      transition: filter var(--duration-fast) var(--ease-emphasis), transform var(--duration-fast);
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .btn-primary:hover  { filter: brightness(1.08); }
+    .btn-primary:active { transform: scale(0.98); }
+
+    .btn-secondary {
+      flex: 1; height: 52px;
+      border-radius: 100px;
+      background: var(--secondary);
+      color: var(--secondary-foreground);
+      font-family: var(--font-sans);
+      font-size: 15px; font-weight: 600;
+      border: none; cursor: pointer;
+      transition: filter var(--duration-fast) var(--ease-emphasis), transform var(--duration-fast);
+    }
+    .btn-secondary:hover  { filter: brightness(0.96); }
+    .btn-secondary:active { transform: scale(0.98); }
+
+    .btn-row { display: flex; gap: 10px; }
+    .btn-row .btn-primary { flex: 2; }
+
+    .btn-ghost-small {
+      width: 100%; height: 40px;
+      border-radius: 100px;
+      background: transparent;
+      color: var(--muted-foreground);
+      font-family: var(--font-sans);
+      font-size: 13px; font-weight: 600;
+      border: none; cursor: pointer;
+    }
+
+    /* ─── Cards ──────────────────────────────────────────── */
+    .card {
+      background: var(--card);
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-card);
+    }
+    .card-p { padding: 16px; }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-tertiary);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 2px 0;
+    }
+
+    /* ─── Token list ─────────────────────────────────────── */
+    .token-search {
+      display: flex; align-items: center; gap: 8px;
+      background: var(--card);
+      border: 1px solid var(--input);
+      border-radius: 100px;
+      padding: 0 14px; height: 42px;
+    }
+    .token-search svg { color: var(--text-tertiary); flex-shrink: 0; }
+    .token-search input {
+      flex: 1; border: none; background: transparent;
+      font-family: var(--font-sans); font-size: 14px;
+      color: var(--foreground); outline: none;
+    }
+    .token-search input::placeholder { color: var(--text-tertiary); }
+
+    .token-list { display: flex; flex-direction: column; gap: 2px; padding: 6px; }
+    .token-row {
+      display: flex; align-items: center; gap: 12px;
+      padding: 10px 10px; border-radius: 12px;
+      cursor: pointer;
+      transition: background var(--duration-fast) var(--ease-emphasis);
+      border: 1.5px solid transparent;
+    }
+    .token-row:hover { background: var(--surface-blue); }
+    .token-row.selected {
+      background: var(--surface-blue-dim);
+      border-color: var(--info-border);
+    }
+    .token-avatar {
+      width: 40px; height: 40px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .tok-info { flex: 1; min-width: 0; }
+    .tok-sym { font-size: 14px; font-weight: 600; color: var(--foreground); line-height: 1.3; }
+    .tok-name { font-size: 12px; color: var(--muted-foreground); margin-top: 1px; }
+    .chain-pill {
+      display: inline-flex; align-items: center; gap: 3px;
+      background: var(--surface-blue-light); border-radius: 100px;
+      padding: 2px 6px; font-size: 10px; font-weight: 600;
+      color: var(--primary); margin-top: 3px;
+    }
+    .tok-right { text-align: right; flex-shrink: 0; }
+    .tok-bal { font-size: 14px; font-weight: 600; color: var(--foreground); line-height: 1.3; }
+    .tok-usd { font-size: 12px; color: var(--muted-foreground); margin-top: 1px; }
+    .check-circle {
+      width: 20px; height: 20px; border-radius: 50%;
+      background: var(--primary); box-shadow: var(--shadow-cta-sm);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .divider { height: 1px; background: var(--border); margin: 2px 10px; }
+
+    /* ─── Amount input ───────────────────────────────────── */
+    .amount-card { background: var(--card); border-radius: 16px; border: 1px solid var(--border); box-shadow: var(--shadow-card); padding: 18px 16px; }
+    .amount-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+    .amount-lbl { font-size: 12px; font-weight: 600; color: var(--muted-foreground); }
+    .btn-max {
+      font-size: 12px; font-weight: 600; color: var(--primary);
+      background: var(--surface-blue-light); border: none; border-radius: 100px;
+      padding: 3px 10px; cursor: pointer;
+    }
+    .amount-row { display: flex; align-items: center; gap: 10px; }
+    .amount-num {
+      flex: 1; border: none; background: transparent;
+      font-family: var(--font-sans); font-size: 34px; font-weight: 700;
+      color: var(--foreground); outline: none; min-width: 0;
+    }
+    .amount-num::placeholder { color: var(--text-tertiary); }
+    .tok-tag {
+      display: flex; align-items: center; gap: 6px;
+      background: var(--secondary); border-radius: 100px;
+      padding: 6px 10px 6px 6px; flex-shrink: 0; cursor: pointer;
+    }
+    .tok-tag .mini-av {
+      width: 20px; height: 20px; border-radius: 50%;
+      font-size: 8px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .tok-tag .sym { font-size: 13px; font-weight: 600; color: var(--foreground); }
+    .amount-equiv { font-size: 13px; color: var(--muted-foreground); margin-top: 8px; }
+    .hr { height: 1px; background: var(--border); margin: 14px 0; }
+    .bal-row { display: flex; justify-content: space-between; align-items: center; }
+    .bal-lbl { font-size: 12px; color: var(--muted-foreground); }
+    .bal-val { font-size: 13px; font-weight: 600; color: var(--foreground); }
+
+    /* ─── Recipient ──────────────────────────────────────── */
+    .field-card { background: var(--card); border-radius: 16px; border: 1px solid var(--border); box-shadow: var(--shadow-card); padding: 14px 16px; }
+    .field-lbl { font-size: 12px; font-weight: 600; color: var(--muted-foreground); margin-bottom: 8px; }
+    .field-row {
+      display: flex; align-items: center; gap: 8px;
+      background: var(--secondary); border-radius: 10px; padding: 10px 12px;
+    }
+    .field-row svg { color: var(--muted-foreground); flex-shrink: 0; }
+    .field-input {
+      flex: 1; border: none; background: transparent;
+      font-family: var(--font-sans); font-size: 13px;
+      color: var(--foreground); outline: none;
+    }
+    .field-input::placeholder { color: var(--text-tertiary); }
+    .icon-btn {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: var(--card); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; color: var(--muted-foreground); flex-shrink: 0;
+    }
+
+    /* ─── Gas ────────────────────────────────────────────── */
+    .gas-card { background: var(--card); border-radius: 16px; border: 1px solid var(--border); box-shadow: var(--shadow-card); padding: 13px 16px; }
+    .gas-row { display: flex; justify-content: space-between; align-items: center; }
+    .gas-lbl { font-size: 13px; color: var(--muted-foreground); display: flex; align-items: center; gap: 5px; }
+    .gas-right { display: flex; align-items: center; gap: 8px; }
+    .gas-val { font-size: 13px; font-weight: 600; color: var(--foreground); }
+    .speed-pill {
+      font-size: 11px; font-weight: 600; color: var(--primary);
+      background: var(--surface-blue-light); border: none; border-radius: 100px;
+      padding: 3px 9px; cursor: pointer;
+    }
+
+    /* ─── Sign screen ────────────────────────────────────── */
+    .sign-hero {
+      background: var(--surface-blue-dim);
+      border: 1.5px solid var(--info-border);
+      border-radius: 16px; padding: 20px 16px;
+      display: flex; flex-direction: column;
+      align-items: center; gap: 6px; text-align: center;
+    }
+    .sign-icon {
+      width: 56px; height: 56px; border-radius: 18px;
+      background: var(--primary); box-shadow: var(--shadow-cta);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 4px;
+    }
+    .sign-icon svg { color: #fff; }
+    .sign-name { font-size: 17px; font-weight: 700; color: var(--foreground); }
+    .sign-sub  { font-size: 12px; color: var(--muted-foreground); }
+    .net-pill {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: var(--secondary); border-radius: 100px; padding: 4px 10px 4px 6px;
+      margin-top: 2px;
+    }
+    .net-dot { width: 8px; height: 8px; border-radius: 50%; }
+    .net-name { font-size: 12px; font-weight: 600; color: var(--muted-foreground); }
+
+    .amount-hero-card { background: var(--card); border-radius: 16px; border: 1px solid var(--border); box-shadow: var(--shadow-card); padding: 16px; text-align: center; }
+    .hero-amt { font-size: 34px; font-weight: 700; color: var(--foreground); letter-spacing: -0.02em; line-height: 1; }
+    .hero-usd { font-size: 14px; color: var(--muted-foreground); margin-top: 4px; }
+
+    .detail-card { background: var(--card); border-radius: 16px; border: 1px solid var(--border); box-shadow: var(--shadow-card); }
+    .detail-row {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      padding: 12px 16px; border-bottom: 1px solid var(--border);
+    }
+    .detail-row:last-child { border-bottom: none; }
+    .d-key { font-size: 13px; color: var(--muted-foreground); }
+    .d-val { font-size: 13px; font-weight: 600; color: var(--foreground); text-align: right; max-width: 200px; word-break: break-all; }
+    .d-val.blue { color: var(--primary); }
+
+    .warn-box {
+      background: rgba(212,24,61,0.06); border: 1px solid rgba(212,24,61,0.18);
+      border-radius: 12px; padding: 12px 14px;
+      display: flex; gap: 10px; align-items: flex-start;
+    }
+    .warn-box svg { color: var(--destructive); flex-shrink: 0; margin-top: 1px; }
+    .warn-text { font-size: 12px; color: var(--destructive); line-height: 1.55; }
+
+    /* ─── Result screen ──────────────────────────────────── */
+    .result-hero {
+      display: flex; flex-direction: column;
+      align-items: center; gap: 10px;
+      padding: 8px 0 4px; text-align: center;
+    }
+    .result-ring-wrap { position: relative; width: 88px; height: 88px; }
+    .ring {
+      position: absolute; border-radius: 50%;
+      border: 2px solid rgba(16,185,129,0.22);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    .ring-1 { inset: 0; }
+    .ring-2 { inset: 10px; border-color: rgba(16,185,129,0.16); animation-delay: 0.35s; }
+    @keyframes pulse {
+      0%,100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.55; transform: scale(1.05); }
+    }
+    .result-icon {
+      position: absolute; inset: 18px; border-radius: 50%;
+      background: var(--success);
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 8px 24px rgba(16,185,129,0.34);
+    }
+    .result-icon svg { color: #fff; }
+    .result-title { font-size: 22px; font-weight: 700; color: var(--foreground); line-height: 1.2; }
+    .result-sub   { font-size: 14px; color: var(--muted-foreground); }
+    .result-badge {
+      background: var(--success-surface);
+      border: 1px solid var(--success-border);
+      border-radius: 100px; padding: 6px 18px;
+      font-size: 16px; font-weight: 700; color: var(--success-text);
+    }
+
+    .hash-card { background: var(--card); border-radius: 12px; border: 1px solid var(--border); padding: 12px 14px; }
+    .hash-lbl { font-size: 11px; font-weight: 600; color: var(--text-tertiary); letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 6px; }
+    .hash-row { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+    .hash-val { font-size: 12px; color: var(--muted-foreground); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .hash-link { font-size: 12px; font-weight: 600; color: var(--primary); text-decoration: none; flex-shrink: 0; }
+
+    .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+    .stat-cell { background: var(--card); padding: 12px 14px; }
+    .stat-lbl { font-size: 11px; color: var(--text-tertiary); margin-bottom: 3px; }
+    .stat-val { font-size: 13px; font-weight: 600; color: var(--foreground); }
+    .stat-cell.wide { grid-column: span 2; }
+
+    /* ─── Toast ──────────────────────────────────────────── */
+    .toast-wrap {
+      position: absolute; bottom: 100px; left: 16px; right: 16px;
+      z-index: 50;
+      animation: toast-in 0.4s var(--ease-emphasis) both;
+    }
+    @keyframes toast-in {
+      from { transform: translateY(20px); opacity: 0; }
+      to   { transform: translateY(0);    opacity: 1; }
+    }
+    .toast {
+      display: flex; align-items: center; gap: 10px;
+      background: var(--foreground); border-radius: 16px;
+      padding: 13px 14px;
+      box-shadow: var(--shadow-dialog);
+    }
+    .toast-ico { flex-shrink: 0; color: var(--success); }
+    .toast-body { flex: 1; min-width: 0; }
+    .toast-title { font-size: 13px; font-weight: 600; color: #fff; line-height: 1.3; }
+    .toast-sub   { font-size: 12px; color: rgba(255,255,255,0.5); margin-top: 1px; }
+    .toast-btn   { font-size: 12px; font-weight: 600; color: var(--accent); background: none; border: none; cursor: pointer; flex-shrink: 0; }
+
+    /* ─── Address mono ───────────────────────────────────── */
+    .addr { font-variant-numeric: tabular-nums; }
+    .addr-hl { color: var(--foreground); font-weight: 600; }
+
+    /* ─── Step nav helper (desktop) ──────────────────────── */
+    .step-nav {
+      display: flex; gap: 8px; align-items: center;
+    }
+    .step-nav-btn {
+      height: 32px; border-radius: 100px;
+      border: 1px solid rgba(17,29,74,0.12);
+      background: rgba(255,255,255,0.7);
+      color: var(--muted-foreground);
+      font-family: var(--font-sans); font-size: 12px; font-weight: 600;
+      padding: 0 14px; cursor: pointer;
+      transition: all var(--duration-fast);
+    }
+    .step-nav-btn:hover { background: #fff; color: var(--foreground); }
+    .step-nav-btn.active {
+      background: var(--primary); color: #fff; border-color: var(--primary);
+      box-shadow: var(--shadow-cta-sm);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page-title">alpha.token.im · Send Token Flow · Interactive Demo</div>
+
+  <!-- Step nav pills -->
+  <div class="step-nav">
+    <button class="step-nav-btn active" onclick="goTo(0)">1 · Select Token</button>
+    <button class="step-nav-btn"        onclick="goTo(1)">2 · Amount</button>
+    <button class="step-nav-btn"        onclick="goTo(2)">3 · Review &amp; Sign</button>
+    <button class="step-nav-btn"        onclick="goTo(3)">4 · Result</button>
+  </div>
+
+  <!-- Phone -->
+  <div class="phone">
+    <div class="dynamic-island"></div>
+    <div class="screen-wrap">
+
+      <!-- ════════════════════════════════════════════════
+           SCREEN 0 · Token Selection
+      ════════════════════════════════════════════════ -->
+      <div class="screen" id="s0" data-state="active">
+        <div class="status-bar">
+          <span class="time">9:41</span>
+          <div class="icons">
+            <svg width="16" height="12" viewBox="0 0 16 12" fill="none"><rect x="0" y="3" width="3" height="9" rx="1" fill="currentColor"/><rect x="4.5" y="2" width="3" height="10" rx="1" fill="currentColor"/><rect x="9" y="0" width="3" height="12" rx="1" fill="currentColor"/><rect x="13.5" y="0" width="2.5" height="12" rx="1" fill="currentColor" opacity="0.3"/></svg>
+            <svg width="15" height="11" viewBox="0 0 15 11" fill="none"><path d="M7.5 2C9.3 2 11 2.8 12.2 4L13.5 2.6C11.9 1.1 9.8 0.2 7.5 0.2C5.2 0.2 3.1 1.1 1.5 2.6L2.8 4C4 2.8 5.7 2 7.5 2Z" fill="currentColor"/><path d="M7.5 5C8.6 5 9.6 5.4 10.3 6.2L11.6 4.8C10.5 3.8 9.1 3.2 7.5 3.2C5.9 3.2 4.5 3.8 3.4 4.8L4.7 6.2C5.4 5.4 6.4 5 7.5 5Z" fill="currentColor"/><circle cx="7.5" cy="9" r="1.5" fill="currentColor"/></svg>
+            <svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x="0.5" y="0.5" width="21" height="11" rx="3.5" stroke="currentColor" stroke-opacity="0.35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="currentColor"/><path d="M23 4.5V7.5C23.8 7.2 24.5 6.7 24.5 6C24.5 5.3 23.8 4.8 23 4.5Z" fill="currentColor" opacity="0.4"/></svg>
+          </div>
+        </div>
+        <div class="nav-bar">
+          <button class="back-btn">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="10 4 6 8 10 12"/></svg>
+          </button>
+          <span class="nav-title">Send</span>
+        </div>
+        <div class="step-bar">
+          <div class="step-dot active" id="d0-0"></div>
+          <div class="step-seg"></div>
+          <div class="step-dot" id="d0-1"></div>
+          <div class="step-seg"></div>
+          <div class="step-dot" id="d0-2"></div>
+          <div class="step-seg"></div>
+          <div class="step-dot" id="d0-3"></div>
+        </div>
+        <div class="screen-body">
+          <div class="token-search">
+            <svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="6.5" cy="6.5" r="4.5"/><path d="M10 10L13 13"/></svg>
+            <input type="text" placeholder="Search token or address">
+          </div>
+          <div class="section-label">My tokens</div>
+          <div class="card">
+            <div class="token-list">
+              <!-- USDT -->
+              <div class="token-row selected" id="sel-usdt" onclick="selectToken('usdt')">
+                <div class="token-avatar" style="background:rgba(39,174,96,0.10);">
+                  <svg width="22" height="22" viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#26A17B"/><path d="M17.9 17.2V22H14.1V17.2C11.2 16.9 9 16.1 9 15.2V12.8C9 11.9 11.2 11.1 14.1 10.8V9H17.9V10.8C20.8 11.1 23 11.9 23 12.8V15.2C23 16.1 20.8 16.9 17.9 17.2Z" fill="white"/></svg>
+                </div>
+                <div class="tok-info">
+                  <div class="tok-sym">USDT</div>
+                  <div class="tok-name">Tether USD</div>
+                  <div class="chain-pill">
+                    <svg width="7" height="7" viewBox="0 0 8 8" fill="currentColor"><circle cx="4" cy="4" r="4"/></svg>
+                    Ethereum
+                  </div>
+                </div>
+                <div class="tok-right">
+                  <div class="tok-bal">4,520.00</div>
+                  <div class="tok-usd">$4,520.00</div>
+                </div>
+                <div class="check-circle">
+                  <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg>
+                </div>
+              </div>
+              <div class="divider"></div>
+              <!-- ETH -->
+              <div class="token-row" id="sel-eth" onclick="selectToken('eth')">
+                <div class="token-avatar" style="background:rgba(98,126,234,0.10);">
+                  <svg width="22" height="22" viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#627EEA"/><path d="M16 6L15.9 11.3V21.3L16 21.4L22 17.8L16 6Z" fill="rgba(255,255,255,0.8)"/><path d="M16 6L10 17.8L16 21.4V14.2V6Z" fill="white"/><path d="M16 22.5L15.9 22.7V27.1L16 27.4L22 18.9L16 22.5Z" fill="rgba(255,255,255,0.8)"/><path d="M16 27.4V22.5L10 18.9L16 27.4Z" fill="white"/></svg>
+                </div>
+                <div class="tok-info">
+                  <div class="tok-sym">ETH</div>
+                  <div class="tok-name">Ethereum</div>
+                  <div class="chain-pill">
+                    <svg width="7" height="7" viewBox="0 0 8 8" fill="currentColor"><circle cx="4" cy="4" r="4"/></svg>
+                    Ethereum
+                  </div>
+                </div>
+                <div class="tok-right">
+                  <div class="tok-bal">1.4832</div>
+                  <div class="tok-usd">$5,820.14</div>
+                </div>
+              </div>
+              <div class="divider"></div>
+              <!-- USDC -->
+              <div class="token-row" id="sel-usdc" onclick="selectToken('usdc')">
+                <div class="token-avatar" style="background:rgba(39,117,202,0.10);">
+                  <svg width="22" height="22" viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#2775CA"/><path d="M16 6C10.5 6 6 10.5 6 16C6 21.5 10.5 26 16 26C21.5 26 26 21.5 26 16C26 10.5 21.5 6 16 6ZM17.2 21.5V23H14.8V21.5C12.6 21 11 19.5 11 17.7H13.2C13.2 18.7 14.5 19.4 16 19.4C17.5 19.4 18.5 18.8 18.5 17.9C18.5 17 17.6 16.7 15.9 16.3C13.8 15.8 11.5 15.2 11.5 12.8C11.5 11.2 12.9 9.9 14.8 9.5V8H17.2V9.5C19.2 10 20.5 11.3 20.5 12.9H18.3C18.3 11.9 17.3 11.2 16 11.2C14.6 11.2 13.7 11.9 13.7 12.7C13.7 13.6 14.6 13.8 16.3 14.3C18.4 14.8 20.5 15.4 20.5 17.9C20.5 19.6 19.1 21 17.2 21.5Z" fill="white"/></svg>
+                </div>
+                <div class="tok-info">
+                  <div class="tok-sym">USDC</div>
+                  <div class="tok-name">USD Coin</div>
+                  <div class="chain-pill">
+                    <svg width="7" height="7" viewBox="0 0 8 8" fill="currentColor"><circle cx="4" cy="4" r="4"/></svg>
+                    Ethereum
+                  </div>
+                </div>
+                <div class="tok-right">
+                  <div class="tok-bal">2,100.00</div>
+                  <div class="tok-usd">$2,100.00</div>
+                </div>
+              </div>
+              <div class="divider"></div>
+              <!-- BTC -->
+              <div class="token-row" id="sel-btc" onclick="selectToken('btc')">
+                <div class="token-avatar" style="background:rgba(247,147,26,0.10);">
+                  <svg width="22" height="22" viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#F7931A"/><path d="M22 14C22.3 12 21 11 19 10.6L19.7 7.5L17.8 7L17.1 10C16.6 9.9 16.1 9.8 15.6 9.6L16.3 6.5L14.4 6L13.7 9.1C13.3 9 12.9 8.9 12.6 8.8L10 8.1L9.5 10.1C9.5 10.1 11 10.4 10.9 10.5C11.8 10.7 11.9 11.3 11.9 11.7L10.8 16.2C10.9 16.2 11 16.3 11.1 16.3C11 16.3 10.9 16.3 10.8 16.2L9.3 22.4C9.2 22.6 9 22.9 8.5 22.8C8.5 22.9 7.1 22.5 7.1 22.5L6.2 24.7L8.7 25.3C9.2 25.4 9.7 25.6 10.1 25.7L9.4 28.8L11.3 29.3L12 26.2C12.5 26.3 13 26.5 13.5 26.6L12.8 29.7L14.7 30.2L15.4 27.1C18.5 27.7 20.8 27.4 21.8 24.6C22.6 22.4 21.8 21.1 20.2 20.3C21.4 20 22.2 19.2 22.4 17.7C22.7 15.5 21.5 14.5 22 14Z" fill="white"/></svg>
+                </div>
+                <div class="tok-info">
+                  <div class="tok-sym">WBTC</div>
+                  <div class="tok-name">Wrapped Bitcoin</div>
+                  <div class="chain-pill">
+                    <svg width="7" height="7" viewBox="0 0 8 8" fill="currentColor"><circle cx="4" cy="4" r="4"/></svg>
+                    Ethereum
+                  </div>
+                </div>
+                <div class="tok-right">
+                  <div class="tok-bal">0.0421</div>
+                  <div class="tok-usd">$4,180.22</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="cta-area">
+          <button class="btn-primary" onclick="goTo(1)">
+            Continue with USDT
+            <svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 3 10 7.5 5 12"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- ════════════════════════════════════════════════
+           SCREEN 1 · Amount & Details
+      ════════════════════════════════════════════════ -->
+      <div class="screen" id="s1" data-state="right">
+        <div class="status-bar">
+          <span class="time">9:41</span>
+          <div class="icons">
+            <svg width="16" height="12" viewBox="0 0 16 12" fill="none"><rect x="0" y="3" width="3" height="9" rx="1" fill="currentColor"/><rect x="4.5" y="2" width="3" height="10" rx="1" fill="currentColor"/><rect x="9" y="0" width="3" height="12" rx="1" fill="currentColor"/><rect x="13.5" y="0" width="2.5" height="12" rx="1" fill="currentColor" opacity="0.3"/></svg>
+            <svg width="15" height="11" viewBox="0 0 15 11" fill="none"><path d="M7.5 2C9.3 2 11 2.8 12.2 4L13.5 2.6C11.9 1.1 9.8 0.2 7.5 0.2C5.2 0.2 3.1 1.1 1.5 2.6L2.8 4C4 2.8 5.7 2 7.5 2Z" fill="currentColor"/><path d="M7.5 5C8.6 5 9.6 5.4 10.3 6.2L11.6 4.8C10.5 3.8 9.1 3.2 7.5 3.2C5.9 3.2 4.5 3.8 3.4 4.8L4.7 6.2C5.4 5.4 6.4 5 7.5 5Z" fill="currentColor"/><circle cx="7.5" cy="9" r="1.5" fill="currentColor"/></svg>
+            <svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x="0.5" y="0.5" width="21" height="11" rx="3.5" stroke="currentColor" stroke-opacity="0.35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="currentColor"/><path d="M23 4.5V7.5C23.8 7.2 24.5 6.7 24.5 6C24.5 5.3 23.8 4.8 23 4.5Z" fill="currentColor" opacity="0.4"/></svg>
+          </div>
+        </div>
+        <div class="nav-bar">
+          <button class="back-btn" onclick="goTo(0)">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="10 4 6 8 10 12"/></svg>
+          </button>
+          <span class="nav-title">Send USDT</span>
+        </div>
+        <div class="step-bar">
+          <div class="step-dot done"></div>
+          <div class="step-seg"></div>
+          <div class="step-dot active"></div>
+          <div class="step-seg"></div>
+          <div class="step-dot"></div>
+          <div class="step-seg"></div>
+          <div class="step-dot"></div>
+        </div>
+        <div class="screen-body">
+          <!-- Amount -->
+          <div class="amount-card">
+            <div class="amount-top">
+              <span class="amount-lbl">Amount</span>
+              <button class="btn-max" onclick="document.getElementById('amtInput').value='4520'; updateEquiv()">Max</button>
+            </div>
+            <div class="amount-row">
+              <input class="amount-num" id="amtInput" type="number" placeholder="0" value="500" oninput="updateEquiv()">
+              <div class="tok-tag">
+                <div class="mini-av" style="background:rgba(39,174,96,0.12); color:#27AE60; font-size:9px; font-weight:700;">T</div>
+                <span class="sym">USDT</span>
+                <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="color:var(--muted-foreground)"><polyline points="3 4.5 6 7.5 9 4.5"/></svg>
+              </div>
+            </div>
+            <div class="amount-equiv" id="amtEquiv">≈ $500.00</div>
+            <div class="hr"></div>
+            <div class="bal-row">
+              <span class="bal-lbl">Available balance</span>
+              <span class="bal-val">4,520.00 USDT</span>
+            </div>
+          </div>
+
+          <!-- Recipient -->
+          <div class="field-card">
+            <div class="field-lbl">Recipient address</div>
+            <div class="field-row">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="5" r="2.5"/><path d="M2 12.5C2 10 4.2 8 7 8C9.8 8 12 10 12 12.5"/></svg>
+              <input class="field-input addr" type="text" placeholder="Paste or enter address" value="0xA1B2C3D4E5F6...">
+              <button class="icon-btn" title="Paste">
+                <svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="8" height="9" rx="1.5"/><path d="M2 10V3C2 2.4 2.4 2 3 2H10"/></svg>
+              </button>
+              <button class="icon-btn" title="QR">
+                <svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="1.5" y="1.5" width="4" height="4" rx="0.8"/><rect x="8.5" y="1.5" width="4" height="4" rx="0.8"/><rect x="1.5" y="8.5" width="4" height="4" rx="0.8"/><rect x="9.5" y="9.5" width="2.5" height="2.5" rx="0.5"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Network fee -->
+          <div class="gas-card">
+            <div class="gas-row">
+              <div class="gas-lbl">
+                <svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text-tertiary)"><path d="M2 12V3a1 1 0 011-1h5a1 1 0 011 1v4h1.5a1 1 0 011 1V11a.5.5 0 001 0V7.5"/><path d="M4 7h3M4 10h2"/></svg>
+                Network fee (Est.)
+              </div>
+              <div class="gas-right">
+                <span class="gas-val">0.0021 ETH · $8.24</span>
+                <button class="speed-pill">Fast ›</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Note -->
+          <div class="field-card">
+            <div class="field-lbl">Note <span style="color:var(--text-tertiary); font-weight:400;">(optional)</span></div>
+            <div class="field-row">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2 2h10v8H8.5L7 12l-1.5-2H2V2Z"/></svg>
+              <input class="field-input" type="text" placeholder="Add a message (visible on-chain)">
+            </div>
+          </div>
+        </div>
+        <div class="cta-area">
+          <button class="btn-primary" onclick="goTo(2)">
+            Preview Transaction
+            <svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 3 10 7.5 5 12"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- ════════════════════════════════════════════════
+           SCREEN 2 · Review & Sign
+      ════════════════════════════════════════════════ -->
+      <div class="screen" id="s2" data-state="right">
+        <div class="status-bar">
+          <span class="time">9:41</span>
+          <div class="icons">
+            <svg width="16" height="12" viewBox="0 0 16 12" fill="none"><rect x="0" y="3" width="3" height="9" rx="1" fill="currentColor"/><rect x="4.5" y="2" width="3" height="10" rx="1" fill="currentColor"/><rect x="9" y="0" width="3" height="12" rx="1" fill="currentColor"/><rect x="13.5" y="0" width="2.5" height="12" rx="1" fill="currentColor" opacity="0.3"/></svg>
+            <svg width="15" height="11" viewBox="0 0 15 11" fill="none"><path d="M7.5 2C9.3 2 11 2.8 12.2 4L13.5 2.6C11.9 1.1 9.8 0.2 7.5 0.2C5.2 0.2 3.1 1.1 1.5 2.6L2.8 4C4 2.8 5.7 2 7.5 2Z" fill="currentColor"/><path d="M7.5 5C8.6 5 9.6 5.4 10.3 6.2L11.6 4.8C10.5 3.8 9.1 3.2 7.5 3.2C5.9 3.2 4.5 3.8 3.4 4.8L4.7 6.2C5.4 5.4 6.4 5 7.5 5Z" fill="currentColor"/><circle cx="7.5" cy="9" r="1.5" fill="currentColor"/></svg>
+            <svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x="0.5" y="0.5" width="21" height="11" rx="3.5" stroke="currentColor" stroke-opacity="0.35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="currentColor"/><path d="M23 4.5V7.5C23.8 7.2 24.5 6.7 24.5 6C24.5 5.3 23.8 4.8 23 4.5Z" fill="currentColor" opacity="0.4"/></svg>
+          </div>
+        </div>
+        <div class="nav-bar">
+          <button class="back-btn" onclick="goTo(1)">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="10 4 6 8 10 12"/></svg>
+          </button>
+          <span class="nav-title">Review &amp; Sign</span>
+        </div>
+        <div class="step-bar">
+          <div class="step-dot done"></div>
+          <div class="step-seg"></div>
+          <div class="step-dot done"></div>
+          <div class="step-seg"></div>
+          <div class="step-dot active"></div>
+          <div class="step-seg"></div>
+          <div class="step-dot"></div>
+        </div>
+        <div class="screen-body">
+          <!-- Header -->
+          <div class="sign-hero">
+            <div class="sign-icon">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            </div>
+            <div class="sign-name">Send Transaction</div>
+            <div class="sign-sub">alpha.token.im · Ethereum Mainnet</div>
+            <div class="net-pill">
+              <div class="net-dot" style="background:#627EEA;"></div>
+              <span class="net-name">Ethereum</span>
+            </div>
+          </div>
+
+          <!-- Amount hero -->
+          <div class="amount-hero-card">
+            <div class="hero-amt" id="reviewAmt">500.00 USDT</div>
+            <div class="hero-usd" id="reviewUsd">≈ $500.00</div>
+          </div>
+
+          <!-- Details -->
+          <div class="detail-card">
+            <div class="detail-row">
+              <span class="d-key">From</span>
+              <span class="d-val addr"><span class="addr-hl">0xDef4</span>…B8E1</span>
+            </div>
+            <div class="detail-row">
+              <span class="d-key">To</span>
+              <span class="d-val addr"><span class="addr-hl">0xA1B2</span>…C3D4</span>
+            </div>
+            <div class="detail-row">
+              <span class="d-key">Token</span>
+              <span class="d-val">USDT · ERC-20</span>
+            </div>
+            <div class="detail-row">
+              <span class="d-key">Network</span>
+              <span class="d-val">Ethereum Mainnet</span>
+            </div>
+            <div class="detail-row">
+              <span class="d-key">Network fee</span>
+              <span class="d-val">0.0021 ETH · $8.24</span>
+            </div>
+            <div class="detail-row">
+              <span class="d-key">Speed</span>
+              <span class="d-val blue">Fast · ~15 sec</span>
+            </div>
+            <div class="detail-row">
+              <span class="d-key">Total cost</span>
+              <span class="d-val" id="reviewTotal">$508.24</span>
+            </div>
+          </div>
+
+          <!-- Warning -->
+          <div class="warn-box">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M7 1L13.5 12H0.5L7 1Z"/><line x1="7" y1="5.5" x2="7" y2="8.5"/><circle cx="7" cy="10.5" r="0.5" fill="currentColor"/></svg>
+            <div class="warn-text">Transactions on Ethereum are irreversible. Verify the recipient address carefully before signing.</div>
+          </div>
+        </div>
+        <div class="cta-area">
+          <div class="btn-row">
+            <button class="btn-secondary" onclick="goTo(1)">Cancel</button>
+            <button class="btn-primary" onclick="goTo(3)">
+              <svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 8 5.5 11.5 13 4"/></svg>
+              Confirm &amp; Sign
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ════════════════════════════════════════════════
+           SCREEN 3 · Result + Toast
+      ════════════════════════════════════════════════ -->
+      <div class="screen" id="s3" data-state="right">
+        <div class="status-bar">
+          <span class="time">9:42</span>
+          <div class="icons">
+            <svg width="16" height="12" viewBox="0 0 16 12" fill="none"><rect x="0" y="3" width="3" height="9" rx="1" fill="currentColor"/><rect x="4.5" y="2" width="3" height="10" rx="1" fill="currentColor"/><rect x="9" y="0" width="3" height="12" rx="1" fill="currentColor"/><rect x="13.5" y="0" width="2.5" height="12" rx="1" fill="currentColor" opacity="0.3"/></svg>
+            <svg width="15" height="11" viewBox="0 0 15 11" fill="none"><path d="M7.5 2C9.3 2 11 2.8 12.2 4L13.5 2.6C11.9 1.1 9.8 0.2 7.5 0.2C5.2 0.2 3.1 1.1 1.5 2.6L2.8 4C4 2.8 5.7 2 7.5 2Z" fill="currentColor"/><path d="M7.5 5C8.6 5 9.6 5.4 10.3 6.2L11.6 4.8C10.5 3.8 9.1 3.2 7.5 3.2C5.9 3.2 4.5 3.8 3.4 4.8L4.7 6.2C5.4 5.4 6.4 5 7.5 5Z" fill="currentColor"/><circle cx="7.5" cy="9" r="1.5" fill="currentColor"/></svg>
+            <svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x="0.5" y="0.5" width="21" height="11" rx="3.5" stroke="currentColor" stroke-opacity="0.35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="currentColor"/><path d="M23 4.5V7.5C23.8 7.2 24.5 6.7 24.5 6C24.5 5.3 23.8 4.8 23 4.5Z" fill="currentColor" opacity="0.4"/></svg>
+          </div>
+        </div>
+        <div class="nav-bar" style="justify-content: center;">
+          <span class="nav-title" style="position:static;transform:none;">Transaction Sent</span>
+        </div>
+        <div class="step-bar">
+          <div class="step-dot done"></div>
+          <div class="step-seg"></div>
+          <div class="step-dot done"></div>
+          <div class="step-seg"></div>
+          <div class="step-dot done"></div>
+          <div class="step-seg"></div>
+          <div class="step-dot done"></div>
+        </div>
+        <div class="screen-body">
+          <!-- Hero -->
+          <div class="result-hero">
+            <div class="result-ring-wrap">
+              <div class="ring ring-1"></div>
+              <div class="ring ring-2"></div>
+              <div class="result-icon">
+                <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 11 8.5 16.5 19 6"/></svg>
+              </div>
+            </div>
+            <div class="result-title">Transaction Sent!</div>
+            <div class="result-sub">Your transfer is on the network</div>
+            <div class="result-badge" id="resultBadge">500.00 USDT sent</div>
+          </div>
+
+          <!-- TX Hash -->
+          <div class="hash-card">
+            <div class="hash-lbl">Transaction Hash</div>
+            <div class="hash-row">
+              <div class="hash-val">0x4f2ca8…e8a37d1c</div>
+              <a class="hash-link" href="#">View on Etherscan ›</a>
+            </div>
+          </div>
+
+          <!-- Stat grid -->
+          <div class="stat-grid">
+            <div class="stat-cell">
+              <div class="stat-lbl">Amount sent</div>
+              <div class="stat-val" id="resultAmt">500.00 USDT</div>
+            </div>
+            <div class="stat-cell">
+              <div class="stat-lbl">USD value</div>
+              <div class="stat-val" id="resultUsd">$500.00</div>
+            </div>
+            <div class="stat-cell">
+              <div class="stat-lbl">Network fee</div>
+              <div class="stat-val">$8.24</div>
+            </div>
+            <div class="stat-cell">
+              <div class="stat-lbl">Est. confirm.</div>
+              <div class="stat-val">~15 sec</div>
+            </div>
+            <div class="stat-cell wide">
+              <div class="stat-lbl">Recipient</div>
+              <div class="stat-val addr" style="font-size:12px;color:var(--muted-foreground);font-weight:500;">0xA1B2C3D4E5F6…</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="cta-area">
+          <button class="btn-primary" onclick="goTo(0)">Done</button>
+          <button class="btn-ghost-small" onclick="goTo(0)">Send Again</button>
+        </div>
+
+        <!-- Toast -->
+        <div class="toast-wrap" id="toast">
+          <div class="toast">
+            <div class="toast-ico">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="9" r="7.5"/><polyline points="5.5 9 7.5 11 12.5 6.5"/></svg>
+            </div>
+            <div class="toast-body">
+              <div class="toast-title">Transaction confirmed</div>
+              <div class="toast-sub" id="toastSub">500 USDT · 1 confirmation</div>
+            </div>
+            <button class="toast-btn">View</button>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /screen-wrap -->
+  </div><!-- /phone -->
+
+  <script>
+    let current = 0;
+    const total = 4;
+
+    const tokens = {
+      usdt: { sym: 'USDT', bal: '4,520.00', usd: '$4,520.00', bg: 'rgba(39,174,96,0.10)' },
+      eth:  { sym: 'ETH',  bal: '1.4832',   usd: '$5,820.14', bg: 'rgba(98,126,234,0.10)' },
+      usdc: { sym: 'USDC', bal: '2,100.00', usd: '$2,100.00', bg: 'rgba(39,117,202,0.10)' },
+      btc:  { sym: 'WBTC', bal: '0.0421',   usd: '$4,180.22', bg: 'rgba(247,147,26,0.10)' },
+    };
+    let selectedToken = 'usdt';
+
+    function selectToken(id) {
+      // Reset all rows
+      document.querySelectorAll('.token-row').forEach(r => {
+        r.classList.remove('selected');
+        const chk = r.querySelector('.check-circle');
+        if (chk) chk.remove();
+      });
+      // Select clicked
+      const row = document.getElementById('sel-' + id);
+      row.classList.add('selected');
+      const chk = document.createElement('div');
+      chk.className = 'check-circle';
+      chk.innerHTML = '<svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2 6 5 9 10 3"/></svg>';
+      row.appendChild(chk);
+      selectedToken = id;
+      // Update CTA label
+      const t = tokens[id];
+      document.querySelector('#s0 .btn-primary').innerHTML =
+        `Continue with ${t.sym} <svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 3 10 7.5 5 12"/></svg>`;
+    }
+
+    function updateEquiv() {
+      const v = parseFloat(document.getElementById('amtInput').value) || 0;
+      document.getElementById('amtEquiv').textContent = '≈ $' + v.toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2});
+      // Sync review screen
+      const sym = tokens[selectedToken].sym;
+      document.getElementById('reviewAmt').textContent = v.toFixed(2) + ' ' + sym;
+      document.getElementById('reviewUsd').textContent = '≈ $' + v.toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2});
+      document.getElementById('reviewTotal').textContent = '$' + (v + 8.24).toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2});
+      document.getElementById('resultBadge').textContent = v.toFixed(2) + ' ' + sym + ' sent';
+      document.getElementById('resultAmt').textContent = v.toFixed(2) + ' ' + sym;
+      document.getElementById('resultUsd').textContent = '$' + v.toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2});
+      document.getElementById('toastSub').textContent = v.toFixed(2) + ' ' + sym + ' · 1 confirmation';
+    }
+
+    let toastTimer = null;
+
+    function goTo(idx) {
+      const prev = current;
+      if (idx === prev) return;
+
+      const dir = idx > prev ? 1 : -1;
+
+      // Animate out current
+      const fromEl = document.getElementById('s' + prev);
+      fromEl.dataset.state = dir > 0 ? 'left' : 'right';
+
+      // Animate in next
+      const toEl = document.getElementById('s' + idx);
+      // Set start position instantly (no transition)
+      toEl.style.transition = 'none';
+      toEl.dataset.state = dir > 0 ? 'right' : 'left';
+      toEl.offsetHeight; // force reflow
+      toEl.style.transition = '';
+      // Trigger animation
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          toEl.dataset.state = 'active';
+        });
+      });
+
+      current = idx;
+      updateNavPills();
+
+      // Show/hide toast on result screen
+      if (idx === 3) {
+        if (toastTimer) clearTimeout(toastTimer);
+        const toast = document.getElementById('toast');
+        toast.style.display = 'block';
+        toast.style.animation = 'none';
+        toast.offsetHeight;
+        toast.style.animation = '';
+        toastTimer = setTimeout(() => {
+          toast.style.opacity = '0';
+          toast.style.transition = 'opacity 0.4s ease';
+          setTimeout(() => {
+            toast.style.display = 'none';
+            toast.style.opacity = '';
+            toast.style.transition = '';
+          }, 400);
+        }, 4000);
+      }
+    }
+
+    function updateNavPills() {
+      document.querySelectorAll('.step-nav-btn').forEach((btn, i) => {
+        btn.classList.toggle('active', i === current);
+      });
+    }
+  </script>
+</body>
+</html>
